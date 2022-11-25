@@ -1,4 +1,6 @@
-﻿namespace Control
+﻿using System;
+
+namespace Control
 {
     using UnityEngine;
     public class MoveControl : MonoBehaviour
@@ -296,6 +298,20 @@
         {
             collisionDirection.Clear();
             onGround = collisionDirection.fromUp;
+        }
+
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            print("enter:"+col.name);
+        }
+        private void OnTriggerExit2D(Collider2D col)
+        {
+            print("exit"+col.name);
+        }
+        private void OnTriggerStay2D(Collider2D col)
+        {
+            print("stay"+col.name);
         }
 
         #endregion

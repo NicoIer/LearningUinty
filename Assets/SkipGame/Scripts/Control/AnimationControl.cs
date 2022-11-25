@@ -25,6 +25,7 @@ namespace Control
         private MoveControl _moveControl;
         //Animation中的参数 字符串
         private static readonly int _drop = Animator.StringToHash("drop");
+        private static readonly int _jump = Animator.StringToHash("jump");
 
         private void Awake()
         {
@@ -78,11 +79,14 @@ namespace Control
                 _trail_renderer.emitting = true;
                 _moveParticles.Stop();
             }
-            //跳跃的粒子效果
+            //跳跃相关
+            //跳跃的粒子效果 和 动画
             var jumpingThisFrame = _moveControl.JumpingThisFrame();
+            _animator.SetBool(_jump,jumpingThisFrame);
             if (jumpingThisFrame)
             {//跳跃
                 _launchParticles.Play();
+                
             }
             else
             {
