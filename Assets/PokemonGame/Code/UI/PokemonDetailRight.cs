@@ -27,6 +27,7 @@ namespace PokemonGame.UI
         [SerializeField] private Sprite sel;
         [SerializeField] private List<Image> ballImages;
         public uint curPokemon = 0;
+        private uint _lastPokemon = 0;
 
         [Header("Item")] [SerializeField] private Text itemText;
         [SerializeField] private Image itemImage;
@@ -39,8 +40,7 @@ namespace PokemonGame.UI
             {
                 _pokemonDetail = transform.parent.parent.GetComponent<PokemonDetail>();
             }
-
-            //ToDo 给按钮添加点击事件的监听
+            
             if (backBtn == null)
             {
                 backBtn = transform.Find("buttons").Find("back").GetComponent<Button>();
@@ -150,7 +150,7 @@ namespace PokemonGame.UI
 
         private void OnEnable()
         {
-            
+            update_ui();
         }
 
         private void OnDisable()
@@ -159,11 +159,71 @@ namespace PokemonGame.UI
         
         private void update_ui()
         {
+            if (_pokemon != null)
+            {
+                //name
+                nameText.text = _pokemon.info.otherName;
+                //sex
+                switch (_pokemon.info.sex)
+                {
+                    case Sex.None:
+                        sexImage.color = new Color(1, 1, 1, 0);
+                        break;
+                    case Sex.Man:
+                        sexImage.color = Color.blue;
+                        break;
+                    case Sex.Woman:
+                        sexImage.color = Color.red;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                //level
+                levelText.text = _pokemon.info.level.ToString();
+                //state ToDo 完善这里的其他判断条件
+                switch (_pokemon.info.state)
+                {
+                    case State.None:
+                        stateImage.color = new Color(0, 0, 0, 0);
+                        stateText.text = "";
+                        break;
+                    case State.Poisoning:
+                        stateImage.color = Color.magenta;
+                        stateText.text = State.Poisoning.ToString();
+                        break;
+                    case State.Sleeping:
+                        stateImage.color = Color.white;
+                        stateText.text = State.Sleeping.ToString();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                //精灵球的选择
+                ballImages[(int)_lastPokemon].sprite = noSel;
+                ballImages[(int)curPokemon].sprite = sel;
+                //Item ToDo 完善这里
+                if (_pokemon.info.item != ItemEnum.None)
+                {
+                    itemImage.color = new Color(0, 0, 0, 0);
+                    itemText.text = "";
+                }
+                else
+                {
+                    itemImage.color = Color.black;
+                    itemText.text =_pokemon.info.item.ToString();
+                }
+                //Skills ToDo 
+            }
+            else
+            {
+                Debug.LogWarning("PokemonDetail->Right持有的Pokemon为空!!");
+            }
         }
 
         public void set_pokemon(Pokemon pokemon, uint index=0)
         {
             _pokemon = pokemon;
+            _lastPokemon = curPokemon;
             curPokemon = index;
         }
     }

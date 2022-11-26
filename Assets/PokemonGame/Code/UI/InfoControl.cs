@@ -54,10 +54,9 @@ namespace PokemonGame.UI
 
         public void EnterPokemonDetail(Pokemon pokemon, uint index)
         {
+            gameObject.SetActive(true);
             pokemonDetail.update_pokemon(pokemon, index);
             pokemonDetail.ShowPokemonDetail();
-            gameObject.SetActive(true);
-
         }
     }
 }

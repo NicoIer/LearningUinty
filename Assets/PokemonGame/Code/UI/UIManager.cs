@@ -30,6 +30,10 @@ namespace PokemonGame.UI
             {
                 attackControl = transform.Find("attack").GetComponent<AttackControl>();
             }
+            
+            infoControl.gameObject.SetActive(false);
+            baseControl.gameObject.SetActive(false);
+            attackControl.gameObject.SetActive(false);
         }
 
         private void Update()

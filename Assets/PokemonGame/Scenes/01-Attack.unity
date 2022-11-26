@@ -2338,6 +2338,8 @@ MonoBehaviour:
   sex: {fileID: 0}
   item: {fileID: 0}
   button: {fileID: 0}
+  state_image: {fileID: 0}
+  state_text: {fileID: 0}
 --- !u!114 &149499962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2636,6 +2638,8 @@ MonoBehaviour:
   sex: {fileID: 0}
   item: {fileID: 0}
   button: {fileID: 0}
+  state_image: {fileID: 0}
+  state_text: {fileID: 0}
 --- !u!114 &162621021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10806,7 +10810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &882493057
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11754,6 +11758,8 @@ MonoBehaviour:
   sex: {fileID: 0}
   item: {fileID: 0}
   button: {fileID: 0}
+  state_image: {fileID: 0}
+  state_text: {fileID: 0}
 --- !u!114 &949437633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19224,7 +19230,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1588301733
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20121,7 +20127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1664589976
 RectTransform:
   m_ObjectHideFlags: 0
@@ -22355,6 +22361,8 @@ MonoBehaviour:
   sex: {fileID: 0}
   item: {fileID: 0}
   button: {fileID: 0}
+  state_image: {fileID: 0}
+  state_text: {fileID: 0}
 --- !u!1 &1825469609
 GameObject:
   m_ObjectHideFlags: 0
@@ -23669,7 +23677,7 @@ MonoBehaviour:
   info:
     name: "\u5999\u86D9\u79CD\u5B50"
     otherName: "\u5999\u86D9\u79CD\u5B50"
-    id: 0
+    id: 1
     level: 10
     state: 0
     character: 0
@@ -24688,7 +24696,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a61a311fe097bc4287174aa132530ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infoControl: {fileID: 0}
+  infoControl: {fileID: 538590056}
   left: {fileID: 1705886064}
   right: {fileID: 1664589979}
 --- !u!1 &2067321083
@@ -24831,6 +24839,8 @@ MonoBehaviour:
   sex: {fileID: 0}
   item: {fileID: 0}
   button: {fileID: 0}
+  state_image: {fileID: 0}
+  state_text: {fileID: 0}
 --- !u!114 &2073793031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25053,6 +25063,8 @@ MonoBehaviour:
   sex: {fileID: 0}
   item: {fileID: 0}
   button: {fileID: 0}
+  state_image: {fileID: 0}
+  state_text: {fileID: 0}
 --- !u!114 &2084187051
 MonoBehaviour:
   m_ObjectHideFlags: 0

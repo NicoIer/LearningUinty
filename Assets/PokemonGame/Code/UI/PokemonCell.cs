@@ -18,7 +18,9 @@ namespace PokemonGame.UI
         [SerializeField] private Image sex;
         [SerializeField] private Image item;
         [SerializeField] private Button button;
-
+        // ToDo 把这两个字段添加到UI更新中上去
+        [SerializeField] private Image state_image;
+        [SerializeField] private Text state_text;
         private void Awake()
         {
             //ToDo 完善Null的处理
@@ -92,8 +94,8 @@ namespace PokemonGame.UI
             update_ui();
         }
 
-        public void update_ui()
-        {
+        private void update_ui()
+        {//ToDo Item和State 需要进行进一步的细化
             if (_pokemon != null)
             {
                 detail.SetActive(true);

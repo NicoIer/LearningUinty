@@ -23,21 +23,17 @@ public class PokemonSel : MonoBehaviour
         if (pokemonCell == null)
         {
             pokemonCell = new List<PokemonCell>();
-            var top = transform.Find("top");
-            for (int i = 0; i < top.childCount; i++)
-            {
-                pokemonCell.Add(top.GetChild(i).GetComponent<PokemonCell>());
-            }
         }
-        else if (pokemonCell.Count != 6)
+
+        pokemonCell.Clear();
+        var top = transform.Find("top");
+        for (var i = 0; i < top.childCount; i++)
         {
-            pokemonCell.Clear();
-            var top = transform.Find("top");
-            for (int i = 0; i < top.childCount; i++)
-            {
-                pokemonCell.Add(top.GetChild(i).GetComponent<PokemonCell>());
-            }
+            var cell = top.GetChild(i).GetComponent<PokemonCell>();
+            cell.index = (byte)i;
+            pokemonCell.Add(cell);
         }
+
 
         if (backBtn == null)
         {
@@ -49,14 +45,14 @@ public class PokemonSel : MonoBehaviour
     }
 
 
-    public void OnPokemonCellClicked(Pokemon pokemon,uint index)
+    public void OnPokemonCellClicked(Pokemon pokemon, uint index)
     {
         if (pokemon != null)
         {
             //关闭自身显示
             gameObject.SetActive(false);
             //激活Pokemon详情
-            infoControl.EnterPokemonDetail(pokemon,index);
+            infoControl.EnterPokemonDetail(pokemon, index);
         }
         else
         {
