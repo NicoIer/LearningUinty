@@ -11,13 +11,15 @@ public class PokemonSel : MonoBehaviour
 {
     [SerializeField] private InfoControl infoControl;
     [SerializeField] private List<PokemonCell> pokemonCell;
-    [SerializeField] private Button backBtn; 
+    [SerializeField] private Button backBtn;
+
     private void Awake()
     {
         if (infoControl == null)
         {
             infoControl = transform.parent.GetComponent<InfoControl>();
         }
+
         if (pokemonCell == null)
         {
             pokemonCell = new List<PokemonCell>();
@@ -42,18 +44,34 @@ public class PokemonSel : MonoBehaviour
             backBtn = transform.Find("bottom").transform.Find("buttons").transform.Find("BackBtn")
                 .GetComponent<Button>();
         }
+
         backBtn.onClick.AddListener(infoControl.BackFromPokemonSel);
     }
 
-    public static void OnPokemonCellClicked(Pokemon pokemon)
+
+    public void OnPokemonCellClicked(Pokemon pokemon,uint index)
     {
         if (pokemon != null)
-        {//ToDo 进行UI处理
-            print("选中了"+pokemon.info.id);
+        {
+            //关闭自身显示
+            gameObject.SetActive(false);
+            //激活Pokemon详情
+            infoControl.EnterPokemonDetail(pokemon,index);
         }
         else
         {
-            print("无pokemon可查看");
+            Debug.LogWarning("点击了没有存放宝可梦的Cell");
         }
+    }
+
+    public void HidePokemonSelect()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void ShowPokemonSelect()
+    {
+        //ToDo 在展示时 获取玩家当前携带宝可梦的情况 为PokemonCell持有的Pokemon赋值
+        gameObject.SetActive(true);
     }
 }

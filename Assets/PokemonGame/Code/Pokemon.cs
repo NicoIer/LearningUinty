@@ -37,6 +37,7 @@ namespace PokemonGame
         public AbilityValue individualValue; //用于在inspector实时显示宝可梦的个体值 
         [Header("测试")]
         [SerializeField] public PokemonCell pokemonCell;
+        [SerializeField] public PokemonDetailLeft pokemonDetailLeft;
 
 
         private void Awake()
@@ -146,8 +147,21 @@ namespace PokemonGame
         private void Update()
         {
             Synchronization();
+
+        }
+
+        private void Start()
+        {
             //ToDo 测试
-            pokemonCell.set_pokemon(this);
+            if (pokemonCell != null)
+            {
+                pokemonCell.set_pokemon(this);
+            }
+
+            if (pokemonDetailLeft != null)
+            {
+                pokemonDetailLeft.set_pokemon(this);
+            }
         }
     }
 }

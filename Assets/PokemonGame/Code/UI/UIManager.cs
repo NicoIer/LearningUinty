@@ -12,7 +12,7 @@ namespace PokemonGame.UI
         [SerializeField] private InfoControl infoControl;
         [SerializeField] private BaseControl baseControl;
         [SerializeField] private AttackControl attackControl;
-        public bool base_opened;
+        private bool _baseOpened;
         private void Awake()
         {
             instance = this;
@@ -34,17 +34,17 @@ namespace PokemonGame.UI
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.C) && !base_opened)
+            if (Input.GetKeyDown(KeyCode.C) && !_baseOpened)
             {
-                base_opened = true;
-                baseControl.gameObject.SetActive(base_opened);
-                baseControl.ActiveSideBar(base_opened);
+                _baseOpened = true;
+                baseControl.gameObject.SetActive(_baseOpened);
+                baseControl.ActiveSideBar(_baseOpened);
             }
-            else if (Input.GetKeyDown(KeyCode.C) && base_opened)
+            else if (Input.GetKeyDown(KeyCode.C) && _baseOpened)
             {
-                base_opened = false;
-                baseControl.gameObject.SetActive(base_opened);
-                baseControl.ActiveSideBar(base_opened);
+                _baseOpened = false;
+                baseControl.gameObject.SetActive(_baseOpened);
+                baseControl.ActiveSideBar(_baseOpened);
             }
         }
 
@@ -60,7 +60,7 @@ namespace PokemonGame.UI
 
         public void OnPokemonBtnClicked()
         {
-           infoControl.ActivePokemonSel();
+            infoControl.ActivePokemonSel();
         }
 
         public void OnManalBtnClicked()

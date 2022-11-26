@@ -7,6 +7,7 @@ namespace PokemonGame.UI
     public class PokemonCell : MonoBehaviour
     {
         private Pokemon _pokemon;
+        public byte index;
         [SerializeField] private PokemonSel pokemonSel;
         [SerializeField] private GameObject detail;
         [SerializeField] private Image icon;
@@ -75,7 +76,7 @@ namespace PokemonGame.UI
             if (button == null)
             {
                 button = GetComponent<Button>();
-                button.onClick.AddListener(() => PokemonSel.OnPokemonCellClicked(_pokemon));
+                button.onClick.AddListener(() => pokemonSel.OnPokemonCellClicked(_pokemon,index));
             }
 
             update_ui();
