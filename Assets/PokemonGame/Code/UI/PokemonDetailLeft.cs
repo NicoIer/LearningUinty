@@ -11,31 +11,31 @@ namespace PokemonGame.UI
     public class PokemonDetailLeft : MonoBehaviour
     {
         //用于显示的_pokemon
-        private Pokemon _pokemon;
-        [SerializeField] private PokemonDetail _pokemonDetail;
+        [SerializeField] private Pokemon _pokemon;
+        private PokemonDetail _pokemonDetail;
 
-        [Header("Info")] [SerializeField] private Text noText;
-        [SerializeField] private Text nameText;
-        [SerializeField] private GameObject propertyObj;
+        private Text _noText;
+        private Text _nameText;
+        private GameObject _propertyObj;
         private GameObject _firstProperty;
         private GameObject _secondProperty;
-        [SerializeField] private Transform propertiesTransform;
-        [SerializeField] private Text trainerText;
-        [SerializeField] private Text idText;
-        [SerializeField] private Text expNowText;
-        [SerializeField] private Text expNowNeedText;
+        private Transform _propertiesTransform;
+        private Text _trainerText;
+        private Text _idText;
+        private Text _expNowText;
+        private Text _expNowNeedText;
 
-        [Header("Peculiarity")] [SerializeField]
-        private Text peculiarityNameText;
 
-        [SerializeField] private Text peculiarityDescText;
-        [Header("Ability")] [SerializeField] private Text hpText;
-        [SerializeField] private Image hpMaskImage;
-        [SerializeField] private Text objectAttackText;
-        [SerializeField] private Text objectDefenseText;
-        [SerializeField] private Text specialAttackText;
-        [SerializeField] private Text specialDefenseText;
-        [SerializeField] private Text speedText;
+        private Text _peculiarityNameText;
+
+        private Text _peculiarityDescText;
+        private Text _hpText;
+        private Image _hpMaskImage;
+        private Text _objectAttackText;
+        private Text _objectDefenseText;
+        private Text _specialAttackText;
+        private Text _specialDefenseText;
+        private Text _speedText;
 
         private void Awake()
         {
@@ -48,53 +48,53 @@ namespace PokemonGame.UI
             var peculiarity = transform.Find("peculiarity");
             var ability = transform.Find("ability");
             //Info
-            if (noText is null)
+            if (_noText is null)
             {
-                noText = info.Find("No").Find("no").GetComponent<Text>();
+                _noText = info.Find("No").Find("no").GetComponent<Text>();
             }
 
-            if (nameText is null)
+            if (_nameText is null)
             {
-                nameText = info.Find("Name").Find("name").GetComponent<Text>();
+                _nameText = info.Find("Name").Find("name").GetComponent<Text>();
             }
 
-            if (propertiesTransform == null)
+            if (_propertiesTransform == null)
             {
-                propertiesTransform = info.Find("Property").Find("properties");
+                _propertiesTransform = info.Find("Property").Find("properties");
             }
 
-            if (propertyObj == null)
+            if (_propertyObj == null)
             {
-                propertyObj = propertiesTransform.Find("property").gameObject;
+                _propertyObj = _propertiesTransform.Find("property").gameObject;
             }
 
-            if (trainerText is null)
+            if (_trainerText is null)
             {
-                trainerText = info.Find("Trainer").Find("trainer").GetComponent<Text>();
+                _trainerText = info.Find("Trainer").Find("trainer").GetComponent<Text>();
             }
 
-            if (idText is null)
+            if (_idText is null)
             {
-                idText = info.Find("ID").Find("id").GetComponent<Text>();
+                _idText = info.Find("ID").Find("id").GetComponent<Text>();
             }
 
-            expNowText ??= info.Find("Empirical-now").Find("empirical").GetComponent<Text>();
+            _expNowText ??= info.Find("Empirical-now").Find("empirical").GetComponent<Text>();
 
-            expNowNeedText ??= info.Find("Empirical-need").Find("empirical").GetComponent<Text>();
+            _expNowNeedText ??= info.Find("Empirical-need").Find("empirical").GetComponent<Text>();
 
             //peculiarity
-            peculiarityNameText ??= peculiarity.Find("name-background").Find("name").GetComponent<Text>();
+            _peculiarityNameText ??= peculiarity.Find("name-background").Find("name").GetComponent<Text>();
 
-            peculiarityDescText ??= peculiarity.Find("des-background").Find("des").GetComponent<Text>();
+            _peculiarityDescText ??= peculiarity.Find("des-background").Find("des").GetComponent<Text>();
 
             //ability
-            hpText ??= ability.Find("HP").Find("info").GetComponent<Text>();
-            hpMaskImage ??= ability.Find("HP-Bar").Find("mask").GetComponent<Image>();
-            objectAttackText ??= ability.Find("ObjectAttack").Find("info").GetComponent<Text>();
-            objectDefenseText ??= ability.Find("ObjectDefense").Find("info").GetComponent<Text>();
-            specialAttackText ??= ability.Find("SpecialAttack").Find("info").GetComponent<Text>();
-            specialDefenseText ??= ability.Find("SpecialDefense").Find("info").GetComponent<Text>();
-            speedText ??= ability.Find("Speed").Find("info").GetComponent<Text>();
+            _hpText ??= ability.Find("HP").Find("info").GetComponent<Text>();
+            _hpMaskImage ??= ability.Find("HP-Bar").Find("mask").GetComponent<Image>();
+            _objectAttackText ??= ability.Find("ObjectAttack").Find("info").GetComponent<Text>();
+            _objectDefenseText ??= ability.Find("ObjectDefense").Find("info").GetComponent<Text>();
+            _specialAttackText ??= ability.Find("SpecialAttack").Find("info").GetComponent<Text>();
+            _specialDefenseText ??= ability.Find("SpecialDefense").Find("info").GetComponent<Text>();
+            _speedText ??= ability.Find("Speed").Find("info").GetComponent<Text>();
         }
 
         private void OnEnable()
@@ -102,30 +102,30 @@ namespace PokemonGame.UI
             update_ui();
         }
 
-        private void OnDisable()
-        {
-            update_ui();
-        }
-        
-        public void update_ui()
+        private void update_ui()
         {
             if (_pokemon != null)
             {
                 //图鉴ID
-                noText.text = _pokemon.info.id.ToString();
+                _noText.text = _pokemon.info.id.ToString();
                 //名称
-                nameText.text = _pokemon.info.otherName;
+                _nameText.text = _pokemon.info.otherName;
                 //属性
-                propertyObj.SetActive(false);
-                if (_pokemon.info.firstProperty != Property.None)
+                _propertyObj.SetActive(false);
+                if (_firstProperty == null)
                 {
-                    if (_firstProperty == null)
-                    {
-                        _firstProperty = Instantiate(propertyObj, propertiesTransform);
-                    }
+                    _firstProperty = Instantiate(_propertyObj, _propertiesTransform);
+                }
 
+                if (_secondProperty == null)
+                {
+                    _secondProperty = Instantiate(_propertyObj, _propertiesTransform);
+                }
+
+                if (_pokemon.FirstProperty.propertyEnum != PropertyEnum.None)
+                {
                     _firstProperty.SetActive(true);
-                    _firstProperty.GetComponent<Text>().text = _pokemon.info.firstProperty.ToString();
+                    _firstProperty.GetComponent<Text>().text = _pokemon.info.firstPropertyEnum.ToString();
                 }
                 else
                 {
@@ -133,15 +133,10 @@ namespace PokemonGame.UI
                     Debug.LogWarning("Pokemon没有第一属性!!!");
                 }
 
-                if (_pokemon.info.secondProperty != Property.None)
+                if (_pokemon.SecondProperty.propertyEnum != PropertyEnum.None)
                 {
-                    if (_secondProperty == null)
-                    {
-                        _secondProperty = Instantiate(propertyObj, propertiesTransform);
-                    }
-
                     _secondProperty.SetActive(true);
-                    _secondProperty.GetComponent<Text>().text = _pokemon.info.secondProperty.ToString();
+                    _secondProperty.GetComponent<Text>().text = _pokemon.info.secondPropertyEnum.ToString();
                 }
                 else
                 {
@@ -150,28 +145,52 @@ namespace PokemonGame.UI
                         _secondProperty.SetActive(false);
                     }
                 }
-                //训练家
-                //ID
-                //exp Now
-                //exp Need
 
-                //特性名
-                //特效效果描述
+                //训练家
+                if (_pokemon.info.trainer != null)
+                {
+                    _trainerText.text = _pokemon.info.trainer.name;
+                }
+                else
+                {
+                    Debug.LogWarning("查看的这只宝可梦没有训练家");
+                    _trainerText.text = "";
+                }
+
+                //ID
+                _idText.text = _pokemon.Uid;
+                //exp Now
+                _expNowText.text = _pokemon.info.expNow.ToString();
+                //exp Need
+                _expNowNeedText.text = _pokemon.info.expNeed.ToString();
+                //特效
+                if (_pokemon.Peculiarity != null)
+                {
+                    //特性名
+                    _peculiarityNameText.text = _pokemon.Peculiarity.name;
+                    //特效效果描述
+                    _peculiarityDescText.text = _pokemon.Peculiarity.desc;
+                }
+                else
+                {
+                    _peculiarityNameText.text = "None";
+                    _peculiarityDescText.text = "None";
+                }
 
                 //hp文字
-                hpText.text = $"{_pokemon.info.currentHealth}/{_pokemon.abilityValue.Health}";
+                _hpText.text = $"{_pokemon.info.currentHealth}/{_pokemon.abilityValue.Health}";
                 //hp-mask
-                hpMaskImage.fillAmount = (float)_pokemon.info.currentHealth / _pokemon.abilityValue.Health;
+                _hpMaskImage.fillAmount = (float)_pokemon.info.currentHealth / _pokemon.abilityValue.Health;
                 //Obj Attack
-                objectAttackText.text = _pokemon.abilityValue.ObjectAttack.ToString();
+                _objectAttackText.text = _pokemon.abilityValue.ObjectAttack.ToString();
                 //Obj Defense
-                objectDefenseText.text = _pokemon.abilityValue.ObjectDefense.ToString();
+                _objectDefenseText.text = _pokemon.abilityValue.ObjectDefense.ToString();
                 //Spe Attack
-                specialAttackText.text = _pokemon.abilityValue.SpecialAttack.ToString();
+                _specialAttackText.text = _pokemon.abilityValue.SpecialAttack.ToString();
                 //Spe Defense
-                specialDefenseText.text = _pokemon.abilityValue.SpecialDefense.ToString();
+                _specialDefenseText.text = _pokemon.abilityValue.SpecialDefense.ToString();
                 //Speed
-                speedText.text = _pokemon.abilityValue.Speed.ToString();
+                _speedText.text = _pokemon.abilityValue.Speed.ToString();
             }
             else
             {
@@ -181,7 +200,7 @@ namespace PokemonGame.UI
 
         public void set_pokemon(Pokemon pokemon)
         {
-            this._pokemon = pokemon;
+            _pokemon = pokemon;
         }
     }
 }

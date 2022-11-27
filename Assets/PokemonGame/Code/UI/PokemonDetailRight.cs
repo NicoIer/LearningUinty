@@ -8,50 +8,51 @@ namespace PokemonGame.UI
 {
     public class PokemonDetailRight : MonoBehaviour
     {
-        [SerializeField] private PokemonDetail _pokemonDetail;
+        [SerializeField] private PokemonDetail pokemonDetail;
         private Pokemon _pokemon;
-        [Header("Button")] [SerializeField] private Button backBtn;
-        [SerializeField] private Button exitBtn;
+        private Button _backBtn;
+        private Button _exitBtn;
 
         [Header("pokemon Model")] [SerializeField]
         private Camera pokemonCamera;
 
         [SerializeField] private GameObject pokemonModel;
 
-        [Header("info")] [SerializeField] private Text nameText;
-        [SerializeField] private Image sexImage;
-        [SerializeField] private Text levelText;
-        [SerializeField] private Image stateImage;
-        [SerializeField] private Text stateText;
+        private Text _nameText;
+        private Image _sexImage;
+        private Text _levelText;
+        private Image _stateImage;
+        private Text _stateText;
         [Header("Order")] [SerializeField] private Sprite noSel;
         [SerializeField] private Sprite sel;
-        [SerializeField] private List<Image> ballImages;
+        private List<Image> _ballImages;
         public uint curPokemon = 0;
         private uint _lastPokemon = 0;
-
-        [Header("Item")] [SerializeField] private Text itemText;
-        [SerializeField] private Image itemImage;
+        [SerializeField] private Transform itemTransform;
+        private Text _itemText;
+        private Image _itemImage;
 
         [SerializeField] private List<SkillCell> skillCells;
 
         private void Awake()
         {
-            if (_pokemonDetail == null)
+            if (pokemonDetail == null)
             {
-                _pokemonDetail = transform.parent.parent.GetComponent<PokemonDetail>();
-            }
-            
-            if (backBtn == null)
-            {
-                backBtn = transform.Find("buttons").Find("back").GetComponent<Button>();
+                pokemonDetail = transform.parent.parent.GetComponent<PokemonDetail>();
             }
 
-            backBtn.onClick.AddListener(_pokemonDetail.OnBackButtonClicked);
-            if (exitBtn == null)
+            if (_backBtn == null)
             {
-                exitBtn = transform.Find("buttons").Find("exit").GetComponent<Button>();
+                _backBtn = transform.Find("buttons").Find("back").GetComponent<Button>();
             }
-            exitBtn.onClick.AddListener(_pokemonDetail.OnExitBtnClicked);
+
+            _backBtn.onClick.AddListener(pokemonDetail.OnBackButtonClicked);
+            if (_exitBtn == null)
+            {
+                _exitBtn = transform.Find("buttons").Find("exit").GetComponent<Button>();
+            }
+
+            _exitBtn.onClick.AddListener(pokemonDetail.OnExitBtnClicked);
 
             var detail = transform.Find("Detail");
             if (pokemonCamera == null)
@@ -65,29 +66,29 @@ namespace PokemonGame.UI
             }
 
             var info = detail.Find("Info");
-            if (nameText == null)
+            if (_nameText == null)
             {
-                nameText = info.Find("name").GetComponent<Text>();
+                _nameText = info.Find("name").GetComponent<Text>();
             }
 
-            if (sexImage == null)
+            if (_sexImage == null)
             {
-                sexImage = info.Find("sex").GetComponent<Image>();
+                _sexImage = info.Find("sex").GetComponent<Image>();
             }
 
-            if (levelText == null)
+            if (_levelText == null)
             {
-                levelText = info.Find("Level").Find("level").GetComponent<Text>();
+                _levelText = info.Find("Level").Find("level").GetComponent<Text>();
             }
 
-            if (stateText == null)
+            if (_stateText == null)
             {
-                stateText = info.Find("state").Find("text").GetComponent<Text>();
+                _stateText = info.Find("state").Find("text").GetComponent<Text>();
             }
 
-            if (stateImage == null)
+            if (_stateImage == null)
             {
-                stateImage = info.Find("state").GetComponent<Image>();
+                _stateImage = info.Find("state").GetComponent<Image>();
             }
 
             if (noSel == null || sel == null)
@@ -98,32 +99,32 @@ namespace PokemonGame.UI
             //6个球
             var order = detail.Find("Order");
             curPokemon = 0;
-            if (ballImages == null)
+            if (_ballImages == null)
             {
-                ballImages = new List<Image>();
+                _ballImages = new List<Image>();
             }
             else
             {
-                ballImages.Clear();
+                _ballImages.Clear();
             }
 
             for (var i = 0; i < order.childCount; i++)
             {
                 var image = order.GetChild(i).GetComponent<Image>();
                 image.sprite = noSel;
-                ballImages.Add(image);
+                _ballImages.Add(image);
             }
 
-            ballImages[(int)curPokemon].sprite = sel;
-
-            if (itemText == null)
+            _ballImages[(int)curPokemon].sprite = sel;
+            itemTransform = detail.Find("Item");
+            if (_itemText == null)
             {
-                itemText = detail.Find("Item").Find("text").GetComponent<Text>();
+                _itemText = itemTransform.Find("text").GetComponent<Text>();
             }
 
-            if (itemImage == null)
+            if (_itemImage == null)
             {
-                itemImage = detail.Find("Item").Find("icon").GetComponent<Image>();
+                _itemImage = itemTransform.Find("icon").GetComponent<Image>();
             }
 
             var skills = detail.Find("Skills");
@@ -153,64 +154,65 @@ namespace PokemonGame.UI
             update_ui();
         }
 
-        private void OnDisable()
-        {
-        }
-        
+
         private void update_ui()
         {
             if (_pokemon != null)
             {
                 //name
-                nameText.text = _pokemon.info.otherName;
+                _nameText.text = _pokemon.info.otherName;
                 //sex
                 switch (_pokemon.info.sex)
                 {
                     case Sex.None:
-                        sexImage.color = new Color(1, 1, 1, 0);
+                        _sexImage.color = new Color(1, 1, 1, 0);
                         break;
                     case Sex.Man:
-                        sexImage.color = Color.blue;
+                        _sexImage.color = Color.blue;
                         break;
                     case Sex.Woman:
-                        sexImage.color = Color.red;
+                        _sexImage.color = Color.red;
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+
                 //level
-                levelText.text = _pokemon.info.level.ToString();
+                _levelText.text = _pokemon.info.level.ToString();
                 //state ToDo 完善这里的其他判断条件
-                switch (_pokemon.info.state)
+                switch (_pokemon.info.stateEnum)
                 {
-                    case State.None:
-                        stateImage.color = new Color(0, 0, 0, 0);
-                        stateText.text = "";
+                    case StateEnum.None:
+                        _stateImage.color = new Color(0, 0, 0, 0);
+                        _stateText.text = "";
                         break;
-                    case State.Poisoning:
-                        stateImage.color = Color.magenta;
-                        stateText.text = State.Poisoning.ToString();
+                    case StateEnum.Poisoning:
+                        _stateImage.color = Color.magenta;
+                        _stateText.text = StateEnum.Poisoning.ToString();
                         break;
-                    case State.Sleeping:
-                        stateImage.color = Color.white;
-                        stateText.text = State.Sleeping.ToString();
+                    case StateEnum.Sleeping:
+                        _stateImage.color = Color.white;
+                        _stateText.text = StateEnum.Sleeping.ToString();
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+
                 //精灵球的选择
-                ballImages[(int)_lastPokemon].sprite = noSel;
-                ballImages[(int)curPokemon].sprite = sel;
+                _ballImages[(int)_lastPokemon].sprite = noSel;
+                _ballImages[(int)curPokemon].sprite = sel;
                 //Item ToDo 完善这里
-                if (_pokemon.info.item != ItemEnum.None)
+                if (_pokemon.Item == null || _pokemon.Item.item_enum==ItemEnum.None)
                 {
-                    itemImage.color = new Color(0, 0, 0, 0);
-                    itemText.text = "";
+                    itemTransform.gameObject.SetActive(false);
+                    _itemImage.color = new Color(0, 0, 0, 0);
+                    _itemText.text = "";
                 }
                 else
                 {
-                    itemImage.color = Color.black;
-                    itemText.text =_pokemon.info.item.ToString();
+                    itemTransform.gameObject.SetActive(true);
+                    _itemImage.color = Color.black;
+                    _itemText.text = _pokemon.Item.name;
                 }
                 //Skills ToDo 
             }
@@ -220,7 +222,7 @@ namespace PokemonGame.UI
             }
         }
 
-        public void set_pokemon(Pokemon pokemon, uint index=0)
+        public void set_pokemon(Pokemon pokemon, uint index = 0)
         {
             _pokemon = pokemon;
             _lastPokemon = curPokemon;

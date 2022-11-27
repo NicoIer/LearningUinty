@@ -1,42 +1,39 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
+using PokemonGame.Structs;
 using PokemonGame.UI;
 using UnityEngine;
 
 namespace PokemonGame
 {
-    [Serializable]
-    public struct PokemonInfo
-    {
-        public string name;
-        public string otherName;
-        public uint id;
-        public uint level;
-        public State state;
-        public CharacterEnum character;
-        public Property firstProperty;
-        public Property secondProperty;
-        public Sex sex;
-        public uint currentHealth;
-        public ItemEnum item;
-    }
-
     public class Pokemon : MonoBehaviour
     {
         private PokemonBase _pokemonBase;
-        public PokemonInfo info;
-        [Header("图像")]
-        public Sprite icon;
-        public Sprite frontImage;//希望以后可以改成3D模型
-        private SpriteRenderer _spriteRenderer;
-        [Header("初始化属性")]
+        public Property FirstProperty => _pokemonBase.firstProperty;
+
+        public Property SecondProperty => _pokemonBase.secondProperty;
+        public Peculiarity Peculiarity => _pokemonBase.peculiarity;
+        public Item Item => _pokemonBase.item;
+        public string Uid => _pokemonBase.uid;
+        public Trainer Trainer => _pokemonBase.trainer;
+        public State State => _pokemonBase.state;
+        public Character Character => _pokemonBase.character;
+
+        public Skill Skill1 => _pokemonBase.skill1;
+        public Skill Skill2 => _pokemonBase.skill2;
+        public Skill Skill3 => _pokemonBase.skill3;
+        public Skill Skill4 => _pokemonBase.skill4;
+
+
+        [Header("初始化属性")] public PokemonInfo info;
         public AbilityValue abilityValue; //用于在inspector实时显示宝可梦的能力值 
         public AbilityValue raceValue; //用于在inspector实时显示宝可梦的种族值 
         public AbilityValue effortValue; //用于在inspector实时显示宝可梦的努力值 
         public AbilityValue individualValue; //用于在inspector实时显示宝可梦的个体值 
-        [Header("测试")]
-        [SerializeField] public PokemonCell pokemonCell;
+        [Header("图像")] public Sprite icon;
+        public Sprite frontImage; //希望以后可以改成3D模型
+        private SpriteRenderer _spriteRenderer;
+        public GameObject pokemonModel;
+        [Header("DEBUG")] [SerializeField] public PokemonCell pokemonCell;
         [SerializeField] public PokemonDetailLeft pokemonDetailLeft;
 
 
@@ -48,11 +45,17 @@ namespace PokemonGame
             }
 
             _spriteRenderer.sprite = frontImage;
+            if (pokemonModel == null)
+            {
+                Debug.LogWarning("当前宝可梦没有指定预制体模型");
+            }
+
             InitializePokemon();
         }
 
         private void InitializePokemon()
         {
+            
             //用inspector上的信息初始化PokemonBase
             var race = new Dictionary<Ability, uint>
             {
@@ -86,16 +89,25 @@ namespace PokemonGame
                 otherName: info.otherName,
                 id: info.id,
                 characterEnum: info.character,
-                firstProperty: info.firstProperty,
-                secondProperty: info.secondProperty,
+                firstPropertyEnum: info.firstPropertyEnum,
+                secondPropertyEnum: info.secondPropertyEnum,
                 abilityValue: null,
                 raceValue: race,
                 individualValue: individual,
                 effortValue: effort,
                 level: info.level,
                 sex: info.sex,
-                item:info.item,
-                currentHealth:info.currentHealth
+                item: info.item,
+                currentHealth: info.currentHealth,
+                expNow: info.expNow,
+                expNeed: info.expNeed,
+                skillEnum1: info.skill1,
+                skillEnum2: info.skill2,
+                skillEnum3: info.skill3,
+                skillEnum4: info.skill4,
+                peculiarityEnum: info.peculiarityEnum,
+                trainer: info.trainer,
+                stateEnum: info.stateEnum
             );
             Synchronization(); //同步面板显示和实际存储信息
         }
@@ -133,21 +145,30 @@ namespace PokemonGame
             individualValue.Speed = _pokemonBase.individual[Ability.Speed];
 
             //Info 更新
+            info.id = _pokemonBase.id;
             info.name = _pokemonBase.name;
             info.otherName = _pokemonBase.otherName;
             info.level = _pokemonBase.level;
-            info.firstProperty = _pokemonBase.firstProperty;
-            info.secondProperty = _pokemonBase.secondProperty;
-            info.state = _pokemonBase.state;
+            info.firstPropertyEnum = FirstProperty.propertyEnum;
+            info.secondPropertyEnum = SecondProperty.propertyEnum;
+            info.stateEnum = State.stateEnum;
             info.sex = _pokemonBase.sex;
             info.currentHealth = _pokemonBase.current_health;
             info.item = _pokemonBase.item.item_enum;
+            info.expNeed = _pokemonBase.exp_need;
+            info.expNow = _pokemonBase.exp_now;
+            //技能部分
+            info.skill1 = _pokemonBase.skill1?.skillEnum ?? SkillEnum.None;
+            info.skill2 = _pokemonBase.skill2?.skillEnum ?? SkillEnum.None;
+            info.skill3 = _pokemonBase.skill3?.skillEnum ?? SkillEnum.None;
+            info.skill4 = _pokemonBase.skill4?.skillEnum ?? SkillEnum.None;
+            //特效部分
+            info.peculiarityEnum = _pokemonBase.peculiarity?.peculiarityEnum ?? PeculiarityEnum.None;
         }
 
         private void Update()
         {
             Synchronization();
-
         }
 
         private void Start()

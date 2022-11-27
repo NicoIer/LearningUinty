@@ -2,39 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PokemonGame.Structs;
 using UnityEngine;
 
 namespace PokemonGame
 {
-    public enum ItemEnum
+    public enum Sex
     {
         None,
-        奇迹种子,
+        Man,
+        Woman,
     }
 
-    /// <summary>
-    /// 道具
-    /// </summary>
-    public class Item
+    public enum PokemonEnum
     {
-        #region STATIC
-
-        public static Item find_item(ItemEnum itemEnum)
-        {
-            return new Item(itemEnum.ToString(), itemEnum);
-        }
-
-        #endregion
-
-        Item(string name, ItemEnum itemEnum)
-        {
-            this.name = name;
-            this.item_enum = itemEnum;
-        }
-
-        //ToDo 添加道具的其他效果
-        public string name;
-        public ItemEnum item_enum;
+        妙蛙种子,
+        妙蛙花,
+        小火龙,
     }
 
     /// <summary>
@@ -44,10 +28,34 @@ namespace PokemonGame
     {
         #region STATIC
 
+        #region Search
+
+        public static Pokemon find_pokemon(uint pokemonID)
+        {
+            //ToDo 完成这里的工作
+            return null;
+        }
+
+        public static Pokemon find_pokemon(string pokemonName)
+        {
+            //ToDo 完成这里的工作
+            return null;
+        }
+
+        public static PokemonBase find_pokemon(PokemonEnum pokemonEnum)
+        {
+            //ToDo 完成这里的工作
+            return null;
+        }
+
+        #endregion
+
+        #region Create
+
         public static PokemonBase create_pokemon(
             string name, string otherName = null, uint id = 0,
             CharacterEnum characterEnum = CharacterEnum.Hardy,
-            Property firstProperty = Property.None, Property secondProperty = Property.None,
+            PropertyEnum firstPropertyEnum = PropertyEnum.None, PropertyEnum secondPropertyEnum = PropertyEnum.None,
             Dictionary<Ability, uint> abilityValue = null,
             Dictionary<Ability, uint> individualValue = null,
             Dictionary<Ability, uint> effortValue = null,
@@ -55,7 +63,16 @@ namespace PokemonGame
             uint level = 1,
             Sex sex = Sex.None,
             ItemEnum item = ItemEnum.None,
-            uint? currentHealth = null
+            uint? currentHealth = null,
+            uint expNow = 0,
+            uint expNeed = 0,
+            SkillEnum skillEnum1 = SkillEnum.None,
+            SkillEnum skillEnum2 = SkillEnum.None,
+            SkillEnum skillEnum3 = SkillEnum.None,
+            SkillEnum skillEnum4 = SkillEnum.None,
+            PeculiarityEnum peculiarityEnum = PeculiarityEnum.None,
+            Trainer trainer = null,
+            StateEnum stateEnum = StateEnum.None
         )
         {
             abilityValue ??= new Dictionary<Ability, uint>();
@@ -96,8 +113,8 @@ namespace PokemonGame
                 otherName,
                 id,
                 characterEnum,
-                firstProperty,
-                secondProperty,
+                firstPropertyEnum,
+                secondPropertyEnum,
                 abilityValue,
                 effortValue,
                 raceValue,
@@ -105,19 +122,37 @@ namespace PokemonGame
                 level,
                 sex,
                 item,
-                currentHealth);
+                currentHealth,
+                expNow,
+                expNeed,
+                skillEnum1,
+                skillEnum2,
+                skillEnum3,
+                skillEnum4,
+                peculiarityEnum,
+                trainer,
+                stateEnum
+            );
         }
 
         #endregion
 
-        public string name;
-        public string otherName;
-        public uint id;
-        public Character character;
-        public Property firstProperty;
-        public Property secondProperty;
+        #region Attribute
+
+        #endregion
+        #endregion
+
+        #region Attribute
+
+        public string uid;
+        public readonly string name;
+        public readonly string otherName;
+        public readonly uint id;
+        public readonly Character character;
+        public readonly Property firstProperty;
+        public readonly Property secondProperty;
         public State state;
-        public uint current_health;
+        public readonly uint current_health;
         public Dictionary<Ability, uint> ability;
         public Dictionary<Ability, uint> effort;
         public Dictionary<Ability, uint> race;
@@ -125,28 +160,57 @@ namespace PokemonGame
         public uint level;
         public Sex sex;
         public Item item;
+        public uint exp_now;
+        public uint exp_need;
 
-        private PokemonBase(string name, string otherName, uint id, CharacterEnum character,
-            Property firstProperty, Property secondProperty,
-            Dictionary<Ability, uint> ability, Dictionary<Ability, uint> effort,
-            Dictionary<Ability, uint> race, Dictionary<Ability, uint> individual,
-            uint level = 1, Sex sex = Sex.None, ItemEnum item = ItemEnum.None,
-            uint? currentHealth = null
+        public Skill skill1;
+        public Skill skill2;
+        public Skill skill3;
+        public Skill skill4;
+        public Peculiarity peculiarity;
+        public bool isEgg = false;
+        public Trainer trainer;
+
+        #endregion
+
+        private PokemonBase(string name,
+            string otherName,
+            uint id,
+            CharacterEnum character,
+            PropertyEnum firstPropertyEnum,
+            PropertyEnum secondPropertyEnum,
+            Dictionary<Ability, uint> ability,
+            Dictionary<Ability, uint> effort,
+            Dictionary<Ability, uint> race,
+            Dictionary<Ability, uint> individual,
+            uint level = 1,
+            Sex sex = Sex.None,
+            ItemEnum item = ItemEnum.None,
+            uint? currentHealth = null,
+            uint expNow = 0,
+            uint expNeed = 0,
+            SkillEnum skillEnum1 = SkillEnum.None,
+            SkillEnum skillEnum2 = SkillEnum.None,
+            SkillEnum skillEnum3 = SkillEnum.None,
+            SkillEnum skillEnum4 = SkillEnum.None,
+            PeculiarityEnum peculiarityEnum = PeculiarityEnum.None,
+            Trainer trainer = null,
+            StateEnum stateEnum = StateEnum.None
         )
         {
             this.name = name;
             this.otherName = otherName;
             this.id = id;
-            this.character = Character.get_character(character);
-            this.state = State.None;
+            this.character = Character.find_character(character);
+            state = State.find_state(stateEnum);
             this.item = Item.find_item(item);
             this.sex = sex;
             this.ability = ability;
             this.effort = effort;
             this.race = race;
             this.individual = individual;
-            this.firstProperty = firstProperty;
-            this.secondProperty = secondProperty;
+            firstProperty = Property.find_property(firstPropertyEnum);
+            secondProperty = Property.find_property(secondPropertyEnum);
             //确保所有的能力都有其value
             foreach (Ability a in Enum.GetValues(typeof(Ability)))
             {
@@ -181,6 +245,32 @@ namespace PokemonGame
             {
                 current_health = (uint)currentHealth;
             }
+
+            //经验
+            exp_now = expNow;
+            exp_need = expNeed;
+
+            //初始技能
+            if (skillEnum1 == SkillEnum.None)
+            {
+                Debug.LogWarning("这只宝可梦什么技能也不会!!");
+            }
+
+            skill1 = Skill.find_skill(skillEnum1);
+            skill2 = Skill.find_skill(skillEnum2);
+            skill3 = Skill.find_skill(skillEnum3);
+            skill4 = Skill.find_skill(skillEnum4);
+            //特效
+            if (peculiarityEnum == PeculiarityEnum.None)
+            {
+                Debug.LogWarning("这只Pokemon没有特效");
+            }
+
+            peculiarity = Peculiarity.FindPeculiarity(peculiarityEnum);
+
+            //
+            this.trainer = trainer;
+            uid = Guid.NewGuid().ToString("N");
         }
 
         public void update_ability()

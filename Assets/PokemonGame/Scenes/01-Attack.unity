@@ -3260,15 +3260,20 @@ MonoBehaviour:
     otherName: "\u5999\u86D9\u82B1"
     id: 2
     level: 10
-    state: 0
+    stateEnum: 0
     character: 0
-    firstProperty: 12
-    secondProperty: 4
+    firstPropertyEnum: 12
+    secondPropertyEnum: 4
     sex: 2
     currentHealth: 10
-    item: 0
-  icon: {fileID: 21300000, guid: be6ee9b67d62a6a4db70e2290f4a3b13, type: 3}
-  frontImage: {fileID: 21300000, guid: be6ee9b67d62a6a4db70e2290f4a3b13, type: 3}
+    item: 1
+    expNow: 10
+    expNeed: 1000
+    skill1: 0
+    skill2: 0
+    skill3: 0
+    skill4: 0
+    peculiarityEnum: 1
   abilityValue:
     Health: 10
     ObjectAttack: 5
@@ -3297,6 +3302,9 @@ MonoBehaviour:
     ObjectDefense: 31
     SpecialDefense: 31
     Speed: 31
+  icon: {fileID: 21300000, guid: be6ee9b67d62a6a4db70e2290f4a3b13, type: 3}
+  frontImage: {fileID: 21300000, guid: be6ee9b67d62a6a4db70e2290f4a3b13, type: 3}
+  pokemonModel: {fileID: 0}
   pokemonCell: {fileID: 1822846280}
   pokemonDetailLeft: {fileID: 0}
 --- !u!212 &217427395
@@ -19230,7 +19238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1588301733
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20127,7 +20135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1664589976
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20200,22 +20208,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c428a02b8163484da6f60b9891f1261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pokemonDetail: {fileID: 0}
-  backBtn: {fileID: 0}
-  exitBtn: {fileID: 0}
+  pokemonDetail: {fileID: 0}
   pokemonCamera: {fileID: 0}
   pokemonModel: {fileID: 0}
-  nameText: {fileID: 0}
-  sexImage: {fileID: 0}
-  levelText: {fileID: 0}
-  stateImage: {fileID: 0}
-  stateText: {fileID: 0}
   noSel: {fileID: 21300000, guid: d2d44c70b429cc345a08896fe016969a, type: 3}
   sel: {fileID: 21300000, guid: f8ce49abfc183d54fa287feed7d36794, type: 3}
-  ballImages: []
   curPokemon: 1
-  itemText: {fileID: 0}
-  itemImage: {fileID: 0}
+  itemTransform: {fileID: 0}
   skillCells: []
 --- !u!1 &1671450869
 GameObject:
@@ -20734,24 +20733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9f2bf6eebe5c54e89b5757082e83c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pokemonDetail: {fileID: 0}
-  noText: {fileID: 0}
-  nameText: {fileID: 0}
-  propertyObj: {fileID: 0}
-  propertiesTransform: {fileID: 0}
-  trainerText: {fileID: 0}
-  idText: {fileID: 0}
-  expNowText: {fileID: 0}
-  expNowNeedText: {fileID: 0}
-  peculiarityNameText: {fileID: 0}
-  peculiarityDescText: {fileID: 0}
-  hpText: {fileID: 0}
-  hpMaskImage: {fileID: 0}
-  objectAttackText: {fileID: 0}
-  objectDefenseText: {fileID: 0}
-  specialAttackText: {fileID: 0}
-  specialDefenseText: {fileID: 0}
-  speedText: {fileID: 0}
+  _pokemon: {fileID: 0}
 --- !u!1 &1707461629
 GameObject:
   m_ObjectHideFlags: 0
@@ -23679,15 +23661,20 @@ MonoBehaviour:
     otherName: "\u5999\u86D9\u79CD\u5B50"
     id: 1
     level: 10
-    state: 0
+    stateEnum: 1
     character: 0
-    firstProperty: 12
-    secondProperty: 0
+    firstPropertyEnum: 12
+    secondPropertyEnum: 0
     sex: 1
     currentHealth: 10
     item: 0
-  icon: {fileID: 21300000, guid: 7995d728ce33ae94b94958ac362b15d2, type: 3}
-  frontImage: {fileID: 21300000, guid: 7995d728ce33ae94b94958ac362b15d2, type: 3}
+    expNow: 0
+    expNeed: 0
+    skill1: 0
+    skill2: 0
+    skill3: 0
+    skill4: 0
+    peculiarityEnum: 1
   abilityValue:
     Health: 10
     ObjectAttack: 5
@@ -23716,6 +23703,9 @@ MonoBehaviour:
     ObjectDefense: 31
     SpecialDefense: 31
     Speed: 31
+  icon: {fileID: 21300000, guid: 7995d728ce33ae94b94958ac362b15d2, type: 3}
+  frontImage: {fileID: 21300000, guid: 7995d728ce33ae94b94958ac362b15d2, type: 3}
+  pokemonModel: {fileID: 0}
   pokemonCell: {fileID: 149499961}
   pokemonDetailLeft: {fileID: 1705886064}
 --- !u!212 &1985163749
@@ -24623,7 +24613,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2051021392
 RectTransform:
   m_ObjectHideFlags: 0
