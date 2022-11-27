@@ -72,7 +72,7 @@
 
 >异常状态<font color=red face="仿宋">    **完成了异常状态的基本定义**</font>
 >
->属性克制
+>属性克制<font color=blue face="仿宋">    **完成**</font>
 >
 >技能<font color=red face="仿宋">    **完成了技能的定义**</font>
 
@@ -88,11 +88,25 @@
 >
 >初步搭建图鉴UI
 >
->完成Pokemon模型在UI中的显示,以及按下鼠标后实时旋转查看模型
+>完成Pokemon模型在UI中的显示,以及按下鼠标后实时旋转查看模型<font color=red face="仿宋">    **基本完成，需要事件分发上的优化**</font>
 >
->**有一个很重要的问题:对象存储,想要通过Enum/string查询,从而实例化一个预先制作好的宝可梦,节约时间**
+>**有一个很重要的问题:对象存储,想要通过Enum/string查询,从而实例化一个预先制作好的宝可梦,节约时间**<font color=red face="仿宋">    **使用JSON序列化完成**</font>
 
 
 
 
+
+#### 11.28
+
+>UI的事件分发
+>
+>完成特性的Inspector实例化,存储
+>
+>完成异常状态的Inspector实例化,存储
+>
+>完成Pokemon的Inspector实例化,存储
+>
+>Pokemon的技能表的定义/存储
+>
+>
 
