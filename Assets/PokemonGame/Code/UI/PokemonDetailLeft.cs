@@ -49,15 +49,9 @@ namespace PokemonGame.Code.UI
             var peculiarity = transform.Find("peculiarity");
             var ability = transform.Find("ability");
             //Info
-            if (_noText is null)
-            {
-                _noText = info.Find("No").Find("no").GetComponent<Text>();
-            }
+            _noText ??= info.Find("No").Find("no").GetComponent<Text>();
 
-            if (_nameText is null)
-            {
-                _nameText = info.Find("Name").Find("name").GetComponent<Text>();
-            }
+            _nameText ??= info.Find("Name").Find("name").GetComponent<Text>();
 
             if (_propertiesTransform == null)
             {
@@ -123,7 +117,7 @@ namespace PokemonGame.Code.UI
                     _secondProperty = Instantiate(_propertyObj, _propertiesTransform);
                 }
 
-                if (_pokemon.FirstProperty.propertyEnum != PropertyEnum.None)
+                if (_pokemon.FirstProperty.propertyEnum != PropertyEnum.无属性)
                 {
                     _firstProperty.SetActive(true);
                     _firstProperty.GetComponent<Text>().text = _pokemon.info.firstPropertyEnum.ToString();
@@ -134,7 +128,7 @@ namespace PokemonGame.Code.UI
                     Debug.LogWarning("Pokemon没有第一属性!!!");
                 }
 
-                if (_pokemon.SecondProperty.propertyEnum != PropertyEnum.None)
+                if (_pokemon.SecondProperty.propertyEnum != PropertyEnum.无属性)
                 {
                     _secondProperty.SetActive(true);
                     _secondProperty.GetComponent<Text>().text = _pokemon.info.secondPropertyEnum.ToString();

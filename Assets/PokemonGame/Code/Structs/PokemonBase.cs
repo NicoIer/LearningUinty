@@ -55,7 +55,7 @@ namespace PokemonGame.Code.Structs
         public static PokemonBase create_pokemon(
             string name, string otherName = null, uint id = 0,
             CharacterEnum characterEnum = CharacterEnum.Hardy,
-            PropertyEnum firstPropertyEnum = PropertyEnum.None, PropertyEnum secondPropertyEnum = PropertyEnum.None,
+            PropertyEnum firstPropertyEnum = PropertyEnum.无属性, PropertyEnum secondPropertyEnum = PropertyEnum.无属性,
             Dictionary<Ability, uint> abilityValue = null,
             Dictionary<Ability, uint> individualValue = null,
             Dictionary<Ability, uint> effortValue = null,

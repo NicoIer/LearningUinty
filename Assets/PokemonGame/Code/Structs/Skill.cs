@@ -29,7 +29,7 @@ namespace PokemonGame.Code.Structs
                     return new Skill(
                         skillEnum,
                         "电光一闪",
-                        PropertyEnum.Genreal,
+                        PropertyEnum.一般,
                         30,
                         "以迅雷不及掩耳之势扑击对手,必定能够先制攻击",
                         SkillTypeEnum.物理,

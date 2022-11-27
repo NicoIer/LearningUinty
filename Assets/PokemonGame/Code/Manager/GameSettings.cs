@@ -46,7 +46,29 @@ namespace PokemonGame.Code.Manager
             CheckFileExits(path, key);
 
             var json = JsonConvert.SerializeObject(characters);
-            json = TextEncoding.GetUtf8RemovedBomString(Encoding.UTF8.GetBytes(json));
+            File.WriteAllText(path, json, Encoding.UTF8);
+            return true;
+        }
+
+        public static Dictionary<PropertyEnum, Property> load_properties(string key)
+        {
+            var path = Path.Combine(get_dir(), key);
+            if (!CheckFileExits(path, key))
+            {
+                return null;
+            }
+
+            var json = File.ReadAllText(path);
+            return JsonConvert
+                .DeserializeObject<Dictionary<PropertyEnum, Property>>(json);
+        }
+
+        public static bool save_properties(Dictionary<PropertyEnum, Property> map,
+            string key)
+        {
+            var path = Path.Combine(get_dir(), key);
+            CheckFileExits(path, key);
+            var json = JsonConvert.SerializeObject(map);
             File.WriteAllText(path, json, Encoding.UTF8);
             return true;
         }
