@@ -1,9 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using PokemonGame.Code.Structs;
 using UnityEngine;
 
-namespace PokemonGame.UI
+namespace PokemonGame.Code.UI
 {
     public class InfoControl : MonoBehaviour
     {

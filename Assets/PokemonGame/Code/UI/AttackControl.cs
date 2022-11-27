@@ -1,18 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackControl : MonoBehaviour
+namespace PokemonGame.Code.UI
 {
-    // Start is called before the first frame update
-    void Start()
+    public class AttackControl : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

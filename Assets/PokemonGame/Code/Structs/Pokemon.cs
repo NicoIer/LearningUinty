@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using PokemonGame.Structs;
-using PokemonGame.UI;
+using PokemonGame.Code.UI;
 using UnityEngine;
 
-namespace PokemonGame
+namespace PokemonGame.Code.Structs
 {
     public class Pokemon : MonoBehaviour
     {
@@ -55,7 +54,6 @@ namespace PokemonGame
 
         private void InitializePokemon()
         {
-            
             //用inspector上的信息初始化PokemonBase
             var race = new Dictionary<Ability, uint>
             {

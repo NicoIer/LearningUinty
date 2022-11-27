@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PokemonGame.Manager
+namespace PokemonGame.Code.Manager
 {
     public class BattleSceneManager : MonoBehaviour
     {

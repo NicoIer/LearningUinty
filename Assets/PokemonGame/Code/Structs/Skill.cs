@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PokemonGame
+namespace PokemonGame.Code.Structs
 {
     public enum SkillEnum
     {

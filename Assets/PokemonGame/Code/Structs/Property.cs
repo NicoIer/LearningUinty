@@ -1,44 +1,61 @@
 ﻿using System;
-namespace PokemonGame
+using System.Collections.Generic;
+
+namespace PokemonGame.Code.Structs
 {
-    /// <summary>
-    /// PokemonProperty - 宝可梦的属性
-    /// 
-    /// </summary>
-    [Serializable]
-    public enum PropertyEnum
-    {
-        None, //未定
-        Genreal, //一般
-        Combat, //格斗
-        Flight, //飞行
-        Poison, //毒
-        Ground, //地面
-        Rock, //岩石
-        Worm, //虫
-        Ghost, //幽灵
-        Stell, //钢
-        Fire, //火
-        Water, //水
-        Grass, //草
-        Electricity, //电
-        Superpowers, //超能
-        Ice, //冰
-        Dragon, //龙
-        Evil, //恶
-        Goblin, //妖精
-    }
+
+
+
 
     public class Property
     {
         public static Property find_property(PropertyEnum propertyEnum)
         {
-            return new Property(propertyEnum.ToString(),propertyEnum);
+            return new Property(propertyEnum.ToString(), propertyEnum);
         }
+
+        private static Dictionary<PropertyEnum, HashSet<PropertyEnum>> _restrinMap; //属性克制表
+        private static Dictionary<PropertyEnum, HashSet<PropertyEnum>> _noUseMap; //属性无效表
+
+        static Property()
+        {
+            //尝试寻找存储的属性克制文件 如果找不到 或者 出错 则 重新生成
+            _restrinMap = new Dictionary<PropertyEnum, HashSet<PropertyEnum>>();
+            _noUseMap = new Dictionary<PropertyEnum, HashSet<PropertyEnum>>();
+        }
+
+        public static PropertyEffect compare(PropertyEnum attackProperty, PropertyEnum defenseProperty)
+        {
+            //找到效果拔群的表
+            var superSet = _restrinMap[attackProperty];
+
+            if (superSet.Contains(defenseProperty))
+            {
+                return PropertyEffect.效果拔群;
+            }
+
+            //找到效果不好的表
+            var lowerSet = _restrinMap[defenseProperty];
+
+            if (lowerSet.Contains(defenseProperty))
+            {
+                return PropertyEffect.效果不好;
+            }
+
+            //找到攻击属性无效的表
+            var nouseSet = _noUseMap[attackProperty];
+            if (nouseSet.Contains(defenseProperty))
+            {
+                return PropertyEffect.无效;
+            }
+
+            return PropertyEffect.一般般;
+        }
+
         public string name;
         public PropertyEnum propertyEnum;
 
-        Property(string name,PropertyEnum propertyEnum)
+        Property(string name, PropertyEnum propertyEnum)
         {
             this.name = name;
             this.propertyEnum = propertyEnum;

@@ -1,8 +1,9 @@
 using System;
+using PokemonGame.Code.Structs;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.UI
+namespace PokemonGame.Code.UI
 {
     public class PokemonCell : MonoBehaviour
     {

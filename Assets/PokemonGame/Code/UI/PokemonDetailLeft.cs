@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using PokemonGame;
+using PokemonGame.Code.Structs;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.UI
+namespace PokemonGame.Code.UI
 {
     public class PokemonDetailLeft : MonoBehaviour
     {

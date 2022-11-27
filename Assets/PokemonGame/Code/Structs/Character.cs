@@ -1,8 +1,10 @@
 ﻿using System;
-using PokemonGame.Structs;
-
-namespace PokemonGame
-{    public enum CharacterEnum
+using System.Collections.Generic;
+using UnityEngine;
+using PokemonGame.Code.Manager;
+namespace PokemonGame.Code.Structs
+{
+    public enum CharacterEnum
     {
         Hardy,
         Lonely,
@@ -30,8 +32,42 @@ namespace PokemonGame
         Naive,
         Serious
     }
+
     public class Character
     {
+        private static readonly Dictionary<CharacterEnum, Character> _characters_map;
+
+        static Character()
+        {
+            _characters_map = GameSettings.load_characters("character.json");
+            if (_characters_map == null)
+            {
+                Debug.LogWarning("性格对照表没有找到,将初始化一张");
+                _characters_map = new Dictionary<CharacterEnum, Character>();
+                create_character_map();
+                //创建后直接保存
+                if (!GameSettings.save_characters(_characters_map, "character.json"))
+                {
+                    Debug.LogWarning("保存性格表时失败!!");
+                }
+            }
+
+
+        }
+
+        private static void create_character_map()
+        {
+            foreach (CharacterEnum characterEnum in Enum.GetValues(typeof(CharacterEnum)))
+            {
+                var character = find_character(characterEnum);
+                _characters_map.Add(characterEnum, character);
+            }
+        }
+
+        // public static Character find_character(CharacterEnum character)
+        // {
+        //     return _characters_map[character];
+        // }
         public static Character find_character(CharacterEnum character)
         {
             var newCharacter = new Character();

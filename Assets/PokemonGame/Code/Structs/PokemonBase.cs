@@ -5,7 +5,7 @@ using System.Text;
 using PokemonGame.Structs;
 using UnityEngine;
 
-namespace PokemonGame
+namespace PokemonGame.Code.Structs
 {
     public enum Sex
     {
@@ -144,21 +144,21 @@ namespace PokemonGame
 
         #region Attribute
 
-        public string uid;
+        public readonly string uid;
         public readonly string name;
         public readonly string otherName;
         public readonly uint id;
         public readonly Character character;
         public readonly Property firstProperty;
         public readonly Property secondProperty;
-        public State state;
+        public readonly State state;
         public readonly uint current_health;
         public Dictionary<Ability, uint> ability;
         public Dictionary<Ability, uint> effort;
         public Dictionary<Ability, uint> race;
         public Dictionary<Ability, uint> individual;
-        public uint level;
-        public Sex sex;
+        public readonly uint level;
+        public readonly Sex sex;
         public Item item;
         public uint exp_now;
         public uint exp_need;

@@ -1,65 +1,64 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using PokemonGame;
-using PokemonGame.UI;
+using PokemonGame.Code.Structs;
 using UnityEngine;
 
-public class PokemonDetail : MonoBehaviour
+namespace PokemonGame.Code.UI
 {
-    [SerializeField] public InfoControl infoControl;
-    [SerializeField] public PokemonDetailLeft left;
-    [SerializeField] public PokemonDetailRight right;
-
-    private void Awake()
+    public class PokemonDetail : MonoBehaviour
     {
-        if (infoControl == null)
+        [SerializeField] public InfoControl infoControl;
+        [SerializeField] public PokemonDetailLeft left;
+        [SerializeField] public PokemonDetailRight right;
+
+        private void Awake()
         {
-            infoControl = transform.parent.GetComponent<InfoControl>();
+            if (infoControl == null)
+            {
+                infoControl = transform.parent.GetComponent<InfoControl>();
+            }
+
+            if (left == null)
+            {
+                left = transform.Find("left").Find("pokemon-detail").GetComponent<PokemonDetailLeft>();
+            }
+
+            if (right == null)
+            {
+                right = transform.Find("right").Find("pokemon-detail").GetComponent<PokemonDetailRight>();
+            }
         }
 
-        if (left == null)
+        public void ShowPokemonDetail()
         {
-            left = transform.Find("left").Find("pokemon-detail").GetComponent<PokemonDetailLeft>();
+            gameObject.SetActive(true);
+            left.gameObject.SetActive(true);
+            right.gameObject.SetActive(true);
         }
 
-        if (right == null)
+
+        public void HidePokemonDetail()
         {
-            right = transform.Find("right").Find("pokemon-detail").GetComponent<PokemonDetailRight>();
+            gameObject.SetActive(false);
+            left.gameObject.SetActive(false);
+            right.gameObject.SetActive(false);
         }
-    }
 
-    public void ShowPokemonDetail()
-    {
-        gameObject.SetActive(true);
-        left.gameObject.SetActive(true);
-        right.gameObject.SetActive(true);
-    }
-    
+        public void update_pokemon(Pokemon pokemon, uint index)
+        {
+            left.set_pokemon(pokemon);
+            right.set_pokemon(pokemon, index);
+        }
 
-    public void HidePokemonDetail()
-    {
-        gameObject.SetActive(false);
-        left.gameObject.SetActive(false);
-        right.gameObject.SetActive(false);
-    }
+        public void OnBackButtonClicked()
+        {
+            right.gameObject.SetActive(false);
+            left.gameObject.SetActive(true);
+            gameObject.SetActive(false);
+            infoControl.BackFromPokemonDetail();
+        }
 
-    public void update_pokemon(Pokemon pokemon, uint index)
-    {
-        left.set_pokemon(pokemon);
-        right.set_pokemon(pokemon, index);
-    }
-
-    public void OnBackButtonClicked()
-    {
-        right.gameObject.SetActive(false);
-        left.gameObject.SetActive(true);
-        gameObject.SetActive(false);
-        infoControl.BackFromPokemonDetail();
-    }
-
-    public void OnExitBtnClicked()
-    {
-        infoControl.ExitFromPokemonDetail();
+        public void OnExitBtnClicked()
+        {
+            infoControl.ExitFromPokemonDetail();
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace PokemonGame.Structs
+namespace PokemonGame.Code.Structs
 {
     public enum Ability
     {

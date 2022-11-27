@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using PokemonGame.Code.UI;
 using UnityEngine;
 
-namespace PokemonGame.UI
+namespace PokemonGame.Code.UI
 {
     public class UIManager : MonoBehaviour
     {

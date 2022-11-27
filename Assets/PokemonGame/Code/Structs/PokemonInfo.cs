@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Structs
+﻿namespace PokemonGame.Code.Structs
 {
     using System;
     [Serializable]
