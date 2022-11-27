@@ -14,6 +14,8 @@ namespace PokemonGame.Code.Factory
             public PropertyEnum attack;
             public PropertyEnum defense;
             public PropertyEffect effect;
+            public string desc;
+            public Sprite sprite;
         }
 
         public static PropertyFactory instance;
@@ -68,7 +70,9 @@ namespace PokemonGame.Code.Factory
                 {
                     properties.Add(p, new Property(p.ToString(), p, set));
                 }
-
+                
+                properties.Add(PropertyEnum.无属性,new Property(PropertyEnum.无属性.ToString(),PropertyEnum.无属性,null));
+                
                 GameSettings.save_properties(properties,key);
             }
             else

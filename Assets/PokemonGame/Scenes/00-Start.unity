@@ -573,9 +573,20 @@ MonoBehaviour:
     otherName: "\u5999\u86D9\u82B1"
     id: 2
     level: 10
+    stateEnum: 0
     character: 0
-    firstProperty: 12
-    secondProperty: 4
+    firstPropertyEnum: 0
+    secondPropertyEnum: 0
+    sex: 0
+    currentHealth: 0
+    item: 0
+    expNow: 0
+    expNeed: 0
+    skill1: 0
+    skill2: 0
+    skill3: 0
+    skill4: 0
+    peculiarityEnum: 0
   abilityValue:
     Health: 10
     ObjectAttack: 5
@@ -604,6 +615,11 @@ MonoBehaviour:
     ObjectDefense: 31
     SpecialDefense: 31
     Speed: 31
+  icon: {fileID: 0}
+  frontImage: {fileID: 0}
+  pokemonModel: {fileID: 0}
+  pokemonCell: {fileID: 0}
+  pokemonDetailLeft: {fileID: 0}
 --- !u!212 &745858912
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -780,7 +796,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760788419}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.08163339, y: 0.19738063, z: 0.47780472}
+  m_LocalPosition: {x: -0.08163339, y: 0.19738063, z: 2.091}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -804,9 +820,20 @@ MonoBehaviour:
     otherName: "\u5999\u86D9\u79CD\u5B50"
     id: 0
     level: 10
+    stateEnum: 0
     character: 0
-    firstProperty: 12
-    secondProperty: 0
+    firstPropertyEnum: 0
+    secondPropertyEnum: 0
+    sex: 0
+    currentHealth: 0
+    item: 0
+    expNow: 0
+    expNeed: 0
+    skill1: 0
+    skill2: 0
+    skill3: 0
+    skill4: 0
+    peculiarityEnum: 0
   abilityValue:
     Health: 10
     ObjectAttack: 5
@@ -835,6 +862,11 @@ MonoBehaviour:
     ObjectDefense: 31
     SpecialDefense: 31
     Speed: 31
+  icon: {fileID: 0}
+  frontImage: {fileID: 0}
+  pokemonModel: {fileID: 0}
+  pokemonCell: {fileID: 0}
+  pokemonDetailLeft: {fileID: 0}
 --- !u!54 &760788423
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1230,9 +1262,20 @@ MonoBehaviour:
     otherName: "\u5999\u86D9\u82B1"
     id: 2
     level: 10
+    stateEnum: 0
     character: 0
-    firstProperty: 12
-    secondProperty: 4
+    firstPropertyEnum: 0
+    secondPropertyEnum: 0
+    sex: 0
+    currentHealth: 0
+    item: 0
+    expNow: 0
+    expNeed: 0
+    skill1: 0
+    skill2: 0
+    skill3: 0
+    skill4: 0
+    peculiarityEnum: 0
   abilityValue:
     Health: 10
     ObjectAttack: 5
@@ -1261,6 +1304,11 @@ MonoBehaviour:
     ObjectDefense: 31
     SpecialDefense: 31
     Speed: 31
+  icon: {fileID: 0}
+  frontImage: {fileID: 0}
+  pokemonModel: {fileID: 0}
+  pokemonCell: {fileID: 0}
+  pokemonDetailLeft: {fileID: 0}
 --- !u!212 &1038935121
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1348,7 +1396,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.000045776}
+  m_AnchoredPosition: {x: 0, y: -0.000061035156}
   m_SizeDelta: {x: 787.5, y: 200}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1088682993
@@ -1426,9 +1474,20 @@ MonoBehaviour:
     otherName: "\u5999\u86D9\u8349"
     id: 1
     level: 10
+    stateEnum: 0
     character: 0
-    firstProperty: 12
-    secondProperty: 4
+    firstPropertyEnum: 0
+    secondPropertyEnum: 0
+    sex: 0
+    currentHealth: 0
+    item: 0
+    expNow: 0
+    expNeed: 0
+    skill1: 0
+    skill2: 0
+    skill3: 0
+    skill4: 0
+    peculiarityEnum: 0
   abilityValue:
     Health: 10
     ObjectAttack: 5
@@ -1457,6 +1516,11 @@ MonoBehaviour:
     ObjectDefense: 31
     SpecialDefense: 31
     Speed: 31
+  icon: {fileID: 0}
+  frontImage: {fileID: 0}
+  pokemonModel: {fileID: 0}
+  pokemonCell: {fileID: 0}
+  pokemonDetailLeft: {fileID: 0}
 --- !u!212 &1188459724
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1517,7 +1581,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188459721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.64036655, y: 0.19738063, z: 0.47780472}
+  m_LocalPosition: {x: 0.64036655, y: 0.19738063, z: 4.009}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []

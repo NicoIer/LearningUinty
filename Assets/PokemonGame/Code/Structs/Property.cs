@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using PokemonGame.Code.Factory;
+using UnityEngine;
 
 namespace PokemonGame.Code.Structs
 {
@@ -14,12 +15,13 @@ namespace PokemonGame.Code.Structs
         {
             return PropertyFactory.properties[propertyEnum];
         }
-
-        //TODo 为属性添加描述字符 显示图像
+        
         public string name;
         public PropertyEnum propertyEnum;
         public Dictionary<PropertyEnum, PropertyEffect> restrainDict;
-
+        //ToDo 属性描述 和 属性图片需要添加
+        public string desc="";
+        public Sprite sprite=null;
         public Property(string name, PropertyEnum propertyEnum, Dictionary<PropertyEnum, PropertyEffect> restrainDict)
         {
             this.name = name;

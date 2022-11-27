@@ -184,366 +184,603 @@ MonoBehaviour:
   - attack: 1
     defense: 6
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 1
     defense: 8
     effect: 0
+    desc: 
+    sprite: {fileID: 0}
   - attack: 1
     defense: 9
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 2
     defense: 1
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 2
     defense: 3
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 2
     defense: 4
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 2
     defense: 6
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 2
     defense: 7
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 2
     defense: 8
     effect: 0
+    desc: 
+    sprite: {fileID: 0}
   - attack: 2
     defense: 9
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 2
     defense: 14
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 2
     defense: 15
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 2
     defense: 17
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 2
     defense: 18
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 3
     defense: 2
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 3
     defense: 6
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 3
     defense: 7
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 3
     defense: 9
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 3
     defense: 12
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 3
     defense: 13
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 4
     defense: 4
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 4
     defense: 5
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 4
     defense: 6
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 4
     defense: 8
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 4
     defense: 9
     effect: 0
+    desc: 
+    sprite: {fileID: 0}
   - attack: 4
     defense: 12
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 4
     defense: 18
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 5
     defense: 3
     effect: 0
+    desc: 
+    sprite: {fileID: 0}
   - attack: 5
     defense: 4
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 5
     defense: 6
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 5
     defense: 7
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 5
     defense: 9
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 5
     defense: 10
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 5
     defense: 12
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 5
     defense: 13
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 6
     defense: 2
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 6
     defense: 3
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 6
     defense: 5
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 6
     defense: 7
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 6
     defense: 9
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 6
     defense: 10
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 6
     defense: 15
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 7
     defense: 2
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 7
     defense: 3
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 7
     defense: 4
     effect: 4
-  - attack: 7
-    defense: 3
-    effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 7
     defense: 8
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 7
     defense: 9
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 7
     defense: 10
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 7
     defense: 12
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 7
     defense: 14
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 7
     defense: 17
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 7
     defense: 18
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 8
     defense: 1
     effect: 0
+    desc: 
+    sprite: {fileID: 0}
   - attack: 8
     defense: 8
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 8
     defense: 14
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 8
     defense: 17
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 9
     defense: 6
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 9
     defense: 10
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 9
     defense: 11
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 9
     defense: 9
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 9
     defense: 13
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 9
     defense: 15
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 9
     defense: 18
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 10
     defense: 6
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 10
     defense: 7
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 10
     defense: 9
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 10
     defense: 10
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 10
     defense: 11
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 10
     defense: 12
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 10
     defense: 15
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 10
     defense: 16
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 11
     defense: 5
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 11
     defense: 6
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 11
     defense: 10
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 11
     defense: 11
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 11
     defense: 12
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 11
     defense: 16
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 12
     defense: 3
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 12
     defense: 4
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 12
     defense: 5
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 12
     defense: 6
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 12
     defense: 7
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 12
     defense: 9
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 12
     defense: 10
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 12
     defense: 11
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 12
     defense: 12
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 12
     defense: 16
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 13
     defense: 3
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 13
     defense: 5
     effect: 0
+    desc: 
+    sprite: {fileID: 0}
   - attack: 13
     defense: 11
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 13
     defense: 12
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 13
     defense: 13
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 13
     defense: 16
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 14
     defense: 2
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 14
     defense: 4
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 14
     defense: 9
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 14
     defense: 14
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 14
     defense: 17
     effect: 0
+    desc: 
+    sprite: {fileID: 0}
   - attack: 15
     defense: 3
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 15
     defense: 5
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 15
     defense: 9
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 15
     defense: 10
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 15
     defense: 11
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 15
     defense: 12
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 15
     defense: 15
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 15
     defense: 16
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 16
     defense: 9
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 16
     defense: 16
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 16
     defense: 18
     effect: 0
+    desc: 
+    sprite: {fileID: 0}
   - attack: 17
     defense: 2
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 17
     defense: 8
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 17
     defense: 14
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 17
     defense: 17
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 17
     defense: 18
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 18
     defense: 2
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 18
     defense: 4
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 18
     defense: 9
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 18
     defense: 10
     effect: 4
+    desc: 
+    sprite: {fileID: 0}
   - attack: 18
     defense: 16
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
   - attack: 18
     defense: 17
     effect: 2
+    desc: 
+    sprite: {fileID: 0}
 --- !u!1 &1758229036
 GameObject:
   m_ObjectHideFlags: 0
