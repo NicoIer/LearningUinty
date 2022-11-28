@@ -84,7 +84,7 @@
 
 #### 11.27
 
->同步技能到UI面板
+>同步技能到UI面板<font color=blue face="仿宋">    **完成**</font>
 >
 >初步搭建图鉴UI
 >
@@ -98,7 +98,7 @@
 
 #### 11.28
 
->UI的事件分发
+>UI的事件分发<font color=blue face="仿宋">    **使用自定义的Button取消了繁琐的工作**</font>
 >
 >完成特性的Inspector实例化,存储
 >
