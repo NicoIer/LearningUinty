@@ -40,6 +40,7 @@ namespace PokemonGame.Code.Structs
                 default:
                     throw new ArgumentOutOfRangeException(nameof(skillEnum), skillEnum, null);
             }
+            
         }
 
         public static Skill find_skill(string skill_name)
@@ -53,25 +54,30 @@ namespace PokemonGame.Code.Structs
 
         #endregion
 
-        
+        public Skill Clone()
+        {
+            return (Skill)MemberwiseClone();
+        }
 
         public SkillEnum skillEnum;
         public string name;
-        public PropertyEnum propertyEnum;
+        public Property property;
         public uint pp;
         public string desc;
         public SkillTypeEnum typeEnum;
         public uint power;
         public float hit_rate;
-
         public byte order;
+
+        public uint cur_pp;
         //ToDo 应该还有一个动画效果
-        public Skill(SkillEnum skillEnum,string name, PropertyEnum propertyEnum, uint pp, string desc, SkillTypeEnum typeEnum, uint power, float hitRate, byte order)
+        private Skill(SkillEnum skillEnum,string name, PropertyEnum propertyEnum, uint pp, string desc, SkillTypeEnum typeEnum, uint power, float hitRate, byte order)
         {
             this.skillEnum = skillEnum;
             this.name = name;
-            this.propertyEnum = propertyEnum;
+            this.property = Property.find_property(propertyEnum);
             this.pp = pp;
+            this.cur_pp = pp;
             this.desc = desc;
             this.typeEnum = typeEnum;
             this.power = power;
