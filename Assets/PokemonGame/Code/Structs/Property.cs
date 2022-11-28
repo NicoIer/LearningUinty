@@ -21,7 +21,7 @@ namespace PokemonGame.Code.Structs
         public Dictionary<PropertyEnum, PropertyEffect> restrainDict;
         //ToDo 属性描述 和 属性图片需要添加
         public string desc="";
-        public Sprite sprite=null;
+        public Sprite icon=null;
         public Property(string name, PropertyEnum propertyEnum, Dictionary<PropertyEnum, PropertyEffect> restrainDict)
         {
             this.name = name;
