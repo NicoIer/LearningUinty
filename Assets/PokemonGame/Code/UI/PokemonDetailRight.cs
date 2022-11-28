@@ -10,14 +10,14 @@ namespace PokemonGame.Code.UI
     public class PokemonDetailRight : MonoBehaviour
     {
         [SerializeField] private PokemonDetail pokemonDetail;
+        [SerializeField] private PokemonCameraControl _pokemonCameraControl;
         private Pokemon _pokemon;
         private Button _backBtn;
         private Button _exitBtn;
+        private GameObject _curPokemonModel;
 
-        [Header("pokemon Model")] [SerializeField]
-        private Camera pokemonCamera;
-
-        [SerializeField] private GameObject pokemonModel;
+        [Header("pokemon Model")]
+        [SerializeField] private GameObject pokemonShow;
 
         private Text _nameText;
         private Image _sexImage;
@@ -27,8 +27,8 @@ namespace PokemonGame.Code.UI
         [Header("Order")] [SerializeField] private Sprite noSel;
         [SerializeField] private Sprite sel;
         private List<Image> _ballImages;
-        public uint curPokemon = 0;
-        private uint _lastPokemon = 0;
+        public uint curPokemon;
+        private uint _lastPokemon;
         [SerializeField] private Transform itemTransform;
         private Text _itemText;
         private Image _itemImage;
@@ -37,6 +37,7 @@ namespace PokemonGame.Code.UI
 
         private void Awake()
         {
+
             if (pokemonDetail == null)
             {
                 pokemonDetail = transform.parent.parent.GetComponent<PokemonDetail>();
@@ -56,16 +57,14 @@ namespace PokemonGame.Code.UI
             _exitBtn.onClick.AddListener(pokemonDetail.OnExitBtnClicked);
 
             var detail = transform.Find("Detail");
-            if (pokemonCamera == null)
+            if (pokemonShow == null)
             {
-                pokemonCamera = detail.Find("Pokemon").Find("camera").GetComponent<Camera>();
+                pokemonShow = detail.Find("Pokemon").Find("pokemon").gameObject;
             }
-
-            if (pokemonModel == null)
+            if (_pokemonCameraControl == null)
             {
-                pokemonModel = detail.Find("Pokemon").Find("pokemon").gameObject;
+                _pokemonCameraControl = detail.Find("Pokemon").GetComponent<PokemonCameraControl>();
             }
-
             var info = detail.Find("Info");
             if (_nameText == null)
             {
@@ -160,6 +159,17 @@ namespace PokemonGame.Code.UI
         {
             if (_pokemon != null)
             {
+                //_pokemon模型
+                if (_pokemon.pokemonModel != null)
+                {
+                    if (_curPokemonModel != null)
+                    {
+                        Destroy(_curPokemonModel);
+                        _curPokemonModel = null;
+                    }
+                    _curPokemonModel = Instantiate(_pokemon.pokemonModel, pokemonShow.transform);
+                    _pokemonCameraControl.set_pokemon_model(_curPokemonModel);
+                }
                 //name
                 _nameText.text = _pokemon.info.otherName;
                 //sex
@@ -180,29 +190,24 @@ namespace PokemonGame.Code.UI
 
                 //level
                 _levelText.text = _pokemon.info.level.ToString();
-                //state ToDo 完善这里的其他判断条件
-                switch (_pokemon.info.stateEnum)
+                //state
+                if (_pokemon.State.stateEnum != StateEnum.无)
                 {
-                    case StateEnum.None:
-                        _stateImage.color = new Color(0, 0, 0, 0);
-                        _stateText.text = "";
-                        break;
-                    case StateEnum.Poisoning:
-                        _stateImage.color = Color.magenta;
-                        _stateText.text = StateEnum.Poisoning.ToString();
-                        break;
-                    case StateEnum.Sleeping:
-                        _stateImage.color = Color.white;
-                        _stateText.text = StateEnum.Sleeping.ToString();
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    _stateImage.enabled = true;
+                    _stateImage.sprite = _pokemon.State.icon;
+                    _stateText.enabled = true;
+                    _stateText.text = _pokemon.State.name;
+                }
+                else
+                {
+                    _stateImage.enabled = false;
+                    _stateText.enabled = false;
                 }
 
-                //精灵球的选择
+                //精灵球的选择 ToDo 当没有6个宝可梦时 要实时变化
                 _ballImages[(int)_lastPokemon].sprite = noSel;
                 _ballImages[(int)curPokemon].sprite = sel;
-                //Item ToDo 完善这里
+                //Item
                 if (_pokemon.Item == null || _pokemon.Item.item_enum==ItemEnum.None)
                 {
                     itemTransform.gameObject.SetActive(false);
@@ -212,10 +217,15 @@ namespace PokemonGame.Code.UI
                 else
                 {
                     itemTransform.gameObject.SetActive(true);
-                    _itemImage.color = Color.black;
+                    _itemImage.sprite = _pokemon.Item.icon;
                     _itemText.text = _pokemon.Item.name;
                 }
-                //Skills ToDo 
+                //Skills
+                print("查看宝可梦....Skill");
+                skillCells[0].update_cell(_pokemon.Skill1);
+                skillCells[1].update_cell(_pokemon.Skill2);
+                skillCells[2].update_cell(_pokemon.Skill3);
+                skillCells[3].update_cell(_pokemon.Skill4);
             }
             else
             {

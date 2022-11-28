@@ -2,44 +2,37 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace PokemonGame.Code.UI
 {
     public class PokemonCameraControl : MonoBehaviour
     {
         [SerializeField] private Camera _camera;
-        public bool viewing = false;
-
+        private Vector3 _BeginCameraPosition;
+        [SerializeField] private NicoButton _button;
+        private GameObject pokemon_model;
         private void Awake()
         {
             if (_camera == null)
             {
                 _camera = transform.Find("camera").GetComponent<Camera>();
+                _BeginCameraPosition = _camera.transform.position;
             }
+
+            if (_button == null)
+            {
+                _button = GetComponent<NicoButton>();
+            }
+
         }
 
-
-        void Update()
+        private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
-            {//ToDo 将这里的内容更新到 UIManager
-                //点击后
-                GameObject obj = GetFirstPickGameObject(Input.mousePosition);
-                if (obj == gameObject)
-                {
-                    viewing = true;
-                }
-            }else if (Input.GetMouseButtonUp(0))
-            {
-                GameObject obj = GetFirstPickGameObject(Input.mousePosition);
-                if (obj == gameObject)
-                {
-                    viewing = false;
-                }
-            }
-
-            if (viewing)
+            
+            if (_button.longPressed)
             {
                 var q = Quaternion.identity;
                 q.SetLookRotation(_camera.transform.forward,_camera.transform.up);
@@ -47,26 +40,15 @@ namespace PokemonGame.Code.UI
                 var v = Input.GetAxis("Mouse Y");
                 var forward = Quaternion.Euler(-v, h, 0) * _camera.transform.forward;
                 _camera.transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
-
             }
         }
 
-        /// <summary>
-        /// 点击屏幕坐标
-        /// </summary>
-        /// <param name="position"></param>
-        /// <returns></returns>
-        public GameObject GetFirstPickGameObject(Vector2 position)
+        public void set_pokemon_model(GameObject pokemonModel)
         {
-            EventSystem eventSystem = EventSystem.current;
-            PointerEventData pointerEventData = new PointerEventData(eventSystem);
-            pointerEventData.position = position;
-            //射线检测ui
-            List<RaycastResult> uiRaycastResultCache = new List<RaycastResult>();
-            eventSystem.RaycastAll(pointerEventData, uiRaycastResultCache);
-            if (uiRaycastResultCache.Count > 0)
-                return uiRaycastResultCache[0].gameObject;
-            return null;
+            _camera.transform.position = _BeginCameraPosition;
+            pokemon_model = pokemonModel;
         }
+
+
     }
 }
