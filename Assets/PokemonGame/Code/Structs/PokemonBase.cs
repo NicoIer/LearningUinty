@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using PokemonGame.Structs;
 using UnityEngine;
 
 namespace PokemonGame.Code.Structs
@@ -72,7 +70,7 @@ namespace PokemonGame.Code.Structs
             SkillEnum skillEnum4 = SkillEnum.None,
             PeculiarityEnum peculiarityEnum = PeculiarityEnum.None,
             Trainer trainer = null,
-            StateEnum stateEnum = StateEnum.None
+            StateEnum stateEnum = StateEnum.无
         )
         {
             abilityValue ??= new Dictionary<Ability, uint>();
@@ -195,7 +193,7 @@ namespace PokemonGame.Code.Structs
             SkillEnum skillEnum4 = SkillEnum.None,
             PeculiarityEnum peculiarityEnum = PeculiarityEnum.None,
             Trainer trainer = null,
-            StateEnum stateEnum = StateEnum.None
+            StateEnum stateEnum = StateEnum.无
         )
         {
             this.name = name;
@@ -255,7 +253,7 @@ namespace PokemonGame.Code.Structs
             {
                 Debug.LogWarning("这只宝可梦什么技能也不会!!");
             }
-
+            
             skill1 = Skill.find_skill(skillEnum1);
             skill2 = Skill.find_skill(skillEnum2);
             skill3 = Skill.find_skill(skillEnum3);

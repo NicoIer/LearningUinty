@@ -32,8 +32,7 @@ namespace PokemonGame.Code.Structs
         public Sprite frontImage; //希望以后可以改成3D模型
         private SpriteRenderer _spriteRenderer;
         public GameObject pokemonModel;
-        [Header("DEBUG")] [SerializeField] public PokemonCell pokemonCell;
-        [SerializeField] public PokemonDetailLeft pokemonDetailLeft;
+        [Header("DEBUG")] [SerializeField] private PokemonCell pokemonCell;
 
 
         private void Awake()
@@ -176,11 +175,7 @@ namespace PokemonGame.Code.Structs
             {
                 pokemonCell.set_pokemon(this);
             }
-
-            if (pokemonDetailLeft != null)
-            {
-                pokemonDetailLeft.set_pokemon(this);
-            }
+            
         }
     }
 }
