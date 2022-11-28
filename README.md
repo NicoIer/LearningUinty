@@ -26,7 +26,7 @@
 >
 >同时学会使用C#的JSON序列化存储游戏数据,将程序和数据分离
 
-| ![Snipaste_2022-11-28_16-50-50](markdown_images\Snipaste_2022-11-28_16-50-50.png) | ![Snipaste_2022-11-28_16-50-44](LearningUinty\markdown_images\Snipaste_2022-11-28_16-50-44.png) |
+| ![Snipaste_2022-11-28_16-50-50](markdown_images/Snipaste_2022-11-28_16-50-50.png) | ![Snipaste_2022-11-28_16-50-44](markdown_images/Snipaste_2022-11-28_16-50-44.png) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![Snipaste_2022-11-28_16-45-20](markdown_images\Snipaste_2022-11-28_16-45-20.png) |                                                              |
+| ![Snipaste_2022-11-28_16-45-20](markdown_images/Snipaste_2022-11-28_16-45-20.png) |                                                              |
 
