@@ -19,7 +19,6 @@ namespace PokemonGame.Code.UI
             if (_camera == null)
             {
                 _camera = transform.Find("camera").GetComponent<Camera>();
-                _BeginCameraPosition = _camera.transform.position;
             }
 
             if (_button == null)
@@ -45,7 +44,6 @@ namespace PokemonGame.Code.UI
 
         public void set_pokemon_model(GameObject pokemonModel)
         {
-            _camera.transform.position = _BeginCameraPosition;
             pokemon_model = pokemonModel;
         }
 
