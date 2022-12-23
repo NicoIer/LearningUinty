@@ -1,4 +1,4 @@
-﻿# Unity Start Project
+# Unity Start Project
 
 `Nico->学习unity的代码仓库,以复刻经典游戏为目标,学习Unity游戏创建`
 
@@ -16,11 +16,9 @@
 | ![Snipaste_2022-11-28_16-34-03](markdown_images/Snipaste_2022-11-28_16-33-48.png) | ![Snipaste_2022-11-28_16-33-48](markdown_images/Snipaste_2022-11-28_16-34-03.png) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
-## 正在实现的游戏
-
 ### Pokemon
 
->复刻宝可梦游戏
+>复刻宝可梦游戏的UI
 
 >期望通过这个demo 学会UGUI的基本使用,包括EventSystem,Canvas,Panel,Image,Button,....组件
 >
