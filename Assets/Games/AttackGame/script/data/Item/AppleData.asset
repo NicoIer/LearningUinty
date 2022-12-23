@@ -15,6 +15,6 @@ MonoBehaviour:
   uid: 0
   item_name: apple
   desc: "\u8FD9\u662F\u4E00\u4E2A\u82F9\u679C"
-  package_limit: 10
+  package_limit: 12
   holding_limit: 0
   sprite: {fileID: 21300000, guid: 61d01e8616313344b978a6518fd86ed6, type: 3}

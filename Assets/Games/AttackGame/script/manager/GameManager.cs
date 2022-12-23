@@ -7,16 +7,19 @@ namespace AttackGame
 {
     public class GameManager : Script.Tools.DesignPattern.Singleton<GameManager>
     {
-        [Header("DEBUG")] public InspectorItem testItem;
-
+        [Header("DEBUG")]
         public bool paused;
 
-        public List<InspectorItem> inspectorItems = new();
-        private List<Item> _items = new();
+        [Header("用于调试背包的临时物品信息")]
+        public InspectorItem testItem;
 
-        protected override void Awake()
+        [Header("初始化背包所需信息")]
+        public List<InspectorItem> inspectorItems = new();
+        //测试用 物品列表应该由玩家持有
+        private readonly List<Item> _items = new();
+
+        protected  void Start()
         {
-            base.Awake();
             InitData();
             DisplayData();
         }
@@ -51,7 +54,6 @@ namespace AttackGame
         {
             foreach (var item in _items)
             {
-                print(item.data.desc);
                 UIManager.instance.packageManager.DisPlayItem(item);
             }
         }

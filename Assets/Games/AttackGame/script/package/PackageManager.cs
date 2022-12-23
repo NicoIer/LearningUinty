@@ -10,7 +10,7 @@ namespace AttackGame
     public class PackageManager : MonoBehaviour
     {
         [SerializeField] private List<PackageCell> cells = new(); //所有的背包单元格集合
-
+        [SerializeField] private int try_times = 100;
         private List<Item> _items = new(); //玩家所持有的所有道具
 
         //当前选中的背包格索引
@@ -44,7 +44,7 @@ namespace AttackGame
                 }
             }
 
-            print($"获取到可用的Index:{-1} total cell:{cells.Count}");
+            Debug.LogWarning("没有额外的可用背包格子辣!!!");
             return -1;
         }
 
@@ -70,7 +70,6 @@ namespace AttackGame
                     return i;
                 }
             }
-
             return -1;
         }
 
@@ -82,10 +81,9 @@ namespace AttackGame
         /// <returns></returns>
         public void DisPlayItem(Item item, int position = -1)
         {
-            print($"存放:{item.data.item_name}");
             if (position == -1)
             {
-                position = NextAvailableCellIndex();
+                position = NextAvailableCellIndex(item);
             }
 
             var total = item.num;
@@ -96,30 +94,75 @@ namespace AttackGame
                 var times = total / limit;
                 for (int i = 0; i < times; i++)
                 {
-                    position = NextAvailableCellIndex();
+                    position = NextAvailableCellIndex(item);
                     var item1 = new Item
                     {
                         data = item.data,
                         num = (int)limit
                     };
-                    cells[position].SetItem(item1);
+                    AddItem(item1, position);
                 }
 
                 if (left != 0)
                 {
-                    position = NextAvailableCellIndex();
+                    position = NextAvailableCellIndex(item);
                     var item2 = new Item
                     {
                         data = item.data,
                         num = (int)left
                     };
-                    cells[position].SetItem(item2);
+                    AddItem(item2, position);
                 }
             }
             else
             {
-                cells[position].SetItem(item);
+                AddItem(item, position);
             }
+        }
+
+        public void AddItem(Item item, int position)
+        {
+
+            for (int i = 0; i < try_times; i++)
+            {
+                //要考虑到堆叠的情况
+                var curCell = cells[position]; //获取要存放物品的背包格
+                var left = curCell.SetItem(item); //尝试存放 
+                if (left >= 0)
+                {
+                    //存放成功
+                    break;
+                }
+
+                switch (left)
+                {
+                    case -2:
+                    {
+                        //可以存 但是只能存一点点
+                        //先存一点
+                        var item1 = new Item
+                        {
+                            data = item.data,
+                            num = curCell.LeftCapacity()
+                        };
+                        curCell.SetItem(item1);
+                        //再找下一个位置存
+                        position = NextAvailableCellIndex(item);
+                        item.num -= item1.num;
+                        continue;
+                    }
+                    case -1:
+                        //这个位置不能存
+                        throw new IndexOutOfRangeException($"不存在的情况:NextAvailableCellIndex(item)必然可以获取一个可用的位置" +
+                                                           $"item-uid:{item.data.uid}" +
+                                                           $"target-position:{position}" +
+                                                           $"target-item-uid:{curCell.Item.data.uid}");
+                    default:
+                        throw new IndexOutOfRangeException($"不存在的left值:{left}");
+                }
+            }
+
+            throw new IndexOutOfRangeException($"无法找到合适的位置存放物品After:{try_times} times try");
         }
     }
 }
