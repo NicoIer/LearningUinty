@@ -7,18 +7,17 @@ namespace AttackGame
 {
     public class GameManager : Script.Tools.DesignPattern.Singleton<GameManager>
     {
-        [Header("DEBUG")]
-        public bool paused;
+        [Header("DEBUG")] public bool paused;
 
-        [Header("用于调试背包的临时物品信息")]
-        public InspectorItem testItem;
+        [Header("用于调试背包的临时物品信息")] public InspectorItem testItem;
+        
 
-        [Header("初始化背包所需信息")]
-        public List<InspectorItem> inspectorItems = new();
+        [Header("初始化背包所需信息")] public List<InspectorItem> inspectorItems = new();
+
         //测试用 物品列表应该由玩家持有
         private readonly List<Item> _items = new();
 
-        protected  void Start()
+        protected void Start()
         {
             InitData();
             DisplayData();
@@ -41,12 +40,22 @@ namespace AttackGame
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                var item = new Item
+                var _item = new Item
                 {
                     data = testItem.data,
                     num = testItem.info.num
                 };
-                UIManager.instance.packageManager.DisPlayItem(item);
+                UIManager.instance.packageManager.AddItem(_item);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                var _item = new Item
+                {
+                    data = testItem.data,
+                    num = testItem.info.num
+                };
+                UIManager.instance.packageManager.RemoveItem(_item.uid, 1);
             }
         }
 
@@ -54,7 +63,7 @@ namespace AttackGame
         {
             foreach (var item in _items)
             {
-                UIManager.instance.packageManager.DisPlayItem(item);
+                UIManager.instance.packageManager.AddItem(item);
             }
         }
     }

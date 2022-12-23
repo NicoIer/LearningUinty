@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace AttackGame
@@ -29,22 +30,36 @@ namespace AttackGame
             _cur_cell_idx = 0;
         }
 
+        #region Search
+
+        public int LastSpecificCellIndex(uint uid)
+        {
+            for (int i = cells.Count - 1; i >= 0; i--)
+            {
+                if (!cells[i].empty && cells[i].item.uid == uid)
+                {
+                    //从后往前找 第一个不为空的 存放相同uid的cell
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         /// <summary>
-        /// 返回下一个可存放对应物品的背包格索引
+        /// 返回下一个为空的物品的背包格索引
         /// </summary>
         /// <returns>-1表示没有可用的背包格</returns>
-        public int NextAvailableCellIndex()
+        public int NextEmptyCellIndex()
         {
             for (int i = 0; i < cells.Count; i++)
             {
                 if (cells[i].empty)
                 {
-                    print($"获取到可用的Index:{i} total cell:{cells.Count}");
                     return i;
                 }
             }
 
-            Debug.LogWarning("没有额外的可用背包格子辣!!!");
             return -1;
         }
 
@@ -53,7 +68,7 @@ namespace AttackGame
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        public int NextAvailableCellIndex(Item item)
+        public int NextAvailableCellIndex(uint uid)
         {
             for (var i = 0; i < cells.Count; i++)
             {
@@ -64,77 +79,96 @@ namespace AttackGame
                     return i;
                 }
 
-                if (cell.Item.data.uid == item.data.uid && cell.LeftCapacity() > 0)
+                if (cell.item.uid == uid && cell.LeftCapacity() > 0)
                 {
                     //存放的物品相同 且 还有剩余位置
                     return i;
                 }
             }
+
             return -1;
         }
 
+        #endregion
+
+        #region Item Function
+
         /// <summary>
-        /// 显示物品
+        /// 将指定位置的背包格物品减少num个
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="num"></param>
+        /// <param name="position"></param>
+        public void RemoveItem(uint uid, int num, int position = -1)
+        {
+            if (position == -1)
+            {
+                position = LastSpecificCellIndex(uid);
+                if (position == -1)
+                {
+                    throw new IndexOutOfRangeException($"there are on item-uid:{uid} can delete");
+                }
+            }
+
+            if (!cells[position].Remove(num))
+            {
+                //删除失败(只可能时因为不够删除)
+                var cell = cells[position];
+                var left = num;
+                for (int i = 0; i < try_times; i++)
+                {
+                    if (left > cell.Count())
+                    {
+                        left -= cell.Count(); //删除不掉的数量
+                        cell.Remove(cell.Count());
+                        //找到下一个删除的位置
+                        position = LastSpecificCellIndex(uid);
+                        cell = cells[position];
+                    }
+                    else
+                    {
+                        cell.Remove(left);
+                        return;
+                    }
+                }
+
+                throw new IndexOutOfRangeException($"after {try_times} times try remove failed");
+            }
+        }
+
+        /// <summary>
+        /// 添加物品到UI
         /// </summary>
         /// <param name="item"></param>
         /// <param name="position"></param>
         /// <returns></returns>
-        public void DisPlayItem(Item item, int position = -1)
+        public void AddItem(Item item, int position = -1)
         {
             if (position == -1)
             {
-                position = NextAvailableCellIndex(item);
-            }
-
-            var total = item.num;
-            var limit = item.data.package_limit;
-            if (total > limit)
-            {
-                var left = total % limit;
-                var times = total / limit;
-                for (int i = 0; i < times; i++)
+                position = NextAvailableCellIndex(item.uid);
+                if (position == -1)
                 {
-                    position = NextAvailableCellIndex(item);
-                    var item1 = new Item
-                    {
-                        data = item.data,
-                        num = (int)limit
-                    };
-                    AddItem(item1, position);
-                }
-
-                if (left != 0)
-                {
-                    position = NextAvailableCellIndex(item);
-                    var item2 = new Item
-                    {
-                        data = item.data,
-                        num = (int)left
-                    };
-                    AddItem(item2, position);
+                    throw new IndexOutOfRangeException("没有位置可以添加这个物品了");
                 }
             }
-            else
-            {
-                AddItem(item, position);
-            }
+            _addItem(item, position);
         }
 
-        public void AddItem(Item item, int position)
+        private void _addItem(Item item, int position)
         {
-
             for (int i = 0; i < try_times; i++)
             {
                 //要考虑到堆叠的情况
                 var curCell = cells[position]; //获取要存放物品的背包格
-                var left = curCell.SetItem(item); //尝试存放 
-                if (left >= 0)
+                var status = curCell.SetItem(item); //尝试存放 
+                if (status >= 0)
                 {
                     //存放成功
-                    break;
+                    return;
                 }
 
-                switch (left)
+                switch (status)
                 {
                     case -2:
                     {
@@ -147,7 +181,7 @@ namespace AttackGame
                         };
                         curCell.SetItem(item1);
                         //再找下一个位置存
-                        position = NextAvailableCellIndex(item);
+                        position = NextAvailableCellIndex(item.uid);
                         item.num -= item1.num;
                         continue;
                     }
@@ -156,13 +190,15 @@ namespace AttackGame
                         throw new IndexOutOfRangeException($"不存在的情况:NextAvailableCellIndex(item)必然可以获取一个可用的位置" +
                                                            $"item-uid:{item.data.uid}" +
                                                            $"target-position:{position}" +
-                                                           $"target-item-uid:{curCell.Item.data.uid}");
+                                                           $"target-item-uid:{curCell.item.data.uid}");
                     default:
-                        throw new IndexOutOfRangeException($"不存在的left值:{left}");
+                        throw new IndexOutOfRangeException($"不存在的left值:{status}");
                 }
             }
 
             throw new IndexOutOfRangeException($"无法找到合适的位置存放物品After:{try_times} times try");
         }
+
+        #endregion
     }
 }

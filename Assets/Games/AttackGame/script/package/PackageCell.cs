@@ -10,8 +10,16 @@ namespace AttackGame
         private Text _count_text;
         private Text _name_text;
         private Image image { get; set; }
+        public int Count()
+        {
+            if (item == null)
+            {
+                return -1;
+            }
 
-        public Item Item { get; private set; }
+            return item.num;
+        }
+        public Item item { get; private set; }
 
         /// <summary>
         /// Cell empty属性
@@ -26,7 +34,7 @@ namespace AttackGame
             _count_text = transform.GetChild(1).GetComponent<Text>();
             _name_text = transform.GetChild(2).GetComponent<Text>();
         }
-        
+
 
         /// <summary>
         /// 清空格子中显示的内容
@@ -35,6 +43,7 @@ namespace AttackGame
         {
             empty = true;
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -46,22 +55,22 @@ namespace AttackGame
         /// </returns>
         public int SetItem(Item item)
         {
-            print($"存放:{item.data.item_name} num:{item.num}");
+            print($"存放{item.num}个{item.data.item_name}到{name}");
             if (empty)
             {
                 //如果格子为空 则直接放 
-                Item = item;
+                this.item = item;
                 UpdateCell(false);
                 return LeftCapacity();
             }
 
-            if (Item.data.uid == item.data.uid)
+            if (this.item.data.uid == item.data.uid)
             {
                 //不为空 但存放的物品相同 则 叠加放
                 if (LeftCapacity() >= item.num)
                 {
                     //放的下
-                    Item.num += item.num;
+                    this.item.num += item.num;
                     UpdateCell(false);
                     return LeftCapacity();
                 }
@@ -72,6 +81,27 @@ namespace AttackGame
 
             //格子不为空 且 存放的物品不相同
             return -1;
+        }
+
+
+        public bool Remove(int num)
+        {
+            if (item.num > num)
+            {
+                item.num -= num;
+                UpdateCell(false);
+                return true;
+            }
+
+            if (item.num == num)
+            {
+                item.num -= num;
+                UpdateCell(true);
+                return true;
+            }
+            //throw new IndexOutOfRangeException($"delete num:{num}  >  cur_num:{Item.num}");
+            return false;
+
         }
 
         private void UpdateCell(bool empty)
@@ -85,14 +115,13 @@ namespace AttackGame
             }
             else
             {
-                image.sprite = Item.data.sprite;
-                _count_text.text = Item.num.ToString();
-                _name_text.text = Item.data.item_name;
+                image.sprite = item.data.sprite;
+                _count_text.text = item.num.ToString();
+                _name_text.text = item.data.item_name;
                 image.color = Color.white;
                 _name_text.gameObject.SetActive(true);
                 _count_text.gameObject.SetActive(true);
             }
-
         }
 
         /// <summary>
@@ -101,9 +130,9 @@ namespace AttackGame
         /// <returns></returns>
         public int LeftCapacity()
         {
-            if (Item != null)
+            if (item != null)
             {
-                return (int)Item.data.package_limit - Item.num;
+                return (int)item.data.package_limit - item.num;
             }
 
             throw new NullReferenceException("背包格的物品没有设定");
