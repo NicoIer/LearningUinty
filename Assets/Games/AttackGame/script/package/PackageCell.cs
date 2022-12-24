@@ -6,31 +6,47 @@ namespace AttackGame
 {
     public class PackageCell : MonoBehaviour
     {
+        //ToDo 实现 被选中 快捷丢弃 功能
+
+        #region UI Attribute
+
         private Text _count_text;
         private Text _name_text;
-        private Image image { get; set; }
+        private Image _image;
+        private Button _button;
 
-        public int Count()
-        {
-            if (item == null)
-            {
-                return -1;
-            }
+        #endregion
 
-            return item.num;
-        }
+        #region Data Attribute
 
         public Item item { get; private set; }
-        
+
+        #endregion
+
         public bool empty { get; private set; } = true;
+
+        public bool selected = false;
 
 
         private void Awake()
         {
-            image = transform.GetChild(0).GetComponent<Image>();
+            _button = GetComponent<Button>();
+            _button.onClick.AddListener(OnBtnClicked);
+            _image = transform.GetChild(0).GetComponent<Image>();
             _count_text = transform.GetChild(1).GetComponent<Text>();
             _name_text = transform.GetChild(2).GetComponent<Text>();
         }
+
+
+        #region Event Method
+
+        private void OnBtnClicked()
+        {
+            print($"鼠标点击了{name}");
+            UpdateCell(empty = true);
+        }
+
+        #endregion
 
         #region UI Method
 
@@ -39,16 +55,16 @@ namespace AttackGame
             this.empty = empty;
             if (this.empty)
             {
-                image.color = Color.clear;
+                _image.color = Color.clear;
                 _name_text.gameObject.SetActive(false);
                 _count_text.gameObject.SetActive(false);
             }
             else
             {
-                image.sprite = item.data.sprite;
+                _image.sprite = item.data.sprite;
                 _count_text.text = item.num.ToString();
                 _name_text.text = item.data.item_name;
-                image.color = Color.white;
+                _image.color = Color.white;
                 _name_text.gameObject.SetActive(true);
                 _count_text.gameObject.SetActive(true);
             }
@@ -57,6 +73,21 @@ namespace AttackGame
         #endregion
 
         #region Function Method
+
+        public int Count()
+        {
+            if (empty)
+            {//为空返回-1 表示为空
+                return -1;
+            }
+            
+            if (item == null)
+            {
+                throw new NullReferenceException($"cell hold a null item so can't be count");
+            }
+            //不为空 且持有item 则返回数量
+            return item.num;
+        }
 
         /// <summary>
         /// 清空格子中显示的内容
@@ -92,7 +123,7 @@ namespace AttackGame
                 //放一个假的
                 this.item = new Item(item.data, 0);
 
-                
+
                 //一次性放不下
                 return -2;
             }
