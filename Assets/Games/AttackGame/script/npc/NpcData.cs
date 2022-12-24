@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AttackGame.Talking;
+using UnityEngine;
 
 namespace AttackGame.NPC
 {
@@ -11,5 +12,6 @@ namespace AttackGame.NPC
     public class NpcData : ScriptableObject
     {
         public string npc_name;
+        public SimpleData taling_data;//ToDo 暂时这样写 明天用JSON解决
     }
 }

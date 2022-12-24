@@ -1147,7 +1147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 612993554}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 9.24, y: -2.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1549,7 +1549,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   packageManager: {fileID: 1426023243}
   talkingManager: {fileID: 1652255688}
-  data: {fileID: 11400000, guid: 49da3061667f60144b22f3f68db88a62, type: 2}
 --- !u!1001 &714144509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3903,6 +3902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue_bubbles: {fileID: 1861270244}
+  _npcData: {fileID: 11400000, guid: ac57f2c9eb862f24bba48bb815c6613b, type: 2}
 --- !u!61 &1589823670
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4354,13 +4354,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1861270245}
   - component: {fileID: 1861270246}
+  - component: {fileID: 1861270248}
   m_Layer: 0
   m_Name: dialogue_bubbles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1861270245
 Transform:
   m_ObjectHideFlags: 0
@@ -4414,9 +4415,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingLayerID: 1313148225
+  m_SortingLayer: 3
+  m_SortingOrder: 0
   m_Sprite: {fileID: -1866388355, guid: ee7b9510788ddec438659c9bc1e91c60, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4428,6 +4429,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1861270248
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861270244}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7e1fc885898efcd46b9780522ce031e9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1873827815
 GameObject:
   m_ObjectHideFlags: 0

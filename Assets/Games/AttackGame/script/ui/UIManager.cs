@@ -10,8 +10,6 @@ namespace AttackGame.UI
         private GameObject _ui;
         public PackageManager packageManager;
         public TalkingManager talkingManager;
-        public SimpleData data;
-
         public static UIManager instance;
 
         private void Awake()
@@ -46,24 +44,17 @@ namespace AttackGame.UI
         private void MenuControl()
         {
             PackageUpdate();
-            TalkingUpdate();
         }
-        
-        private void TalkingUpdate()
+
+        public void OpenTalkingPanel(TalkingData data)
         {
-            //Todo 仅限Debug使用 应该交给玩家控制器调用 对话显示
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                //Debug.Log("按下T");
-                if (!talkingManager.opened)
-                {//没有打开对话则打开
-                    talkingManager.Open(data);
-                }
-                else
-                {
-                    talkingManager.Close();
-                }
-            }
+            if(!talkingManager.opened)
+                talkingManager.Open(data);
+        }
+
+        public void CloseTalkingPanel()
+        {
+            talkingManager.Close();
         }
 
         private void PackageUpdate()
