@@ -14,6 +14,7 @@ namespace AttackGame
         private Text _count_text;
         private Text _name_text;
         private Image _image;
+        private Image _mask_image;
         private Button _button;
 
         #endregion
@@ -25,9 +26,30 @@ namespace AttackGame
         #endregion
 
         public bool empty { get; private set; } = true;
-        public int idx;
-        public bool selected = false;
+        private int _idx;
+        private bool _selected;
 
+        public bool selected
+        {
+            get => _selected;
+            set
+            {
+                _selected = value;
+
+                _mask_image.gameObject.SetActive(value);
+            }
+        }
+
+        #region Set Method
+
+        public void set_idx(int idx)
+        {
+            _idx = idx;
+        }
+
+        #endregion
+
+        #region Unity Method
 
         private void Awake()
         {
@@ -38,28 +60,39 @@ namespace AttackGame
             _image = transform.GetChild(0).GetComponent<Image>();
             _count_text = transform.GetChild(1).GetComponent<Text>();
             _name_text = transform.GetChild(2).GetComponent<Text>();
+            _mask_image = transform.GetChild(3).GetComponent<Image>();
         }
 
+        #endregion
 
         #region Event Method
 
         private void OnBtnClicked()
         {
-            selected = true;
-            UIManager.instance.packageManager.ClickedCell(idx);
+            if (!empty)
+            {
+                UIManager.instance.packageManager.ClickedCell(_idx);
+                selected = true;
+            }
+            else
+            {
+                UIManager.instance.packageManager.ClickedCell();
+                selected = false;
+            }
             //UpdateCell(empty = true);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            selected = true;
-            UIManager.instance.packageManager.PointerEnterCell(idx);
+            if (!empty)
+            {
+                UIManager.instance.packageManager.PointerEnterCell(_idx);
+            }
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            selected = false;
-            UIManager.instance.packageManager.PointerExitCell();
+            UIManager.instance.packageManager.PointerExitCell(_idx);
         }
 
         #endregion

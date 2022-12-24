@@ -28,7 +28,7 @@ namespace AttackGame
             for (var i = 0; i < _cell_panel.transform.childCount; i++)
             {
                 var cell = _cell_panel.transform.GetChild(i).GetComponent<PackageCell>();
-                cell.idx = i;
+                cell.set_idx(i);
                 cells.Add(cell);
             }
 
@@ -264,24 +264,53 @@ namespace AttackGame
         /// idx对应的cell被点击事件
         /// </summary>
         /// <param name="idx">cell的idx</param>
-        public void ClickedCell(int idx)
+        public void ClickedCell(int idx = -1)
         {
-            //ToDo 点击后(锁定)就默认这个物品 
+            if (_cur_cell_idx != -1)
+            {
+                //先取消当前高亮背包格
+                cells[_cur_cell_idx].selected = false;
+            }
+
+            if (idx != -1)
+            {
+                //点击非空背包格,高亮显示对应格子
+                cells[idx].selected = true;
+                _infoPanel.Flash(cells[idx].item);
+                _infoPanel.Show();
+                _cur_cell_idx = idx; //更新当前选中格
+                return;
+            }
+            //点击空背包格 -> 重置选中信息
             _cur_cell_idx = idx;
-            _infoPanel.Flash(cells[idx].item);
-            _infoPanel.Show();
+            _infoPanel.Hide();
+            
         }
 
         public void PointerEnterCell(int idx)
         {
+            if (_cur_cell_idx != -1)
+            {
+                cells[_cur_cell_idx].selected = false;
+            }
+
+            cells[idx].selected = true;
             _infoPanel.Flash(cells[idx].item);
             _infoPanel.Show();
         }
 
-        public void PointerExitCell()
+        /// <summary>
+        /// 表示鼠标从第idx个背包格离开
+        /// </summary>
+        /// <param name="idx"></param>
+        public void PointerExitCell(int idx)
         {
+            //先取消高亮
+            cells[idx].selected = false;
+            
             if (_cur_cell_idx != -1)
             {
+                cells[_cur_cell_idx].selected = true;
                 _infoPanel.Flash(cells[_cur_cell_idx].item);
                 _infoPanel.Show();
                 return;
