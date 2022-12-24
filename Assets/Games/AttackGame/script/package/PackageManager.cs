@@ -264,8 +264,8 @@ namespace AttackGame
         public void DropBtnClicked(int num)
         {
             //ToDo 先通知玩家 再更新UI
-            
-            
+
+
             if (_cur_cell_idx == -1)
             {
                 throw new IndexOutOfRangeException("尝试丢弃一个不存在的背包格中的物品!");
@@ -285,7 +285,7 @@ namespace AttackGame
                     throw new BeyondException($"超出可以丢弃的最大数量.item:{cell.item.uid} num:{num}");
                 }
             }
-            
+
             //如果丢完了 背包格为空 则重置选中 隐藏infoPanel
             if (cell.empty)
             {
@@ -352,6 +352,15 @@ namespace AttackGame
             }
 
             _infoPanel.Hide();
+        }
+
+        #endregion
+
+        #region Set Method
+
+        public void SetActive(bool value)
+        {
+            gameObject.SetActive(value);
         }
 
         #endregion

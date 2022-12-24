@@ -8,47 +8,54 @@ namespace AttackGame
 {
     public class UIManager : Script.Tools.DesignPattern.Singleton<UIManager>
     {
-        public GameObject menu;
+        public GameObject ui;
         public PackageManager packageManager;
+
         private void Start()
         {
-            menu.SetActive(false);
+            ui.SetActive(false); //不显示UI
+            packageManager.SetActive(false); //不显示背包
         }
 
         private void Update()
-        {
+        {//ToDo 其实没有按键时 完全不需要进行更新
             MenuControl();
         }
 
         private void MenuControl()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
+            if (Input.GetKeyDown(KeyCode.C))
+            {//假设按C打开背包
+                //打开背包
                 if (GameManager.instance.paused)
                 {
-                    //继续
-                    Resume();
+                    ui.SetActive(false);
+                    packageManager.SetActive(false);
+                    //继续游戏
+                    GameManager.instance.Resume();
                 }
                 else
                 {
-                    //暂停
-                    Pause();
+                    ui.SetActive(true);
+                    packageManager.SetActive(true);
+                    //暂停游戏
+                    GameManager.instance.Pause();
                 }
             }
-        }
 
-        private void Resume()
-        {
-            menu.SetActive(false);
-            Time.timeScale = 1;
-            GameManager.instance.paused = false;
-        }
-
-        private void Pause()
-        {
-            menu.SetActive(true);
-            Time.timeScale = 0;
-            GameManager.instance.paused = true;
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                if (!GameManager.instance.paused)
+                {//游戏没有暂停的情况下 按T进行对话
+                    
+                    return;
+                }
+                else
+                {//游戏暂停了 按 T没有用处
+                    return;
+                }
+                
+            }
         }
     }
 }
