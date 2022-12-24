@@ -144,7 +144,10 @@ namespace AttackGame
         {
             if (item != null)
             {
-                return (int)item.data.package_limit - item.num;
+                var tmp= (int)item.data.package_limit - item.num;
+                if (tmp < 0)
+                    throw new IndexOutOfRangeException($"背包格还能存放:{tmp}个{item.data.item_name}");
+                return tmp;
             }
 
             throw new NullReferenceException("背包格的物品没有设定");
