@@ -13,10 +13,23 @@ namespace AttackGame
         [SerializeField] private Text count_text;
         [SerializeField] private Text name_text;
 
+        [SerializeField] private Button drop_btn_0;
+        [SerializeField] private Button drop_btn_1;
+        [SerializeField] private Button use_btn_0;
+        [SerializeField] private Button use_btn_1;
+
         private void Awake()
         {
             gameObject.SetActive(false);
+            //Todo 能否使用 Event优化
+            drop_btn_0.onClick.AddListener(DropBtnClicked_0);
+            drop_btn_1.onClick.AddListener(DropBtnClicked_1);
+            use_btn_0.onClick.AddListener(UseBtnClicked_0);
+            use_btn_1.onClick.AddListener(UseBtnClicked_1);
         }
+
+
+        #region UI Method
 
         public void Flash(Item item)
         {
@@ -35,5 +48,27 @@ namespace AttackGame
         {
             gameObject.SetActive(true);
         }
+
+        #endregion
+
+        #region Event
+
+        public void DropBtnClicked_0()
+        {
+        }
+
+        public void DropBtnClicked_1()
+        {
+        }
+
+        public void UseBtnClicked_0()
+        {
+        }
+
+        public void UseBtnClicked_1()
+        {
+        }
+
+        #endregion
     }
 }
