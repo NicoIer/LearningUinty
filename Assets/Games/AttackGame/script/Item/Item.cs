@@ -12,6 +12,9 @@
         }
 
         public uint uid => data.uid;
+        public string item_name => data.item_name;
+        public string desc => data.desc;
+
         public ItemData data; //道具的基本数据
         public int num; //持有的数量
 
