@@ -58,10 +58,22 @@ namespace AttackGame
             print($"存放{item.num}个{item.data.item_name}到{name}");
             if (empty)
             {
-                //如果格子为空 则直接放 
-                this.item = item;
-                UpdateCell(false);
-                return LeftCapacity();
+                //如果格子为空 
+                if (item.data.package_limit >= item.num)
+                {//可以直接放下 则放下
+                    this.item = item;
+                    UpdateCell(false);
+                    return LeftCapacity();
+                }
+                //放一个假的
+                this.item = new Item
+                {
+                    data = item.data,
+                    num = 0
+                };
+                //一次性放不下
+                return -2;
+
             }
 
             if (this.item.data.uid == item.data.uid)
