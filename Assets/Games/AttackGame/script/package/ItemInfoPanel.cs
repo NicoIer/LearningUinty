@@ -53,19 +53,22 @@ namespace AttackGame
 
         #region Event
 
-        public void DropBtnClicked_0()
+        private void DropBtnClicked_0()
+        {
+            UIManager.instance.packageManager.DropBtnClicked(1);
+        }
+
+        private void DropBtnClicked_1()
+        {
+            
+            UIManager.instance.packageManager.DropBtnClicked(-1);
+        }
+
+        private void UseBtnClicked_0()
         {
         }
 
-        public void DropBtnClicked_1()
-        {
-        }
-
-        public void UseBtnClicked_0()
-        {
-        }
-
-        public void UseBtnClicked_1()
+        private void UseBtnClicked_1()
         {
         }
 

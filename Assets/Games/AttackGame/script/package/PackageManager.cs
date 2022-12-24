@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Script.Tools.DesignPattern;
 using UnityEngine;
 
 namespace AttackGame
@@ -16,7 +17,7 @@ namespace AttackGame
         //private List<Item> _items = new(); //玩家所持有的所有道具
 
         //当前选中的背包格索引
-        public int _cur_cell_idx { get; set; }
+        private int _cur_cell_idx;
 
         private GameObject _cell_panel;
 
@@ -260,6 +261,40 @@ namespace AttackGame
 
         #region Event Method
 
+        public void DropBtnClicked(int num)
+        {
+            //ToDo 先通知玩家 再更新UI
+            
+            
+            if (_cur_cell_idx == -1)
+            {
+                throw new IndexOutOfRangeException("尝试丢弃一个不存在的背包格中的物品!");
+            }
+
+            var cell = cells[_cur_cell_idx];
+            if (num == -1)
+            {
+                //全部丢掉
+                cell.Clear();
+            }
+            else
+            {
+                //丢num个
+                if (!cell.Remove(num))
+                {
+                    throw new BeyondException($"超出可以丢弃的最大数量.item:{cell.item.uid} num:{num}");
+                }
+            }
+            
+            //如果丢完了 背包格为空 则重置选中 隐藏infoPanel
+            if (cell.empty)
+            {
+                _cur_cell_idx = -1;
+                cell.selected = false;
+                _infoPanel.Hide();
+            }
+        }
+
         /// <summary>
         /// idx对应的cell被点击事件
         /// </summary>
@@ -281,10 +316,10 @@ namespace AttackGame
                 _cur_cell_idx = idx; //更新当前选中格
                 return;
             }
+
             //点击空背包格 -> 重置选中信息
             _cur_cell_idx = idx;
             _infoPanel.Hide();
-            
         }
 
         public void PointerEnterCell(int idx)
@@ -307,7 +342,7 @@ namespace AttackGame
         {
             //先取消高亮
             cells[idx].selected = false;
-            
+
             if (_cur_cell_idx != -1)
             {
                 cells[_cur_cell_idx].selected = true;

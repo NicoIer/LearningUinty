@@ -696,6 +696,10 @@ MonoBehaviour:
   image: {fileID: 664676210}
   count_text: {fileID: 1051720834}
   name_text: {fileID: 1422194827}
+  drop_btn_0: {fileID: 1878578448}
+  drop_btn_1: {fileID: 1570824880}
+  use_btn_0: {fileID: 546220833}
+  use_btn_1: {fileID: 655286530}
 --- !u!1001 &399458065
 PrefabInstance:
   m_ObjectHideFlags: 0

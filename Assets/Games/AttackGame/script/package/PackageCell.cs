@@ -145,7 +145,7 @@ namespace AttackGame
         /// </summary>
         public void Clear()
         {
-            empty = true;
+            UpdateCell(true);
         }
 
         /// <summary>
