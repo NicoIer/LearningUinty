@@ -10,6 +10,7 @@ namespace AttackGame
     public class PackageManager : MonoBehaviour
     {
         [SerializeField] private List<PackageCell> cells = new(); //所有的背包单元格集合
+        [SerializeField] private ItemInfoPanel _infoPanel;
 
         [SerializeField] private int tryTimes = 100;
         //private List<Item> _items = new(); //玩家所持有的所有道具
@@ -19,18 +20,26 @@ namespace AttackGame
 
         private GameObject _cell_panel;
 
+        #region Unity Method
+
         private void Awake()
         {
             _cell_panel = transform.GetChild(0).gameObject;
             for (var i = 0; i < _cell_panel.transform.childCount; i++)
             {
-                cells.Add(_cell_panel.transform.GetChild(i).GetComponent<PackageCell>());
+                var cell = _cell_panel.transform.GetChild(i).GetComponent<PackageCell>();
+                cell.idx = i;
+                cells.Add(cell);
             }
 
-            _cur_cell_idx = 0;
+            _cur_cell_idx = -1;
+
+            _infoPanel = transform.GetChild(2).GetComponent<ItemInfoPanel>();
         }
 
-        #region Search Function
+        #endregion
+
+        #region Search Method
 
         public bool HaveCapacity(uint uid)
         {
@@ -128,7 +137,7 @@ namespace AttackGame
 
         #endregion
 
-        #region Item Function
+        #region Item Method
 
         /// <summary>
         /// 将指定位置的背包格物品减少num个
@@ -245,6 +254,40 @@ namespace AttackGame
             }
 
             throw new IndexOutOfRangeException($"无法找到合适的位置存放物品After:{tryTimes} times try");
+        }
+
+        #endregion
+
+        #region Event Method
+
+        /// <summary>
+        /// idx对应的cell被点击事件
+        /// </summary>
+        /// <param name="idx">cell的idx</param>
+        public void ClickedCell(int idx)
+        {
+            //ToDo 点击后(锁定)就默认这个物品 
+            _cur_cell_idx = idx;
+            _infoPanel.Flash(cells[idx].item);
+            _infoPanel.Show();
+        }
+
+        public void PointerEnterCell(int idx)
+        {
+            _infoPanel.Flash(cells[idx].item);
+            _infoPanel.Show();
+        }
+
+        public void PointerExitCell()
+        {
+            if (_cur_cell_idx != -1)
+            {
+                _infoPanel.Flash(cells[_cur_cell_idx].item);
+                _infoPanel.Show();
+                return;
+            }
+
+            _infoPanel.Hide();
         }
 
         #endregion

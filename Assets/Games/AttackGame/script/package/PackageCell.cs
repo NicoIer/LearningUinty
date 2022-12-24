@@ -25,7 +25,7 @@ namespace AttackGame
         #endregion
 
         public bool empty { get; private set; } = true;
-
+        public int idx;
         public bool selected = false;
 
 
@@ -45,18 +45,21 @@ namespace AttackGame
 
         private void OnBtnClicked()
         {
-            print($"鼠标点击了{name}");
-            UpdateCell(empty = true);
+            selected = true;
+            UIManager.instance.packageManager.ClickedCell(idx);
+            //UpdateCell(empty = true);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Debug.Log("");
+            selected = true;
+            UIManager.instance.packageManager.PointerEnterCell(idx);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            throw new NotImplementedException();
+            selected = false;
+            UIManager.instance.packageManager.PointerExitCell();
         }
 
         #endregion
