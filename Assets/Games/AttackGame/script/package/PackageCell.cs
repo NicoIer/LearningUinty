@@ -1,10 +1,11 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace AttackGame
 {
-    public class PackageCell : MonoBehaviour
+    public class PackageCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         //ToDo 实现 被选中 快捷丢弃 功能
 
@@ -32,6 +33,8 @@ namespace AttackGame
         {
             _button = GetComponent<Button>();
             _button.onClick.AddListener(OnBtnClicked);
+
+
             _image = transform.GetChild(0).GetComponent<Image>();
             _count_text = transform.GetChild(1).GetComponent<Text>();
             _name_text = transform.GetChild(2).GetComponent<Text>();
@@ -44,6 +47,16 @@ namespace AttackGame
         {
             print($"鼠标点击了{name}");
             UpdateCell(empty = true);
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            Debug.Log("");
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -77,14 +90,16 @@ namespace AttackGame
         public int Count()
         {
             if (empty)
-            {//为空返回-1 表示为空
+            {
+                //为空返回-1 表示为空
                 return -1;
             }
-            
+
             if (item == null)
             {
                 throw new NullReferenceException($"cell hold a null item so can't be count");
             }
+
             //不为空 且持有item 则返回数量
             return item.num;
         }
@@ -108,7 +123,6 @@ namespace AttackGame
         /// </returns>
         public int SetItem(Item item)
         {
-            print($"存放{item.num}个{item.data.item_name}到{name}");
             if (empty)
             {
                 //如果格子为空 
@@ -116,6 +130,7 @@ namespace AttackGame
                 {
                     //可以直接放下 则放下
                     this.item = item;
+                    print($"存放{item.num}个{item.data.item_name}到{name}");
                     UpdateCell(false);
                     return LeftCapacity();
                 }
@@ -134,6 +149,7 @@ namespace AttackGame
                 if (LeftCapacity() >= item.num)
                 {
                     //放的下
+                    print($"存放{item.num}个{item.data.item_name}到{name}");
                     this.item.num += item.num;
                     UpdateCell(false);
                     return LeftCapacity();
@@ -174,15 +190,39 @@ namespace AttackGame
         /// <returns></returns>
         public int LeftCapacity()
         {
+            if (empty)
+            {
+                return -1;
+            }
+
             if (item != null)
             {
                 var tmp = (int)item.data.package_limit - item.num;
                 if (tmp < 0)
-                    throw new IndexOutOfRangeException($"背包格还能存放:{tmp}个{item.data.item_name}");
+                    throw new IndexOutOfRangeException($"背包格还能存放:{tmp} < 0个{item.data.item_name}");
                 return tmp;
             }
 
             throw new NullReferenceException("背包格的物品没有设定");
+        }
+
+        /// <summary>
+        /// 当前格子是否存满
+        /// </summary>
+        /// <returns></returns>
+        public bool Full()
+        {
+            if (empty)
+            {
+                return false;
+            }
+
+            if (item != null)
+            {
+                return item.data.package_limit >= item.num;
+            }
+
+            throw new IndexOutOfRangeException("不为空的背包格持有了null物品!!!");
         }
 
         #endregion
