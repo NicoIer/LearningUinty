@@ -27,38 +27,26 @@ namespace AttackGame
         {
             foreach (var inspectorItem in inspectorItems)
             {
-                var item = new Item
-                {
-                    data = inspectorItem.data,
-                    num = inspectorItem.info.num
-                };
+                var item = new Item(inspectorItem.data, inspectorItem.info.num);
                 _items.Add(item);
             }
         }
 
         private void Update()
         {
-
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                var _item = new Item
-                {
-                    data = testItem.data,
-                    num = testItem.info.num
-                };
-                UIManager.instance.packageManager.AddItem(_item);
+                var item = new Item(testItem.data, testItem.info.num);
+
+                UIManager.instance.packageManager.AddItem(item);
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha0))
             {
-                var _item = new Item
-                {
-                    data = testItem.data,
-                    num = testItem.info.num
-                };
-                UIManager.instance.packageManager.RemoveItem(_item.uid, 1);
-            }
+                var item = new Item(testItem.data, testItem.info.num);
 
+                UIManager.instance.packageManager.RemoveItem(item.uid, 1);
+            }
         }
 
         private void DisplayData()

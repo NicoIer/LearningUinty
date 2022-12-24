@@ -8,6 +8,14 @@ namespace AttackGame
     /// </summary>
     public class DroppedItem : MonoBehaviour
     {
+        public InspectorItem inspectorItem;
+        private Item _item;
+
+        private void Awake()
+        {
+            _item = new Item(inspectorItem.data, inspectorItem.info.num);
+        }
+
         private void OnTriggerEnter2D(Collider2D col)
         {
             if (col.CompareTag("Player"))

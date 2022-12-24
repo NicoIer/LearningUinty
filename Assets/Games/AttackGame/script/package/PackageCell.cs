@@ -91,11 +91,9 @@ namespace AttackGame
                 }
 
                 //放一个假的
-                this.item = new Item
-                {
-                    data = item.data,
-                    num = 0
-                };
+                this.item = new Item(item.data, 0);
+
+                
                 //一次性放不下
                 return -2;
             }

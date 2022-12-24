@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace AttackGame
@@ -11,8 +10,8 @@ namespace AttackGame
     public class PackageManager : MonoBehaviour
     {
         [SerializeField] private List<PackageCell> cells = new(); //所有的背包单元格集合
-        [SerializeField] private int try_times = 100;
-        private List<Item> _items = new(); //玩家所持有的所有道具
+        [SerializeField] private int tryTimes = 100;
+        //private List<Item> _items = new(); //玩家所持有的所有道具
 
         //当前选中的背包格索引
         public int _cur_cell_idx { get; set; }
@@ -115,7 +114,7 @@ namespace AttackGame
                 //删除失败(只可能时因为不够删除)
                 var cell = cells[position];
                 var left = num;
-                for (int i = 0; i < try_times; i++)
+                for (int i = 0; i < tryTimes; i++)
                 {
                     if (left > cell.Count())
                     {
@@ -132,7 +131,7 @@ namespace AttackGame
                     }
                 }
 
-                throw new IndexOutOfRangeException($"after {try_times} times try remove failed");
+                throw new IndexOutOfRangeException($"after {tryTimes} times try remove failed");
             }
         }
 
@@ -152,12 +151,13 @@ namespace AttackGame
                     throw new IndexOutOfRangeException("没有位置可以添加这个物品了");
                 }
             }
+
             _addItem(item, position);
         }
 
         private void _addItem(Item item, int position)
         {
-            for (int i = 0; i < try_times; i++)
+            for (int i = 0; i < tryTimes; i++)
             {
                 //要考虑到堆叠的情况
                 var curCell = cells[position]; //获取要存放物品的背包格
@@ -174,11 +174,7 @@ namespace AttackGame
                     {
                         //可以存 但是只能存一点点
                         //先存一点
-                        var item1 = new Item
-                        {
-                            data = item.data,
-                            num = curCell.LeftCapacity()
-                        };
+                        var item1 = new Item(item.data, curCell.LeftCapacity());
                         curCell.SetItem(item1);
                         //再找下一个位置存
                         position = NextAvailableCellIndex(item.uid);
@@ -196,7 +192,7 @@ namespace AttackGame
                 }
             }
 
-            throw new IndexOutOfRangeException($"无法找到合适的位置存放物品After:{try_times} times try");
+            throw new IndexOutOfRangeException($"无法找到合适的位置存放物品After:{tryTimes} times try");
         }
 
         #endregion
