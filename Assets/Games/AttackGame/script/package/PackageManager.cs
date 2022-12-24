@@ -143,6 +143,11 @@ namespace AttackGame
         /// <returns></returns>
         public void AddItem(Item item, int position = -1)
         {
+            if (item.num <= 0)
+            {//ToDo 是否应该 throw error
+                Debug.LogWarning($"{item.num} {item.data.item_name} can't be add");
+                return;
+            }
             if (position == -1)
             {
                 position = NextAvailableCellIndex(item.uid);

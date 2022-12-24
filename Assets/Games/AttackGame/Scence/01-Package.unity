@@ -1934,7 +1934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cells: []
-  try_times: 100
+  tryTimes: 100
 --- !u!1001 &1462095277
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -27,6 +27,8 @@ namespace AttackGame
         private void PickedByPlayer()
         {
             Destroy(gameObject);
+            //ToDo 应该交给Player做处理
+            UIManager.instance.packageManager.AddItem(_item);
         }
     }
 }
