@@ -10,7 +10,7 @@ namespace AttackGame
         [Header("DEBUG")] public bool paused;
 
         [Header("用于调试背包的临时物品信息")] public InspectorItem testItem;
-        
+
 
         [Header("初始化背包所需信息")] public List<InspectorItem> inspectorItems = new();
 
@@ -38,6 +38,7 @@ namespace AttackGame
 
         private void Update()
         {
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 var _item = new Item
@@ -57,6 +58,7 @@ namespace AttackGame
                 };
                 UIManager.instance.packageManager.RemoveItem(_item.uid, 1);
             }
+
         }
 
         private void DisplayData()
