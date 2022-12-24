@@ -20,7 +20,7 @@ namespace AttackGame
         {
             if (col.CompareTag("Player"))
             {
-                PickedByPlayer();    
+                PickedByPlayer();
             }
         }
 
@@ -28,7 +28,14 @@ namespace AttackGame
         {
             Destroy(gameObject);
             //ToDo 应该交给Player做处理
-            UIManager.instance.packageManager.AddItem(_item);
+            if (UIManager.instance.packageManager.HaveCapacity(_item.uid))
+            {
+                UIManager.instance.packageManager.AddItem(_item);
+            }
+            else
+            {
+                print("背包没有空间存放物品了");
+            }
         }
     }
 }
