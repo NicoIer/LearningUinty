@@ -14,7 +14,6 @@ namespace AttackGame.Talking
         {
             get
             {
-                Debug.Log(inited);
                 if (!inited)
                 {
                     Init();

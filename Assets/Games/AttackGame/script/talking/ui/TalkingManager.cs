@@ -32,7 +32,7 @@ namespace AttackGame.Talking
             print("Open");
             opened = true;
             _data = data;
-            data.Init();//ToDo 搞清楚这里为什么必须要Init一下
+            data.Init(); //ToDo 搞清楚这里为什么必须要Init一下
             gameObject.SetActive(true);
             NextData();
         }
@@ -50,7 +50,7 @@ namespace AttackGame.Talking
             if (_idx < _data.Count && _idx >= 0)
             {
                 var curTalking = _data[_idx];
-                _taking_text.text = curTalking.text;
+                _taking_text.text = System.Text.RegularExpressions.Regex.Unescape(curTalking.text);
                 _background_image.sprite = curTalking.background_image;
             }
             else

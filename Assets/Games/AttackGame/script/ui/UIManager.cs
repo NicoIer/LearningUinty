@@ -20,6 +20,13 @@ namespace AttackGame.UI
             {
                 instance = this;
                 _ui = gameObject;
+                _ui.gameObject.SetActive(true);
+                packageManager.gameObject.SetActive(true);
+                packageManager.gameObject.SetActive(false);
+                
+                talkingManager.gameObject.SetActive(true);
+                talkingManager.gameObject.SetActive(false);
+
             }
         }
 

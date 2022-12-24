@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace AttackGame.NPC
 {
-    public abstract class NpcBase: MonoBehaviour
+    public  interface NpcBase
     {
-        protected NpcData _data;
-
     }
     
 }
