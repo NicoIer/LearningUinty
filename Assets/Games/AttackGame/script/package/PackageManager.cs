@@ -10,6 +10,7 @@ namespace AttackGame
     public class PackageManager : MonoBehaviour
     {
         [SerializeField] private List<PackageCell> cells = new(); //所有的背包单元格集合
+
         [SerializeField] private int tryTimes = 100;
         //private List<Item> _items = new(); //玩家所持有的所有道具
 
@@ -29,7 +30,44 @@ namespace AttackGame
             _cur_cell_idx = 0;
         }
 
-        #region Search
+        #region Search Function
+
+        public bool HaveCapacity(uint uid)
+        {
+            foreach (var cell in cells)
+            {
+                if (cell.empty)
+                {
+                    //有空格子 true
+                    return true;
+                }
+
+                if (cell.item.uid == uid && !cell.Full())
+                {
+                    //不是空格子 但是 存放的物品相同 且有 剩余空间
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 是否有空的背包格
+        /// </summary>
+        /// <returns></returns>
+        public bool HaveEmpty()
+        {
+            foreach (var cell in cells)
+            {
+                if (cell.empty)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         public int LastSpecificCellIndex(uint uid)
         {
@@ -144,10 +182,12 @@ namespace AttackGame
         public void AddItem(Item item, int position = -1)
         {
             if (item.num <= 0)
-            {//ToDo 是否应该 throw error
+            {
+                //ToDo 是否应该 throw error
                 Debug.LogWarning($"{item.num} {item.data.item_name} can't be add");
                 return;
             }
+
             if (position == -1)
             {
                 position = NextAvailableCellIndex(item.uid);
@@ -179,13 +219,20 @@ namespace AttackGame
                     {
                         //可以存 但是只能存一点点
                         //先存一点
-                        var item1 = new Item(item.data, curCell.LeftCapacity());
+                        var left = curCell.LeftCapacity();
+                        if (left == -1)
+                        {
+                            left = (int)item.data.package_limit;
+                        }
+
+                        var item1 = new Item(item.data, left);
                         curCell.SetItem(item1);
                         //再找下一个位置存
                         position = NextAvailableCellIndex(item.uid);
                         item.num -= item1.num;
                         continue;
                     }
+
                     case -1:
                         //这个位置不能存
                         throw new IndexOutOfRangeException($"不存在的情况:NextAvailableCellIndex(item)必然可以获取一个可用的位置" +
