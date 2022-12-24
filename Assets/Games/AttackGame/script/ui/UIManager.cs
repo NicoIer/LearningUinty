@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using AttackGame.Data.Talking;
-using Unity.VisualScripting;
+using AttackGame.Common.Manager;
+using AttackGame.Package;
+using AttackGame.Talking;
 using UnityEngine;
 
-namespace AttackGame
+namespace AttackGame.UI
 {
     public class UIManager : MonoBehaviour
     {

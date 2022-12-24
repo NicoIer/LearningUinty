@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using AttackGame._Item;
 using Script.Tools.DesignPattern;
 using UnityEngine;
 
-namespace AttackGame
+namespace AttackGame.Package
 {
     /// <summary>
     /// 背包管理器 用于 进行UI和数据的交互

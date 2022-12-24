@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace AttackGame.Data.Talking
+namespace AttackGame.Talking
 {
     [Serializable]
     public class TalkingStruct

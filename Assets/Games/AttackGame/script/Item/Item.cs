@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AttackGame
+namespace  AttackGame._Item
 {
     /// <summary>
     /// 道具类

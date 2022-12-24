@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace AttackGame.Data.Talking
+namespace AttackGame.Talking
 {
     /// <summary>
     /// 你一句我一句 的 简单对话数据存储 

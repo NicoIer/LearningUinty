@@ -1,9 +1,11 @@
 ﻿using System;
+using AttackGame._Item;
+using AttackGame.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace AttackGame
+namespace AttackGame.Package
 {
     public class PackageCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
@@ -202,7 +204,7 @@ namespace AttackGame
 
         private void _set_item_print(Item item)
         {
-            print($"存放{item.num}个{item.data.item_name}到{name}");
+           
         }
 
         public bool Remove(int num)

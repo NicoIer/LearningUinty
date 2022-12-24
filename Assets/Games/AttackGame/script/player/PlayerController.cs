@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using AttackGame;
 using UnityEngine;
 
-namespace AttackGame
+namespace AttackGame.Player
 {
     public class PlayerController : MonoBehaviour
     {

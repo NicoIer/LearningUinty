@@ -1,7 +1,8 @@
 ﻿using System;
+using AttackGame.UI;
 using UnityEngine;
 
-namespace AttackGame
+namespace AttackGame._Item
 {
     /// <summary>
     /// 掉落在地上的物品 可以被捡起

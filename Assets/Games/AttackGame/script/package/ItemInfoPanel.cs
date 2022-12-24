@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using AttackGame._Item;
+using AttackGame.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AttackGame
+namespace AttackGame.Package
 {
     public class ItemInfoPanel : MonoBehaviour
     {

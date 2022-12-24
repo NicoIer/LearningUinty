@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AttackGame
+namespace AttackGame.Common.Manager
 {
     public static class ResourcesManager
     {

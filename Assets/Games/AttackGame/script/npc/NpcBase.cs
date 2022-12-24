@@ -1,7 +1,7 @@
 ﻿
 using UnityEngine;
 
-namespace AttackGame.script.npc
+namespace AttackGame.NPC
 {
     public abstract class NpcBase: MonoBehaviour
     {

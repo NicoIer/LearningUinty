@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AttackGame.Data.Talking
+namespace AttackGame.Talking
 {
     public abstract class TalkingData : ScriptableObject
     {

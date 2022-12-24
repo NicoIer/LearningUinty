@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace AttackGame
+namespace AttackGame.Player
 {
     public class PlayerInfo : MonoBehaviour
     {

@@ -1,10 +1,7 @@
-﻿using System;
-using AttackGame.Data.Talking;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace AttackGame
+namespace AttackGame.Talking
 {
     public class TalkingManager : MonoBehaviour
     {
@@ -42,7 +39,6 @@ namespace AttackGame
 
         public void Close()
         {
-            print("关闭");
             opened = false;
             _idx = -1;
             gameObject.SetActive(false);
@@ -50,9 +46,7 @@ namespace AttackGame
 
         private void NextData()
         {
-            print("Next");
             _idx++;
-            print(_data.Count);
             if (_idx < _data.Count && _idx >= 0)
             {
                 var curTalking = _data[_idx];

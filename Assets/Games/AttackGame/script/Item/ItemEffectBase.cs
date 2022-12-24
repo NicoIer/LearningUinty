@@ -1,4 +1,4 @@
-﻿namespace AttackGame
+﻿namespace  AttackGame._Item
 {
     /// <summary>
     /// 道具抽象接口

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AttackGame.script.ui
+namespace AttackGame.UI
 {
     public class FloatPanel : MonoBehaviour
     {

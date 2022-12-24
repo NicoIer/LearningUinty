@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AttackGame.script.npc
+namespace AttackGame.NPC
 {
     /// <summary>
     /// NpcData

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace AttackGame
+namespace AttackGame.Player
 {
     public class PlayerInputHandler : MonoBehaviour
     {

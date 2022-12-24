@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace AttackGame
+namespace AttackGame.Common.Manager 
 {
     public class GameManager : Script.Tools.DesignPattern.Singleton<GameManager>
     {
