@@ -166,7 +166,7 @@ namespace AttackGame
                 {
                     //可以直接放下 则放下
                     this.item = item;
-                    print($"存放{item.num}个{item.data.item_name}到{name}");
+                    _set_item_print(item);
                     UpdateCell(false);
                     return LeftCapacity();
                 }
@@ -185,7 +185,8 @@ namespace AttackGame
                 if (LeftCapacity() >= item.num)
                 {
                     //放的下
-                    print($"存放{item.num}个{item.data.item_name}到{name}");
+                    _set_item_print(item);
+                    
                     this.item.num += item.num;
                     UpdateCell(false);
                     return LeftCapacity();
@@ -199,6 +200,10 @@ namespace AttackGame
             return -1;
         }
 
+        private void _set_item_print(Item item)
+        {
+            print($"存放{item.num}个{item.data.item_name}到{name}");
+        }
 
         public bool Remove(int num)
         {
