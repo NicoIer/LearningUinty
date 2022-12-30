@@ -12,7 +12,7 @@ namespace AttackGame.Player
 
         [Header("inspector")] public PlayerData data;
 
-        public Rigidbody2D rigidbody2D { get; private set; }
+        public Rigidbody2D body { get; private set; }
 
         #endregion
 
@@ -45,7 +45,7 @@ namespace AttackGame.Player
 
         private void Awake()
         {
-            rigidbody2D = GetComponent<Rigidbody2D>();
+            body = GetComponent<Rigidbody2D>();
             controller = new PlayerController(this);
             info = new PlayerInfo();
             if (handler == null)

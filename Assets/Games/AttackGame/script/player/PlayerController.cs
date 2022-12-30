@@ -33,7 +33,7 @@ namespace AttackGame.Player
 
         #region Reference Attribute
 
-        private Rigidbody2D rigidbody => _player.rigidbody2D;
+        private Rigidbody2D rigidbody => _player.body;
         private PlayerInputHandler handler => _player.handler;
 
         #endregion
