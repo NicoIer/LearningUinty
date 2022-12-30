@@ -112,7 +112,7 @@ namespace AttackGame.Package
             }
             else
             {
-                _image.sprite = item.data.sprite;
+                _image.sprite = item.sprite;
                 _count_text.text = item.num.ToString();
                 _name_text.text = item.data.item_name;
                 _image.color = Color.white;
@@ -174,7 +174,7 @@ namespace AttackGame.Package
                 }
 
                 //放一个假的
-                this.item = new Item(item.data, 0);
+                this.item = new Item(item.data, 0,item.sprite);
 
 
                 //一次性放不下

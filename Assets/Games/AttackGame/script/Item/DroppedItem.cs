@@ -14,7 +14,7 @@ namespace AttackGame._Item
 
         private void Awake()
         {
-            _item = new Item(inspectorItem.data, inspectorItem.info.num);
+            _item = new Item(inspectorItem.data, inspectorItem.info.num,inspectorItem.info.sprite);
         }
 
         private void OnTriggerEnter2D(Collider2D col)

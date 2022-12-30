@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace AttackGame
 {
@@ -9,6 +10,7 @@ namespace AttackGame
     public class ItemInfo
     {
         public int num; //数量
+        public Sprite sprite;
     }
     
     /// <summary>

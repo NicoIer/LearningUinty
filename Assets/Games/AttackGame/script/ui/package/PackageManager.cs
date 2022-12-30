@@ -240,7 +240,7 @@ namespace AttackGame.Package
                             left = (int)item.data.package_limit;
                         }
 
-                        var item1 = new Item(item.data, left);
+                        var item1 = new Item(item.data, left,item.sprite);
                         curCell.SetItem(item1);
                         //再找下一个位置存
                         position = NextAvailableCellIndex(item.uid);

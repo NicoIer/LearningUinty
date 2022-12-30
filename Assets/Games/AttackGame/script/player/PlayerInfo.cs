@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using AttackGame._Item;
 using AttackGame.common.component;
+using AttackGame.Common.Manager;
 using AttackGame.UI;
 using UnityEngine;
 
@@ -44,9 +45,11 @@ namespace AttackGame.Player
                 var pair = new ItemPair(data, num);
                 items.Add(data.uid,pair);
             }
+            
         }
         private void DropItem(ItemData data, int num)
         {
+            ResourcesManager.Save(items,"./data/player/items.json");
             if (num == -1)
             {
                 items.Remove(data.uid);

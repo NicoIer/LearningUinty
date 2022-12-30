@@ -13,6 +13,7 @@ namespace AttackGame.Common.Manager
         {
             paused = true;
             Time.timeScale = 0;
+            
         }
 
         public void Resume()
@@ -20,5 +21,6 @@ namespace AttackGame.Common.Manager
             paused = false;
             Time.timeScale = 1;
         }
+        
     }
 }

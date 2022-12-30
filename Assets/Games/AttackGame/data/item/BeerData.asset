@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uid: 2
   item_name: beer
-  desc: "\u4E00\u676F\u5564\u9152"
-  package_limit: 20
+  desc: "\u8FD9\u662F\u5564\u9152"
+  package_limit: 6
   holding_limit: 0
-  sprite: {fileID: 21300000, guid: e0a7fb47c7111464f866363e7a3f47da, type: 3}
