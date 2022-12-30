@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AttackGame._Item;
 using Script.Tools.DesignPattern;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace AttackGame.Package
 {
@@ -12,10 +13,12 @@ namespace AttackGame.Package
     public class PackageManager : MonoBehaviour
     {
         [SerializeField] private List<PackageCell> cells = new(); //所有的背包单元格集合
-        [SerializeField] private ItemInfoPanel _infoPanel;
+        [SerializeField] private ItemInfoPanel infoPanel;
 
         [SerializeField] private int tryTimes = 100;
-        //private List<Item> _items = new(); //玩家所持有的所有道具
+
+        public Action<ItemData, int> dropAction;
+        public Action<ItemData, int> addAction;
 
         //当前选中的背包格索引
         private int _cur_cell_idx;
@@ -36,7 +39,7 @@ namespace AttackGame.Package
 
             _cur_cell_idx = -1;
 
-            _infoPanel = transform.GetChild(2).GetComponent<ItemInfoPanel>();
+            infoPanel = transform.GetChild(2).GetComponent<ItemInfoPanel>();
         }
 
         #endregion
@@ -67,7 +70,7 @@ namespace AttackGame.Package
         /// 是否有空的背包格
         /// </summary>
         /// <returns></returns>
-        public bool HaveEmpty()
+        public bool HaveEmptyCell()
         {
             foreach (var cell in cells)
             {
@@ -220,6 +223,7 @@ namespace AttackGame.Package
                 var status = curCell.SetItem(item); //尝试存放 
                 if (status >= 0)
                 {
+                    addAction.Invoke(item.data,item.num);
                     //存放成功
                     return;
                 }
@@ -258,30 +262,52 @@ namespace AttackGame.Package
             throw new IndexOutOfRangeException($"无法找到合适的位置存放物品After:{tryTimes} times try");
         }
 
+        private bool _remove_item(PackageCell cell, int num, bool all = false)
+        {
+            if (all)
+            {
+                dropAction.Invoke(cell.item.data, cell.item.num);
+                cell.Clear();
+                return true;
+            }
+            else
+            {
+                var flag = cell.Remove(num);
+                if (flag)
+                {
+                    dropAction.Invoke(cell.item.data, num);
+                }
+
+                return flag;
+            }
+        }
+
         #endregion
 
         #region Event Method
 
         public void DropBtnClicked(int num)
         {
-            //ToDo 先通知玩家 再更新UI
-
-
             if (_cur_cell_idx == -1)
             {
                 throw new IndexOutOfRangeException("尝试丢弃一个不存在的背包格中的物品!");
             }
 
             var cell = cells[_cur_cell_idx];
+
+
             if (num == -1)
             {
                 //全部丢掉
-                cell.Clear();
+                if (!_remove_item(cell, num, true))
+                {
+                    throw new BeyondException($"未知错误");
+                }
             }
             else
             {
                 //丢num个
-                if (!cell.Remove(num))
+                if (!_remove_item(cell, num))
                 {
                     throw new BeyondException($"超出可以丢弃的最大数量.item:{cell.item.uid} num:{num}");
                 }
@@ -292,7 +318,7 @@ namespace AttackGame.Package
             {
                 _cur_cell_idx = -1;
                 cell.selected = false;
-                _infoPanel.Hide();
+                infoPanel.Hide();
             }
         }
 
@@ -312,15 +338,15 @@ namespace AttackGame.Package
             {
                 //点击非空背包格,高亮显示对应格子
                 cells[idx].selected = true;
-                _infoPanel.Flash(cells[idx].item);
-                _infoPanel.Show();
+                infoPanel.Flash(cells[idx].item);
+                infoPanel.Show();
                 _cur_cell_idx = idx; //更新当前选中格
                 return;
             }
 
             //点击空背包格 -> 重置选中信息
             _cur_cell_idx = idx;
-            _infoPanel.Hide();
+            infoPanel.Hide();
         }
 
         public void PointerEnterCell(int idx)
@@ -331,8 +357,8 @@ namespace AttackGame.Package
             }
 
             cells[idx].selected = true;
-            _infoPanel.Flash(cells[idx].item);
-            _infoPanel.Show();
+            infoPanel.Flash(cells[idx].item);
+            infoPanel.Show();
         }
 
         /// <summary>
@@ -347,12 +373,12 @@ namespace AttackGame.Package
             if (_cur_cell_idx != -1)
             {
                 cells[_cur_cell_idx].selected = true;
-                _infoPanel.Flash(cells[_cur_cell_idx].item);
-                _infoPanel.Show();
+                infoPanel.Flash(cells[_cur_cell_idx].item);
+                infoPanel.Show();
                 return;
             }
 
-            _infoPanel.Hide();
+            infoPanel.Hide();
         }
 
         #endregion

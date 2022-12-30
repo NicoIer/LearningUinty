@@ -12,7 +12,7 @@ namespace AttackGame.Player
 
         [Header("inspector")] public PlayerData data;
 
-        public Rigidbody2D rigidbody { get; private set; }
+        public Rigidbody2D rigidbody2D { get; private set; }
 
         #endregion
 
@@ -25,30 +25,29 @@ namespace AttackGame.Player
         #region Reference attribute
 
         public Vector2 velocity => controller.velocity;
-        public float health => playerInfo.health;
-        public List<Item> items => playerInfo.items;
-
+        public float health => info.health;
+        public Dictionary<uint,ItemPair> items => info.items;
         #endregion
 
         #region Public attribute
 
         public PlayerInputHandler handler { get; private set; }
         public PlayerController controller { get; private set; }
-        public PlayerInfo playerInfo { get; private set; }
+        public PlayerInfo info { get; private set; }
 
         #endregion
 
         #region Private attribute
-
+        
         #endregion
 
         #region Unity Callback
 
         private void Awake()
         {
-            rigidbody = GetComponent<Rigidbody2D>();
+            rigidbody2D = GetComponent<Rigidbody2D>();
             controller = new PlayerController(this);
-            playerInfo = new PlayerInfo();
+            info = new PlayerInfo();
             if (handler == null)
             {
                 handler = transform.Find("input").GetComponent<PlayerInputHandler>();
@@ -57,14 +56,21 @@ namespace AttackGame.Player
             }
         }
 
+        private void Start()
+        {
+            info.Start();
+        }
+
         private void Update()
         {
             controller.Update();
+            info.Update();
         }
 
         private void FixedUpdate()
         {
             controller.FixedUpdate();
+            info.FixedUpdate();
         }
 
         #endregion

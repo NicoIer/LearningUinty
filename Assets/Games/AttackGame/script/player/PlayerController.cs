@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using AttackGame;
+using AttackGame.common.component;
 using UnityEngine;
 
 namespace AttackGame.Player
 {
-    public class PlayerController
+    public class PlayerController: ICoreComponent
     {
         #region Construct
 
@@ -32,16 +33,22 @@ namespace AttackGame.Player
 
         #region Reference Attribute
 
-        private Rigidbody2D rigidbody => _player.rigidbody;
+        private Rigidbody2D rigidbody => _player.rigidbody2D;
         private PlayerInputHandler handler => _player.handler;
 
         #endregion
-        
+
+        public void Start()
+        {
+            
+        }
+
         public void Update()
         {
             _velocity.x = handler.move.x * _player.data.move_speed;
             _velocity.y = handler.move.y * _player.data.move_speed;
         }
+        
 
         public void FixedUpdate()
         {
