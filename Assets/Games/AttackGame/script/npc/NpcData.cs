@@ -1,17 +1,27 @@
-﻿using AttackGame.Talking;
+﻿using System;
+using AttackGame.Talking;
 using UnityEngine;
 
 namespace AttackGame.NPC
 {
-    /// <summary>
-    /// NpcData
-    /// 存储包括Npc名字
-    /// 对话
-    /// </summary>
-    [CreateAssetMenu(fileName = "NpcData", menuName = "Data/Npc", order = 0)]
-    public class NpcData : ScriptableObject
+    [Serializable]
+    public class NpcData
     {
-        public string npc_name;
-        public SimpleData taling_data;//ToDo 暂时这样写 明天用JSON解决
+        public string name;
+        public Sprite sprite;
+        public int talkingID = -1;
+
+        private TalkingData _talking_data;
+        public TalkingData talkingData
+        {
+            get
+            {
+                if (talkingID != -1)
+                    return _talking_data ??= new JsonTalkingData(talkingID);
+                return null;
+            }
+        }
+
+        public float health;
     }
 }

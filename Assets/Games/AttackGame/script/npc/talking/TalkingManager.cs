@@ -1,20 +1,37 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using AttackGame.Common.Manager;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace AttackGame.Talking
 {
     public class TalkingManager : MonoBehaviour
     {
-        [SerializeField] private Text _taking_text;
+        [SerializeField] private Text takingText;
 
-        [SerializeField] private Image _background_image;
+        [SerializeField] private Image backgroundImage;
 
         //ToDo 后续构建一个新的mono类控制左右对话的显示
         [SerializeField] private GameObject right;
+
         [SerializeField] private GameObject left;
+
+        //ToDo 用它来控制对话框的样式
+        public List<Sprite> styles = new();
         private TalkingData _data;
         private int _idx = -1; //当前显示到的对话索引
-        public bool opened { get; set; }
+        public bool opened { get; private set; }
+        private Sprite _defaultStyle;
+
+        private void Awake()
+        {
+            _defaultStyle = backgroundImage.sprite;
+            if (backgroundImage == null)
+            {
+                backgroundImage = GetComponent<Image>();
+            }
+        }
 
         private void Update()
         {
@@ -29,10 +46,10 @@ namespace AttackGame.Talking
 
         public void Open(TalkingData data)
         {
-            print("Open");
             opened = true;
             _data = data;
-            data.Init(); //ToDo 搞清楚这里为什么必须要Init一下
+            data.Init();
+            ResourcesManager.Save(data,"./data/talking/1.json");
             gameObject.SetActive(true);
             NextData();
         }
@@ -50,8 +67,9 @@ namespace AttackGame.Talking
             if (_idx < _data.Count && _idx >= 0)
             {
                 var curTalking = _data[_idx];
-                _taking_text.text = System.Text.RegularExpressions.Regex.Unescape(curTalking.text);
-                _background_image.sprite = curTalking.background_image;
+                takingText.text = System.Text.RegularExpressions.Regex.Unescape(curTalking.text);
+                backgroundImage.sprite =
+                    curTalking.styleIdx < styles.Count ? styles[curTalking.styleIdx] : _defaultStyle;
             }
             else
             {

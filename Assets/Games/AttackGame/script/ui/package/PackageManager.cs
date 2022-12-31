@@ -197,7 +197,6 @@ namespace AttackGame.Package
         {
             if (item.num <= 0)
             {
-                //ToDo 是否应该 throw error
                 Debug.LogWarning($"{item.num} {item.data.item_name} can't be add");
                 return;
             }
@@ -242,6 +241,7 @@ namespace AttackGame.Package
 
                         var item1 = new Item(item.data, left,item.sprite);
                         curCell.SetItem(item1);
+                        addAction.Invoke(item1.data,item1.num);
                         //再找下一个位置存
                         position = NextAvailableCellIndex(item.uid);
                         item.num -= item1.num;

@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 namespace AttackGame.Common.Manager 
 {
     public class GameManager : Script.Tools.DesignPattern.Singleton<GameManager>
     {
+        protected override void Awake()
+        {
+            base.Awake();
+            ResourcesManager.PreLoadResources();
+        }
+
         public bool paused { get; private set; }
 
         public void Pause()

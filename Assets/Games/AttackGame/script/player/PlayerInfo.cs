@@ -20,14 +20,12 @@ namespace AttackGame.Player
         public ItemData data;
         public int num;
     }
-    /// <summary>
-    /// 玩家详情
-    /// </summary>
+
     public class PlayerInfo: ICoreComponent
     {
         public float health;//玩家生命值
         public Dictionary<uint,ItemPair> items = new();//玩家持有的道具集合
-
+        
         public void Start()
         {
             UIManager.instance.packageManager.dropAction += DropItem;
@@ -49,7 +47,6 @@ namespace AttackGame.Player
         }
         private void DropItem(ItemData data, int num)
         {
-            ResourcesManager.Save(items,"./data/player/items.json");
             if (num == -1)
             {
                 items.Remove(data.uid);

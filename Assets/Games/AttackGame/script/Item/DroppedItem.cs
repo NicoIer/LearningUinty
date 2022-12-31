@@ -28,7 +28,6 @@ namespace AttackGame._Item
         private void PickedByPlayer()
         {
             Destroy(gameObject);
-            //ToDo 应该交给Player做处理
             if (UIManager.instance.packageManager.HaveCapacity(_item.uid))
             {
                 UIManager.instance.packageManager.AddItem(_item);
