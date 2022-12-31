@@ -13,7 +13,7 @@
 | `了解Unity编辑器的基本使用` | `使用物理组件的碰撞检测,实现具有很好手感的跳跃` | `初步学习了粒子系统,并制作了跳跃/跑步的粒子特效` | `学习了AudioListener的基本使用,有三种音效` |
 | --------------------------- | ----------------------------------------------- | ------------------------------------------------ | ------------------------------------------ |
 
-| ![Snipaste_2022-11-28_16-34-03](markdown_images/Snipaste_2022-11-28_16-33-48.png) | ![Snipaste_2022-11-28_16-33-48](markdown_images/Snipaste_2022-11-28_16-34-03.png) |
+| ![PackageSystem](https://github.com/NicoIer/LearningUinty/blob/master/markdown_images/Snipaste_2022-11-28_16-33-48.png) | ![PackageSystem](https://github.com/NicoIer/LearningUinty/blob/master/markdown_images/Snipaste_2022-11-28_16-34-03.png) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
 ### PokemonUI
@@ -24,7 +24,7 @@
 >
 >同时学会使用C#的JSON序列化存储游戏数据,将程序和数据分离
 
-| ![Snipaste_2022-11-28_16-50-50](markdown_images/Snipaste_2022-11-28_16-50-50.png) | ![Snipaste_2022-11-28_16-50-44](markdown_images/Snipaste_2022-11-28_16-50-44.png) | ![Snipaste_2022-11-28_16-45-20](markdown_images/Snipaste_2022-11-28_16-45-20.png) |
+| ![PackageSystem](https://github.com/NicoIer/LearningUinty/blob/master/markdown_images/Snipaste_2022-11-28_16-50-50.png) | ![PackageSystem](https://github.com/NicoIer/LearningUinty/blob/master/markdown_images/Snipaste_2022-11-28_16-50-44.png) | ![PackageSystem](https://github.com/NicoIer/LearningUinty/blob/master/markdown_images/Snipaste_2022-11-28_16-45-20.png) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
 ## PackageSystem and TalkingSystem
@@ -39,12 +39,5 @@
 >>
 >>使用Action进行数据和UI的解耦
 
-| ![Snipaste_2022-12-31_19-30-55](markdown_images\Snipaste_2022-12-31_19-30-55.png) | ![Snipaste_2022-12-31_19-31-37](markdown_images\Snipaste_2022-12-31_19-31-37.png) |
+| ![PackageSystem](https://github.com/NicoIer/LearningUinty/blob/master/markdown_images/Snipaste_2022-12-31_19-30-55.png) | ![TalkingSystem](https://github.com/NicoIer/LearningUinty/blob/master/markdown_images/Snipaste_2022-12-31_19-31-37.png) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-
-
-
-| ![PackageSystem](https://github.com/NicoIer/LearningUinty/blob/master/markdown_images/Snipaste_2022-11-28_16-33-48.png) | ![PackageSystem](https://github.com/NicoIer/LearningUinty/blob/master/markdown_images/Snipaste_2022-12-31_19-31-37.png) |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-|                                                              |                                                              |
-
