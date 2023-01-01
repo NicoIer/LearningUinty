@@ -39,25 +39,31 @@ namespace PackageGame.Common.Manager
             File.WriteAllText(path, json, Encoding.UTF8);
         }
 
-        private static string get_path(string path)
+        private static string get_path(string path,bool auto_create=false)
         {
+
             path = Path.Combine(_persistentDataPath, path);
             var dir = Path.GetDirectoryName(path);
             if (dir == null)
                 throw new NullReferenceException($"不存在的null目录!");
-
-            if (!Directory.Exists(dir))
+            if (auto_create)
             {
-                Directory.CreateDirectory(dir);
-            }
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
 
-            if (!File.Exists(path))
-            {
-                //Close必不可少
-                File.Create(path).Close();
-            }
+                if (!File.Exists(path))
+                {
+                    //Close必不可少
+                    File.Create(path).Close();
+                }
 
+                
+            }
+            
             return path;
+
         }
     }
 }
