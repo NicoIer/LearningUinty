@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Nico.Common;
 using PackageGame.Common.Manager;
 using UnityEngine;
 using UnityEngine.UI;

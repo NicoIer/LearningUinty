@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Nico.Interface;
 using PackageGame._Item;
 using PackageGame.Common.Manager;
-using PackageGame.common.component;
 using PackageGame.UI;
 using UnityEngine;
 

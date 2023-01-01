@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Nico.Common;
+using UnityEngine;
 
 namespace PackageGame.Common.Manager 
 {

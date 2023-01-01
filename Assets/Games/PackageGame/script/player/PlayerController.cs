@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Nico.Interface;
+using Nico.Player;
 using PackageGame;
-using PackageGame.common.component;
 using UnityEngine;
 
 namespace PackageGame.Player

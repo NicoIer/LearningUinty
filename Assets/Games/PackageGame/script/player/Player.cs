@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Nico.Player;
 using PackageGame._Item;
 using UnityEngine;
 using UnityEngine.InputSystem;
