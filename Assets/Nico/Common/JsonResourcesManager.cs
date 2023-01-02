@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Nico.Common
 {
-    public static class ResourcesManager
+    public static class JsonResourcesManager
     {
         private static readonly string _persistentDataPath = Application.persistentDataPath;
         private static readonly string _dataPath = Application.dataPath;

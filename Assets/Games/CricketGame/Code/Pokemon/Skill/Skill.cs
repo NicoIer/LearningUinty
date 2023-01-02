@@ -38,7 +38,7 @@ namespace Games.CricketGame.Code.Pokemon.Skill
             //初始化静态变量
             try
             {
-                _effectTyeMap = ResourcesManager.LoadInDynamic<Dictionary<SkillEnum, Type>>(_effect_map_path);
+                _effectTyeMap = JsonResourcesManager.LoadInDynamic<Dictionary<SkillEnum, Type>>(_effect_map_path);
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -82,7 +82,7 @@ namespace Games.CricketGame.Code.Pokemon.Skill
 
         public static void Save()
         {
-            ResourcesManager.SaveInDynamic(_effectTyeMap, _effect_map_path);
+            JsonResourcesManager.SaveInDynamic(_effectTyeMap, _effect_map_path);
         }
 
 

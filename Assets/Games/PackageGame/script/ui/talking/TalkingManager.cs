@@ -50,7 +50,7 @@ namespace PackageGame.Talking
             opened = true;
             _data = data;
             data.Init();
-            ResourcesManager.SaveInDynamic(data,"./data/talking/1.json");
+            JsonResourcesManager.SaveInDynamic(data,"./data/talking/1.json");
             gameObject.SetActive(true);
             NextData();
         }

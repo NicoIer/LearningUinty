@@ -25,7 +25,7 @@ namespace Games.CricketGame.Code.Pokemon
             try
             {
                 _pokemonMeta =
-                    ResourcesManager.LoadStreamingAssets<Dictionary<PokemonEnum, PokemonDataMeta>>(_pokemon_meta_path);
+                    JsonResourcesManager.LoadStreamingAssets<Dictionary<PokemonEnum, PokemonDataMeta>>(_pokemon_meta_path);
             }
             catch (FileNotFoundException)
             {
@@ -40,7 +40,7 @@ namespace Games.CricketGame.Code.Pokemon
 
         public static void Save()
         {
-            ResourcesManager.SaveStreamingAssets(_pokemonMeta, _pokemon_meta_path,true);
+            JsonResourcesManager.SaveStreamingAssets(_pokemonMeta, _pokemon_meta_path,true);
         }
 
         public static void Add(PokemonDataMeta meta,bool replace)

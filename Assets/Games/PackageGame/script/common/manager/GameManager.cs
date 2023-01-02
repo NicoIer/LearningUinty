@@ -8,7 +8,7 @@ namespace PackageGame.Common.Manager
         protected override void Awake()
         {
             base.Awake();
-            ResourcesManager.PreLoadResources();
+            JsonResourcesManager.PreLoadResources();
         }
 
         public bool paused { get; private set; }
