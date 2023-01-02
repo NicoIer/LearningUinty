@@ -1,4 +1,5 @@
 ﻿using System;
+using Games.CricketGame.Code.Pokemon.Enum;
 
 namespace Games.CricketGame.Code.Pokemon
 {

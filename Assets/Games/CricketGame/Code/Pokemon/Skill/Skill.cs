@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Games.CricketGame.Code.Pokemon.Enum;
+using Games.CricketGame.Code.Pokemon.Skill.Effects;
 using Nico.Common;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -13,6 +15,7 @@ namespace Games.CricketGame.Code.Pokemon.Skill
         public int useTimes;
         public int needLevel;
     }
+
     public class Skill
     {
         #region Static
@@ -28,14 +31,16 @@ namespace Games.CricketGame.Code.Pokemon.Skill
         public int use_times;
         public int need_level;
 
+        #region Static Method
+
         private static void InitializeStatic()
         {
             //初始化静态变量
             try
             {
-                _effectTyeMap = ResourcesManager.Load<Dictionary<SkillEnum, Type>>(_effect_map_path);
+                _effectTyeMap = ResourcesManager.LoadInDynamic<Dictionary<SkillEnum, Type>>(_effect_map_path);
             }
-            catch (System.IO.FileNotFoundException e)
+            catch (System.IO.FileNotFoundException)
             {
                 _effectTyeMap = new();
             }
@@ -51,24 +56,38 @@ namespace Games.CricketGame.Code.Pokemon.Skill
             _initilized = true;
         }
 
-        public static void Add<T>(SkillEnum skillEnum) where T: ISkillEffect
+        public static void Add<T>(SkillEnum skillEnum, bool replace) where T : ISkillEffect
         {
             if (!_initilized)
             {
                 InitializeStatic();
             }
+
             if (!_effectTyeMap.ContainsKey(skillEnum))
             {
-                _effectTyeMap.Add(skillEnum,typeof(T));
-                _effectMap.Add(skillEnum,(ISkillEffect)Activator.CreateInstance(typeof(T)));
+                _effectTyeMap.Add(skillEnum, typeof(T));
+                _effectMap.Add(skillEnum, (ISkillEffect)Activator.CreateInstance(typeof(T)));
             }
-
+            else if (replace)
+            {
+                _effectTyeMap[skillEnum] = typeof(T);
+                _effectMap[skillEnum] = (ISkillEffect)Activator.CreateInstance(typeof(T));
+                Debug.LogWarning($"覆盖了{skillEnum}的效果为:{typeof(T)}");
+            }
+            else
+            {
+                throw new Exception("未指定replace时出现了key冲突");
+            }
         }
 
         public static void Save()
         {
-            ResourcesManager.Save(_effectTyeMap,_effect_map_path);
+            ResourcesManager.SaveInDynamic(_effectTyeMap, _effect_map_path);
         }
+
+
+        #endregion
+
         public Skill(SkillEnum skillEnum, int needLevel, int useTimes)
         {
             if (!_initilized)

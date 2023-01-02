@@ -1,4 +1,4 @@
-﻿namespace Games.CricketGame.Code.Pokemon.Skill
+﻿namespace Games.CricketGame.Code.Pokemon.Enum
 {
     public enum SkillEnum
     {

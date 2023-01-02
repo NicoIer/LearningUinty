@@ -1,0 +1,28 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="top" style="width: auto; flex-grow: 1; max-height: 50px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;">
+        <ui:Label text="技能Meta数据创建面板" display-tooltip-when-elided="true" style="flex-direction: column; -unity-font-style: normal; color: rgb(255, 255, 255); -unity-font: url(&apos;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#Arial&apos;); -unity-text-align: upper-center; font-size: 16px;" />
+        <ui:VisualElement name="functions" style="flex-direction: row-reverse; -unity-text-align: upper-left; flex-wrap: wrap; min-height: auto;">
+            <ui:Button text="清空已有数据" display-tooltip-when-elided="true" name="clear" />
+            <ui:Button text="读取已有数据" display-tooltip-when-elided="true" name="read" style="-unity-text-align: middle-center; flex-direction: column-reverse;" />
+            <ui:Button text="保存" display-tooltip-when-elided="true" name="save" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="mid" style="flex-grow: 1; flex-direction: row; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255);">
+        <ui:VisualElement name="left" style="flex-grow: 1; width: auto; max-width: 30%; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;">
+            <ui:ListView focusable="true" name="ListView" style="flex-grow: 1;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="right" style="flex-grow: 1; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;">
+            <ui:VisualElement name="top">
+                <ui:Foldout text="SkillMeta" name="SkillMeta" style="background-color: rgb(43, 43, 43); border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                    <uie:EnumField label="技能枚举" value="Center" name="skillEnum" />
+                    <ui:TextField picking-mode="Ignore" label="图鉴名称" value="电光一闪" text="电光一闪" name="skillName" />
+                    <uie:FloatField label="命中率" value="1" name="hitRate" />
+                    <uie:IntegerField label="威力" value="30" name="power" />
+                    <uie:EnumField label="优先级枚举" value="Center" name="skillPriority" />
+                </ui:Foldout>
+                <ui:Button text="添加" display-tooltip-when-elided="true" name="add" />
+            </ui:VisualElement>
+            <ui:VisualElement name="bottom" style="border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
