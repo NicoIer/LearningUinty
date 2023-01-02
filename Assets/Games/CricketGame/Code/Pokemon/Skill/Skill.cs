@@ -12,6 +12,7 @@ namespace Games.CricketGame.Code.Pokemon.Skill
     public class SkillInspector
     {
         public SkillEnum skillEnum;
+        public PropertyEnum propertyEnum;
         public int useTimes;
         public int needLevel;
     }
@@ -28,6 +29,7 @@ namespace Games.CricketGame.Code.Pokemon.Skill
         #endregion
 
         public SkillMeta meta;
+        public PropertyEnum propertyEnum;
         public int use_times;
         public int need_level;
 
@@ -88,14 +90,14 @@ namespace Games.CricketGame.Code.Pokemon.Skill
 
         #endregion
 
-        public Skill(SkillEnum skillEnum, int needLevel, int useTimes)
+        public Skill(SkillEnum skillEnum,PropertyEnum propertyEnum, int needLevel, int useTimes)
         {
             if (!_initilized)
             {
                 InitializeStatic();
             }
 
-
+            this.propertyEnum = propertyEnum;
             this.meta = SkillMeta.Find(skillEnum);
             this.need_level = needLevel;
             this.use_times = useTimes;

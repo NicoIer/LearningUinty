@@ -41,7 +41,7 @@ namespace Games.CricketGame.Code.Pokemon.Asset
             foreach (var inspector in skillInspectors)
             {
                 var skillMeta = SkillMeta.Find(inspector.skillEnum); //通过枚举查找技能meta信息
-                var skill = new Skill.Skill(skillMeta.skillEnum, inspector.needLevel,
+                var skill = new Skill.Skill(skillMeta.skillEnum, inspector.propertyEnum, inspector.needLevel,
                     inspector.useTimes); //通过枚举和指定信息创建skill
                 skills.Add(skillMeta.skillEnum, skill);
             }
