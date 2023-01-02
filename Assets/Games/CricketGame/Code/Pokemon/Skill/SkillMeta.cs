@@ -7,10 +7,12 @@ namespace Games.CricketGame.Code.Pokemon.Skill
     [Serializable]
     public class SkillMeta
     {
+        #region STATIC
+
         private static bool _initialized = false;
         private static readonly string _meta_map_path = "./data/skill_meta_map.json";
         private static Dictionary<SkillEnum, SkillMeta> _metaMap;
-
+        
         private static void InitializeStatic()
         {
             try
@@ -36,6 +38,10 @@ namespace Games.CricketGame.Code.Pokemon.Skill
             {
                 _metaMap.Add(meta.skillEnum, meta);
             }
+            else
+            {
+                _metaMap[meta.skillEnum] = meta;
+            }
         }
         public static void Save()
         {
@@ -52,9 +58,26 @@ namespace Games.CricketGame.Code.Pokemon.Skill
             return _metaMap[skillEnum];
         }
 
+
+        #endregion
+
+        
         public string name;
         public SkillEnum skillEnum;
         public int power;
         public float hitRate;
+
+        public SkillMeta()
+        {
+            this.skillEnum = SkillEnum.None;
+        }
+        public SkillMeta(string name, SkillEnum skillEnum, int power, int hitRate)
+        {
+            this.name = name;
+            this.skillEnum = skillEnum;
+            this.power = power;
+            this.hitRate = hitRate;
+            Add(this);
+        }
     }
 }

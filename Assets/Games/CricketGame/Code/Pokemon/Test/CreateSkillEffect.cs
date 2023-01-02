@@ -10,7 +10,7 @@ namespace Games.CricketGame.Code.Pokemon.Test
         private void Awake()
         {
             //ToDO 暂时就这样吧
-            Skill.Skill.Add<电光一闪>(SkillEnum.电光一闪);
+            Skill.Skill.Add<电光一闪>(SkillEnum.电光一闪);//技能枚举和技能效果类型的对应
             Skill.Skill.Save();
         }
     }

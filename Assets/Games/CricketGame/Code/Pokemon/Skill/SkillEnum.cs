@@ -2,6 +2,7 @@
 {
     public enum SkillEnum
     {
-        电光一闪
+        电光一闪,
+        None
     }
 }

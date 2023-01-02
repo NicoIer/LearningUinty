@@ -7,6 +7,12 @@ using UnityEngine.Serialization;
 namespace Games.CricketGame.Code.Pokemon.Skill
 {
     [Serializable]
+    public class SkillInspector
+    {
+        public SkillEnum skillEnum;
+        public int useTimes;
+        public int needLevel;
+    }
     public class Skill
     {
         #region Static
