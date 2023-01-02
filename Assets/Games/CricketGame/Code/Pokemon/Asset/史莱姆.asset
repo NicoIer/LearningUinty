@@ -12,9 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60371ce82bc545959a0fa8908fab9528, type: 3}
   m_Name: "\u53F2\u83B1\u59C6"
   m_EditorClassIdentifier: 
+  autoReplace: 1
   skillInspectors:
   - skillEnum: 0
-    useTimes: 0
+    propertyEnum: 0
+    useTimes: 30
+    needLevel: 10
+  - skillEnum: 2
+    propertyEnum: 0
+    useTimes: 35
+    needLevel: 0
+  - skillEnum: 1
+    propertyEnum: 0
+    useTimes: 35
     needLevel: 0
   meta:
     defaultName: "\u53F2\u83B1\u59C6"
@@ -24,4 +34,4 @@ MonoBehaviour:
     attackRace: 10
     defenseRace: 10
     speedRace: 10
-    nextLevel: 1
+    nextLevel: 5

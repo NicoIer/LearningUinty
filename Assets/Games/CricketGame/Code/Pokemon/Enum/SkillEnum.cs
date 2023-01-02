@@ -3,6 +3,9 @@
     public enum SkillEnum
     {
         电光一闪,
+        叫声,
+        撞击,
+        火花,
         None
     }
 }
