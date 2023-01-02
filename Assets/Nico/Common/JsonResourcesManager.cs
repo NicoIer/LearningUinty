@@ -31,7 +31,6 @@ namespace Nico.Common
         public static void SaveStreamingAssets<T>(T obj, string path, bool autoCreate)
         {
             path = Path.Combine(_streamingAssetsPath, path);
-            Debug.Log($"Save {obj} At {path}");
             if (autoCreate)
             {
                 var dir = Path.GetDirectoryName(path);

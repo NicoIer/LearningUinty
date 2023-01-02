@@ -32,9 +32,13 @@ namespace Games.CricketGame.Code.Pokemon.Skill
 
         #region Static Method
 
-        public static Dictionary<SkillEnum, Type> GetEffectMap()
+        public static Dictionary<SkillEnum, Type> GetEffectMap(bool reload=false)
         {
-            if (!Initilized)
+            if (reload)
+            {
+                InitializeStatic();
+            }
+            else if (!Initilized)
             {
                 InitializeStatic();
             }
@@ -54,6 +58,10 @@ namespace Games.CricketGame.Code.Pokemon.Skill
             try
             {
                 _effectTyeMap = JsonResourcesManager.LoadStreamingAssets<Dictionary<SkillEnum, Type>>(_effect_map_path);
+                if (_effectTyeMap == null)
+                {
+                    _effectTyeMap = new();
+                }
             }
             catch (DirectoryNotFoundException)
             {

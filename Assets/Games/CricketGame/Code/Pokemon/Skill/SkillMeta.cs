@@ -24,6 +24,10 @@ namespace Games.CricketGame.Code.Pokemon.Skill
             try
             {
                 _metaMap = JsonResourcesManager.LoadStreamingAssets<Dictionary<SkillEnum, SkillMeta>>(_meta_map_path);
+                if (_metaMap == null)
+                {
+                    _metaMap = new();
+                }
             }
             catch (FileNotFoundException)
             {
@@ -37,9 +41,13 @@ namespace Games.CricketGame.Code.Pokemon.Skill
             JsonResourcesManager.SaveStreamingAssets(_metaMap, _meta_map_path,true);
         }
 
-        public static List<SkillEnum> GetSkillEnumList()
+        public static List<SkillEnum> GetSkillEnumList(bool reload = false)
         {
-            if (!_initialized)
+            if (reload)
+            {
+                InitializeStatic();
+            }
+            else if (!_initialized)
             {
                 InitializeStatic();
             }
