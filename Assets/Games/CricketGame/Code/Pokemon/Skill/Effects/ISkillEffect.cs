@@ -2,6 +2,6 @@
 {
     public interface ISkillEffect
     {
-        public void Apply(Pokemon user, Pokemon hitter);
+        public void Apply(Pokemon user, Pokemon hitter,Skill skill);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Games.CricketGame.Code.Pokemon.Enum;
 using Games.CricketGame.Code.Pokemon.Skill.Effects;
 using Nico.Common;
@@ -21,46 +22,106 @@ namespace Games.CricketGame.Code.Pokemon.Skill
     {
         #region Static
 
-        private static bool _initilized = false;
+        public static bool Initilized { get; private set; }
         private static Dictionary<SkillEnum, Type> _effectTyeMap;
-        private static Dictionary<SkillEnum, ISkillEffect> _effectMap;
-        private static readonly string _effect_map_path = "./data/effect_map.json";
+        private static Dictionary<SkillEnum, ISkillEffect> _effectObjs;
+        private static readonly string _effect_map_path = "skill/effect_map.json";
 
         #endregion
 
-        public SkillMeta meta;
-        public PropertyEnum propertyEnum;
-        public int use_times;
-        public int need_level;
 
         #region Static Method
+
+        public static Dictionary<SkillEnum, Type> GetEffectMap()
+        {
+            if (!Initilized)
+            {
+                InitializeStatic();
+            }
+
+            return _effectTyeMap;
+        }
+
+        public static void ClearEffect()
+        {
+            _effectTyeMap.Clear();
+            _effectObjs.Clear();
+        }
 
         private static void InitializeStatic()
         {
             //初始化静态变量
             try
             {
-                _effectTyeMap = JsonResourcesManager.LoadInDynamic<Dictionary<SkillEnum, Type>>(_effect_map_path);
+                _effectTyeMap = JsonResourcesManager.LoadStreamingAssets<Dictionary<SkillEnum, Type>>(_effect_map_path);
             }
-            catch (System.IO.FileNotFoundException)
+            catch (DirectoryNotFoundException)
+            {
+                _effectTyeMap = new();
+            }
+            catch (FileNotFoundException)
             {
                 _effectTyeMap = new();
             }
 
-            _effectMap = new();
+            _effectObjs = new();
             foreach (var (skillEnum, type) in _effectTyeMap)
             {
                 //读取枚举 - 效果类型表 通过反射创建对应类型的效果对象
                 var effect = (ISkillEffect)Activator.CreateInstance(type);
-                _effectMap.Add(skillEnum, effect);
+                _effectObjs.Add(skillEnum, effect);
             }
 
-            _initilized = true;
+            Initilized = true;
         }
 
-        public static void Add<T>(SkillEnum skillEnum, bool replace) where T : ISkillEffect
+        public static void AddEffectByString(SkillEnum skillEnum, string type, bool replace)
         {
-            if (!_initilized)
+            if (!Initilized)
+            {
+                InitializeStatic();
+            }
+
+            var value = Type.GetType(type);
+
+            if (value == null)
+            {
+                Debug.LogError($"请先定义{skillEnum}对应的effect类型");
+                return;
+            }
+
+            if (!_effectTyeMap.ContainsKey(skillEnum))
+            {
+                Debug.Log($"为技能:{skillEnum} 添加技能效果类:{value}");
+                _effectTyeMap.Add(skillEnum, value);
+                _effectObjs.Add(skillEnum, (ISkillEffect)Activator.CreateInstance(value));
+            }
+            else if (replace)
+            {
+                _effectTyeMap[skillEnum] = value;
+                _effectObjs[skillEnum] = (ISkillEffect)Activator.CreateInstance(value);
+                Debug.LogWarning($"覆盖了{skillEnum}的效果为:{value}");
+            }
+            else
+            {
+                throw new Exception("未指定replace时出现了key冲突");
+            }
+
+            var effect = (ISkillEffect)Activator.CreateInstance(value);
+            if (!_effectObjs.ContainsKey(skillEnum))
+            {
+                _effectObjs.Add(skillEnum, effect);
+            }
+            else
+            {
+                _effectObjs[skillEnum] = effect;
+            }
+        }
+
+        public static void AddEffect<T>(SkillEnum skillEnum, bool replace) where T : ISkillEffect
+        {
+            Debug.Log($"为技能:{skillEnum} 添加技能效果类:{typeof(T)}");
+            if (!Initilized)
             {
                 InitializeStatic();
             }
@@ -68,12 +129,12 @@ namespace Games.CricketGame.Code.Pokemon.Skill
             if (!_effectTyeMap.ContainsKey(skillEnum))
             {
                 _effectTyeMap.Add(skillEnum, typeof(T));
-                _effectMap.Add(skillEnum, (ISkillEffect)Activator.CreateInstance(typeof(T)));
+                _effectObjs.Add(skillEnum, (ISkillEffect)Activator.CreateInstance(typeof(T)));
             }
             else if (replace)
             {
                 _effectTyeMap[skillEnum] = typeof(T);
-                _effectMap[skillEnum] = (ISkillEffect)Activator.CreateInstance(typeof(T));
+                _effectObjs[skillEnum] = (ISkillEffect)Activator.CreateInstance(typeof(T));
                 Debug.LogWarning($"覆盖了{skillEnum}的效果为:{typeof(T)}");
             }
             else
@@ -84,15 +145,19 @@ namespace Games.CricketGame.Code.Pokemon.Skill
 
         public static void Save()
         {
-            JsonResourcesManager.SaveInDynamic(_effectTyeMap, _effect_map_path);
+            JsonResourcesManager.SaveStreamingAssets(_effectTyeMap, _effect_map_path, true);
         }
-
 
         #endregion
 
-        public Skill(SkillEnum skillEnum,PropertyEnum propertyEnum, int needLevel, int useTimes)
+        public SkillMeta meta;
+        public PropertyEnum propertyEnum;
+        public int use_times;
+        public int need_level;
+
+        public Skill(SkillEnum skillEnum, PropertyEnum propertyEnum, int needLevel, int useTimes)
         {
-            if (!_initilized)
+            if (!Initilized)
             {
                 InitializeStatic();
             }
@@ -105,7 +170,7 @@ namespace Games.CricketGame.Code.Pokemon.Skill
 
         public void Apply(Pokemon user, Pokemon hitter)
         {
-            _effectMap[meta.skillEnum].Apply(user, hitter);
+            _effectObjs[meta.skillEnum].Apply(user, hitter, this);
         }
     }
 }

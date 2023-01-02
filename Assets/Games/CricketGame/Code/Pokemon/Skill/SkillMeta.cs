@@ -72,7 +72,6 @@ namespace Games.CricketGame.Code.Pokemon.Skill
         public static void Clear()
         {
             _metaMap.Clear();
-            Save();
         }
 
 

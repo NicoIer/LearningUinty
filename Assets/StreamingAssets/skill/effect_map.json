@@ -1,0 +1,8 @@
+﻿{
+  "电光一闪": "Games.CricketGame.Code.Pokemon.Skill.Effects.电光一闪, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "叫声": "Games.CricketGame.Code.Pokemon.Skill.Effects.叫声, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "撞击": "Games.CricketGame.Code.Pokemon.Skill.Effects.撞击, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "火花": "Games.CricketGame.Code.Pokemon.Skill.Effects.火花, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "None": "Games.CricketGame.Code.Pokemon.Skill.Effects.None, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "抓": "Games.CricketGame.Code.Pokemon.Skill.Effects.抓, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+}

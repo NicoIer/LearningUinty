@@ -11,6 +11,9 @@ namespace Games.CricketGame.Editor.SkillMeta
     public class SkillMetaWindow : EditorWindow
     {
         private static VisualTreeAsset _visualTree;
+        private static bool _readed = false;
+        private static readonly string _template =
+            "Games.CricketGame.Code.Pokemon.Skill.Effects.{0}, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
 
         [MenuItem("Window/Create/SkillMeta")]
         public static void ShowExample()
@@ -36,7 +39,7 @@ namespace Games.CricketGame.Editor.SkillMeta
         #endregion
 
 
-        private static List<SkillEnum> _metas = new();
+        private static List<SkillEnum> _skillEnumList = new();
 
         private static void _query(VisualElement root)
         {
@@ -62,12 +65,27 @@ namespace Games.CricketGame.Editor.SkillMeta
             read.clicked += _read;
             save.clicked += _save;
             _listView.fixedItemHeight = 20;
-            _listView.itemsSource = _metas;
+            _listView.itemsSource = _skillEnumList;
             _listView.makeItem = _makeItem;
             _listView.bindItem = _bindItem;
             _listView.onSelectionChange += _on_selected_change;
         }
 
+
+
+        public void CreateGUI()
+        {
+            if (_visualTree == null)
+            {
+                _visualTree =
+                    AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
+                        "Assets/Games/CricketGame/Editor/SkillMeta/SkillMetaWindow.uxml");
+            }
+
+            _visualTree.CloneTree(rootVisualElement);
+
+            _query(rootVisualElement);
+        }
         private static void _on_selected_change(IEnumerable<object> objs)
         {
             foreach (var obj in objs)
@@ -77,7 +95,7 @@ namespace Games.CricketGame.Editor.SkillMeta
                     Debug.Log("点击了其他地方");
                     return;
                 }
-
+                
                 var @enum = (SkillEnum)obj;
                 var meta = Code.Pokemon.Skill.SkillMeta.Find(@enum);
                 skillEnum.value = meta.skillEnum;
@@ -85,26 +103,14 @@ namespace Games.CricketGame.Editor.SkillMeta
                 power.value = meta.power;
                 hitRate.value = meta.hitRate;
                 skillName.value = meta.name;
+                
             }
-        }
-
-
-        public void CreateGUI()
-        {
-            if (_visualTree == null)
-            {
-                _visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Games/CricketGame/Editor/SkillMeta/SkillMetaWindow.uxml");
-            }
-
-            _visualTree.CloneTree(rootVisualElement);
-
-            _query(rootVisualElement);
         }
 
         private static void _bindItem(VisualElement arg1, int arg2)
         {
             Label label = arg1 as Label;
-            SkillEnum @enum = _metas[arg2];
+            SkillEnum @enum = _skillEnumList[arg2];
             if (label != null) label.text = @enum.ToString();
         }
 
@@ -118,6 +124,11 @@ namespace Games.CricketGame.Editor.SkillMeta
 
         private static void _save()
         {
+            if (!_readed)
+            {
+                return;
+            }
+            Skill.Save();
             Code.Pokemon.Skill.SkillMeta.Save();
         }
 
@@ -135,30 +146,56 @@ namespace Games.CricketGame.Editor.SkillMeta
 
         private static void _add()
         {
-            var _enum = _create_meta();
-            if (!_metas.Contains(_enum))
+            if (!_readed)
             {
-                _metas.Add(_enum);
+                return;
+            }
+            SkillEnum skill_enum = _create_meta();
+            if (!_skillEnumList.Contains(skill_enum))
+            {
+                _skillEnumList.Add(skill_enum);
             }
             else
             {
-                _metas.Remove(_enum);
-                _metas.Add(_enum);
+                _skillEnumList.Remove(skill_enum);
+                _skillEnumList.Add(skill_enum);
             }
-
+            var type = string.Format(_template, skill_enum);
+            Skill.AddEffectByString(skill_enum, type, true);
             _read();
         }
 
         private static void _clear()
         {
+            if (!_readed)
+            {
+                return;
+            }
             Code.Pokemon.Skill.SkillMeta.Clear();
+            Skill.ClearEffect();
             _read();
         }
 
         private static void _read()
         {
-            _metas = Code.Pokemon.Skill.SkillMeta.GetSkillEnumList();
-            _listView.itemsSource = _metas;
+            _skillEnumList = Code.Pokemon.Skill.SkillMeta.GetSkillEnumList();
+            if (!Skill.Initilized)
+            {
+                var map = Skill.GetEffectMap();
+                foreach (SkillEnum @enum in _skillEnumList)
+                {
+
+                    if (!map.ContainsKey(@enum))
+                    {
+                        var type = string.Format(_template, @enum);
+                        Skill.AddEffectByString(@enum, type, true);
+                    }
+
+                }
+            }
+
+            _listView.itemsSource = _skillEnumList;
+            _readed = true;
         }
     }
 }

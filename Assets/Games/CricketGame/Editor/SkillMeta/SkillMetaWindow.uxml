@@ -13,14 +13,14 @@
         </ui:VisualElement>
         <ui:VisualElement name="right" style="flex-grow: 1; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;">
             <ui:VisualElement name="top">
-                <ui:Foldout text="SkillMeta" name="SkillMeta" style="background-color: rgb(43, 43, 43); border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                <ui:Foldout text="SkillMeta" name="SkillMeta" style="background-color: rgb(43, 43, 43); border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
                     <uie:EnumField label="技能枚举" value="Center" name="skillEnum" />
                     <ui:TextField picking-mode="Ignore" label="图鉴名称" value="电光一闪" text="电光一闪" name="skillName" />
                     <uie:FloatField label="命中率" value="1" name="hitRate" />
                     <uie:IntegerField label="威力" value="30" name="power" />
                     <uie:EnumField label="优先级枚举" value="Center" name="skillPriority" />
                 </ui:Foldout>
-                <ui:Button text="添加" display-tooltip-when-elided="true" name="add" />
+                <ui:Button text="添加/更新" display-tooltip-when-elided="true" name="add" />
             </ui:VisualElement>
             <ui:VisualElement name="bottom" style="border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; border-bottom-width: 1px;" />
         </ui:VisualElement>
