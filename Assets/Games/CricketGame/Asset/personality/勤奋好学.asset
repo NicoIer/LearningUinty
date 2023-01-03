@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59536b4b0daf42be8ddbe3bc83c4d149, type: 3}
+  m_Name: "\u52E4\u594B\u597D\u5B66"
+  m_EditorClassIdentifier: 
+  autoCreate: 0
+  personalityEnum: 2
+  effects:
+  - abilityEnum: 1
+    percent: -10
+  - abilityEnum: 3
+    percent: 10
