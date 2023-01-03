@@ -1,54 +1,74 @@
 ﻿using System;
 using Games.CricketGame.Code.Pokemon.Enum;
+using UnityEngine;
 
 namespace Games.CricketGame.Code.Pokemon
 {
+    [Serializable]
     public class PokemonData
     {
-        public PokemonDataMeta data;
+        //基本数据(图鉴和种族值)
+        [HideInInspector] public PokemonDataMeta data;
+
+        //性格
+        public PersonalityEnum personalityEnum;
         public string name;
         public int level;
 
-        public int health_ability;
-        public int attack_ability;
-        public int defense_ability;
-        public int speed_ability;
+        public int healthAbility;
+        public int attackAbility;
+        public int defenseAbility;
+        public int specialAttackAbility;
+        public int specialDefenseAbility;
+        public int speedAbility;
 
-        public int health_individual;
-        public int attack_individual;
-        public int defense_individual;
-        public int speed_individual;
+        public int healthIndividual;
+        public int attackIndividual;
+        public int defenseIndividual;
+        public int specialAttackIndividual;
+        public int specialDefenseIndividual;
+        public int speedIndividual;
 
-        public int health_effort;
-        public int attack_effort;
-        public int defense_effort;
-        public int speed_effort;
+        public int healthEffort;
+        public int attackEffort;
+        public int specialAttackEffort;
+        public int specialDefenseEffort;
+        public int defenseEffort;
+        public int speedEffort;
 
         public PokemonData(PokemonEnum pokemonEnum,
             int level,
             int healthIndividual,
             int attackIndividual,
             int defenseIndividual,
+            int specialAttackIndividual,
+            int specialDefenseIndividual,
             int speedIndividual,
             int healthEffort,
             int attackEffort,
             int defenseEffort,
+            int specialAttackEffort,
+            int specialDefenseEffort,
             int speedEffort
         )
         {
             this.level = level;
 
-            this.health_individual = healthIndividual;
-            this.attack_individual = attackIndividual;
-            this.defense_individual = defenseIndividual;
-            this.speed_individual = speedIndividual;
-            
-            this.health_effort = healthEffort;
-            this.attack_effort = attackEffort;
-            this.defense_effort = defenseEffort;
-            this.speed_effort = speedEffort;
-            
-            this.data = PokemonDataMeta.Find(pokemonEnum);
+            this.healthIndividual = healthIndividual;
+            this.attackIndividual = attackIndividual;
+            this.defenseIndividual = defenseIndividual;
+            this.specialAttackIndividual = specialAttackIndividual;
+            this.specialDefenseIndividual = specialDefenseIndividual;
+            this.speedIndividual = speedIndividual;
+
+            this.healthEffort = healthEffort;
+            this.attackEffort = attackEffort;
+            this.defenseEffort = defenseEffort;
+            this.specialAttackEffort = specialAttackEffort;
+            this.specialDefenseEffort = specialDefenseEffort;
+            this.speedEffort = speedEffort;
+
+            data = PokemonDataMeta.Find(pokemonEnum);
             //ToDo 计算默认能力值
             _cal_default();
         }
@@ -57,6 +77,7 @@ namespace Games.CricketGame.Code.Pokemon
         {
             throw new NotImplementedException();
         }
+
         public void LevelUp()
         {
             throw new NotImplementedException();

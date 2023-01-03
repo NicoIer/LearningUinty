@@ -1,40 +1,22 @@
 ﻿using System.Collections.Generic;
 using Games.CricketGame.Code.Pokemon.Enum;
 using Games.CricketGame.Code.Pokemon.Skill;
+using Newtonsoft.Json;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Games.CricketGame.Code.Pokemon.Asset
 {
     [CreateAssetMenu(fileName = "PokemonMetaData", menuName = "Data/CricketGame/Pokemon/PokemonMetaData", order = 0)]
     public class PokemonMetaInspector : ScriptableObject
     {
-        public bool autoReplace;
+        [JsonIgnore]public bool autoCreate;
         public List<SkillInspector> skillInspectors = new();
         public PokemonDataMeta meta;
 
         public void OnValidate()
         {
-            PokemonDataMeta dataMeta = null;
-            try
-            {
-                dataMeta = PokemonDataMeta.Find(meta.pokemonEnum);
-            }
-            catch (KeyNotFoundException)
-            {
-            }
-
-            if (dataMeta != null)
-            {
-                if (autoReplace)
-                {
-                    Debug.LogWarning("对应精灵Meta数据已经创建,正在进行覆盖");
-                }
-                else
-                {
-                    return;
-                }
-            }
+            if(!autoCreate)
+                return;
 
             var skills = new Dictionary<SkillEnum, Skill.Skill>();
 
@@ -63,5 +45,6 @@ namespace Games.CricketGame.Code.Pokemon.Asset
             PokemonDataMeta.Add(meta, true);
             PokemonDataMeta.Save();
         }
+        
     }
 }

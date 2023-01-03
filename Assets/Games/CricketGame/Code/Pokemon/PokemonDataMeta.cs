@@ -79,15 +79,18 @@ namespace Games.CricketGame.Code.Pokemon
         }
 
         #endregion
-
-        public string defaultName;
+        
         public PropertyEnum property;
         public PokemonEnum pokemonEnum;
         public int healthRace;
         public int attackRace;
         public int defenseRace;
+        public int specialAttackRace;
+        public int specialDefenseRace;
         public int speedRace;
+        public string desc;//图鉴描述
         public Dictionary<SkillEnum, Skill.Skill> SkillMetas;
-        public PokemonEnum nextLevel;
+        public PokemonEnum previousLevel;
+        public List<PokemonEnum> nextLevel = new();
     }
 }
