@@ -1,5 +1,6 @@
 ﻿using System;
 using Games.CricketGame.Code.Pokemon.Enum;
+using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
 
@@ -8,45 +9,67 @@ namespace Games.CricketGame.Code.Pokemon
     [Serializable]
     public class PokemonData
     {
-        public static Random random = new Random();
+        #region STATIC
 
-        public static PokemonData random_init(PokemonEnum @enum)
+        private static readonly Random _random = new();
+
+        public static PokemonData GetRandom(PokemonEnum @enum)
         {
-            var level = random.Next(1, 101);
-            var hi = random.Next(0, 32);
-            var ai = random.Next(0, 32);
-            var di = random.Next(0, 32);
-            var sai = random.Next(0, 32);
-            var sdi = random.Next(0, 32);
-            var si = random.Next(0, 32);
-            var he = random.Next(0, 32);
-            var ae = random.Next(0, 32);
-            var de = random.Next(0, 32);
-            var sae = random.Next(0, 32);
-            var sde = random.Next(0, 32);
-            var se = random.Next(0, 32);
+            var level = _random.Next(1, 101);
+            var hi = _random.Next(0, 32);
+            var ai = _random.Next(0, 32);
+            var di = _random.Next(0, 32);
+            var sai = _random.Next(0, 32);
+            var sdi = _random.Next(0, 32);
+            var si = _random.Next(0, 32);
+            var he = _random.Next(0, 32);
+            var ae = _random.Next(0, 32);
+            var de = _random.Next(0, 32);
+            var sae = _random.Next(0, 32);
+            var sde = _random.Next(0, 32);
+            var se = _random.Next(0, 32);
 
             var values = System.Enum.GetValues(typeof(PersonalityEnum));
-            PersonalityEnum personalityEnum = (PersonalityEnum)values.GetValue(random.Next(values.Length));
+            PersonalityEnum personalityEnum = (PersonalityEnum)values.GetValue(_random.Next(values.Length));
+            values = System.Enum.GetValues(typeof(CharacterEnum));
+            CharacterEnum characterEnum = (CharacterEnum)values.GetValue(_random.Next(values.Length));
+
             return new PokemonData(
                 @enum,
                 @enum.ToString(),
                 personalityEnum,
+                characterEnum,
                 level,
-                hi, ai, di,
-                sai, sdi, si, he, ae,
-                de, sae, sde, se);
+                hi,
+                ai,
+                di,
+                sai,
+                sdi,
+                si,
+                he,
+                ae,
+                de,
+                sae,
+                sde,
+                se);
         }
 
-        //基本数据(图鉴和种族值)
-        private PokemonDataMeta _meta_data;
+        #endregion
 
-        //访问属性
-        public PokemonDataMeta meta => _meta_data;
+        #region 特殊信息
+
+        //基本数据(图鉴和种族值)
+
+        public PokemonDataMeta meta;
+
+        //特性
+        public Character.Character character;
 
         //性格
-        public PersonalityEnum personalityEnum;
-        public Personality personality { get; private set; }
+        public Personality personality;
+
+        #endregion
+
         public string name;
         public int level;
         public int alreadyExperience;
@@ -84,10 +107,12 @@ namespace Games.CricketGame.Code.Pokemon
 
         #endregion
 
+        #region Construct Method
 
         public PokemonData(PokemonEnum pokemonEnum,
             string name,
             PersonalityEnum personalityEnum,
+            CharacterEnum characterEnum,
             int level,
             int healthIndividual,
             int attackIndividual,
@@ -105,8 +130,8 @@ namespace Games.CricketGame.Code.Pokemon
         {
             this.level = level;
             this.name = name;
-            this.personalityEnum = personalityEnum;
             personality = Personality.Find(personalityEnum);
+            character = Character.Character.Find(characterEnum);
             this.healthIndividual = healthIndividual;
             this.attackIndividual = attackIndividual;
             this.defenseIndividual = defenseIndividual;
@@ -120,20 +145,103 @@ namespace Games.CricketGame.Code.Pokemon
             this.specialAttackEffort = specialAttackEffort;
             this.specialDefenseEffort = specialDefenseEffort;
             this.speedEffort = speedEffort;
-            _meta_data = PokemonDataMeta.Find(pokemonEnum);
+            meta = PokemonDataMeta.Find(pokemonEnum);
 
-            _cal_default();
+            CalDefault();
         }
 
-        private void _cal_default()
+        #endregion
+
+        public void RandomInit()
         {
-            //ToDo 计算默认能力值
+            level = _random_level();
+        }
+        public void RandomFlashIndividual()
+        {
+            healthIndividual = _random.Next(0, 32);
+            attackIndividual = _random.Next(0, 32);
+            defenseIndividual = _random.Next(0, 32);
+            specialAttackIndividual = _random.Next(0, 32);
+            specialDefenseIndividual = _random.Next(0, 32);
+            speedIndividual = _random.Next(0, 32);
+            CalDefault();
+        }
+
+        public void RandomFlashEffort()
+        {
+            throw new NotImplementedException();
+        }
+
+        private int _random_level()
+        {
+            return _random.Next(1, 101);
+        }
+
+        private int _random_individual()
+        {
+            return _random.Next(0, 32);
+        }
+
+        public void CalDefault()
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                name = meta.pokemonEnum.ToString();
+            }
+
+            if (level == 0)
+            {
+                level = _random_level();
+            }
+            
             alreadyExperience = ExperienceManger.NeededExperience(this);
-            healthAbility = level * healthIndividual + healthEffort / 4;
+            var levelRate = level / 100.0;
+            healthAbility = (int)((meta.healthRace * 2 + healthIndividual + Math.Sqrt(healthEffort)) * levelRate + 15 +
+                                  level);
+            attackAbility = (int)((meta.healthRace * 2 + attackIndividual + Math.Sqrt(attackEffort)) * levelRate + 10);
+            defenseAbility = (int)((meta.healthRace * 2 + defenseIndividual + Math.Sqrt(speedEffort)) * levelRate + 10);
+            specialAttackAbility =
+                (int)((meta.healthRace * 2 + specialAttackIndividual + Math.Sqrt(specialAttackEffort)) * levelRate +
+                      10);
+            specialDefenseAbility =
+                (int)((meta.healthRace * 2 + specialDefenseIndividual + Math.Sqrt(specialDefenseEffort)) * levelRate +
+                      10);
+            speedAbility = (int)((meta.healthRace * 2 + speedIndividual + Math.Sqrt(speedEffort)) * levelRate + 10);
+
+            foreach (var effect in personality.effects)
+            {
+                var effectRate = (1 + effect.percent / 100);
+                switch (effect.abilityEnum)
+                {
+                    case AbilityEnum.生命:
+                        healthAbility = (int)(healthAbility * effectRate);
+                        break;
+                    case AbilityEnum.攻击:
+                        attackAbility = (int)(attackAbility * effectRate);
+                        break;
+                    case AbilityEnum.防御:
+                        defenseAbility = (int)(defenseAbility * effectRate);
+                        break;
+                    case AbilityEnum.特殊攻击:
+                        specialAttackAbility = (int)(specialAttackAbility * effectRate);
+                        break;
+                    case AbilityEnum.特殊防御:
+                        specialDefenseAbility = (int)(specialDefenseAbility * effectRate);
+                        break;
+                    case AbilityEnum.速度:
+                        speedAbility = (int)(speedAbility * effectRate);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
         }
 
         public void LevelUp()
-        {
+        {//Todo 做进化
+            // meta = PokemonDataMeta.Find(meta.nextLevel[0]);
+            CalDefault();
         }
+        
     }
 }

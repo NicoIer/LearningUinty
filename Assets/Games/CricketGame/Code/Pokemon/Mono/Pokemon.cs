@@ -8,7 +8,6 @@ namespace Games.CricketGame.Code.Pokemon
 {
     public class Pokemon : MonoBehaviour
     {
-        [field: SerializeField] public PokemonEnum pokemonEnum { get; private set; }
         [field: SerializeField]public PokemonData data { get; private set; }
         [field: SerializeField] public PokemonInputHandler handler { get; private set; }
         private readonly List<ICoreComponent> _components = new();
@@ -18,7 +17,8 @@ namespace Games.CricketGame.Code.Pokemon
         {
             handler = transform.GetChild(0).GetComponent<PokemonInputHandler>();
             var controller = new Controller(this);
-            data = PokemonData.random_init(pokemonEnum);
+            // data = PokemonData.random_init(data.meta.pokemonEnum);
+            data.CalDefault();
             _components.Add(controller);
         }
 

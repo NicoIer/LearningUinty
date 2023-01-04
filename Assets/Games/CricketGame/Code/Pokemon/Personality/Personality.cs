@@ -20,7 +20,10 @@ namespace Games.CricketGame.Code.Pokemon
     public class Personality : ScriptableObject
     {//ToDo 后面做成编辑器的形式
         [JsonIgnore] public bool autoCreate = false;
-        private static Dictionary<PersonalityEnum, Personality> _data;
+
+        #region STATIC
+
+                private static Dictionary<PersonalityEnum, Personality> _data;
         public static string personality_path = "pokemon/personality.json";
         private static bool _initialized;
 
@@ -98,6 +101,9 @@ namespace Games.CricketGame.Code.Pokemon
                 return;
             JsonResourcesManager.SaveStreamingAssets(_data, personality_path, true);
         }
+
+        #endregion
+
 
         public PersonalityEnum personalityEnum;
         public List<PersonalityEffectMeta> effects = new();

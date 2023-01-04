@@ -364,9 +364,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f86cce2609e05e34fae5334ddf8b0696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <pokemonEnum>k__BackingField: 0
   <data>k__BackingField:
-    personalityEnum: 0
+    meta: {fileID: 11400000, guid: a00ab55dbb203cd46bd58524f6f9d29b, type: 2}
+    character: {fileID: 11400000, guid: 2c71e5225e98fda47a02095ab50c6482, type: 2}
+    personality: {fileID: 11400000, guid: 8a6421e9d913dfe4a86e3fb338ba3161, type: 2}
     name: 
     level: 0
     alreadyExperience: 0
