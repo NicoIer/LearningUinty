@@ -10,17 +10,23 @@ namespace Games.CricketGame.Code.Pokemon.Enum
     {
         private static Dictionary<ExperienceEnum, int> _expMap;
 
-        public static int NeededExperience(Pokemon pokemon)
+        public static int AlreadyExperience(PokemonData pokemon)
+        {
+            var level = pokemon.level;
+            return (int)(Math.Pow(level, 3) + Math.Pow(level, 2) - (double)level / 4 +
+                         _base_exp(pokemon.meta.experienceEnum));
+        }
+        public static int NeededExperience(PokemonData pokemon)
         {
             // 升级所需经验 = 
-            var level = pokemon.data.level;
+            var level = pokemon.level;
             if (level == 100)
             {//满级则不需要额外经验
                 return -1;
             }
             level += 1;//否则计算下一级需要的经验总和 - 已经获得的经验
             return (int)(Math.Pow(level, 3) + Math.Pow(level, 2) - (double)level / 4 +
-                         _base_exp(pokemon.data.meta.experienceEnum)) - pokemon.data.alreadyExperience;
+                         _base_exp(pokemon.meta.experienceEnum)) - pokemon.alreadyExperience;
         }
 
 
@@ -30,11 +36,11 @@ namespace Games.CricketGame.Code.Pokemon.Enum
         /// <param name="p1">胜利者</param>
         /// <param name="p2">失败者</param>
         /// <returns></returns>
-        public static int AttackExperience(Pokemon p1, Pokemon p2)
+        public static int AttackExperience(PokemonData p1, PokemonData p2)
         {
             //ToDo 后续再做数值上的优化
-            double sub = Math.Sqrt((double)p2.data.level / p1.data.level); //等级差距
-            var exp = _base_exp(p2.data.meta.experienceEnum); //被击败精灵提供的基础经验值
+            double sub = Math.Sqrt((double)p2.level / p1.level); //等级差距
+            var exp = _base_exp(p2.meta.experienceEnum); //被击败精灵提供的基础经验值
 
             return (int)sub * exp + exp;
         }

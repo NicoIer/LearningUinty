@@ -18,7 +18,7 @@ namespace Games.CricketGame.Code.Pokemon
     [CreateAssetMenu(fileName = "PersonalityData", menuName = "Data/CricketGame/Pokemon/PersonalityData", order = 0)]
     [Serializable]
     public class Personality : ScriptableObject
-    {
+    {//ToDo 后面做成编辑器的形式
         [JsonIgnore] public bool autoCreate = false;
         private static Dictionary<PersonalityEnum, Personality> _data;
         public static string personality_path = "pokemon/personality.json";
@@ -55,6 +55,10 @@ namespace Games.CricketGame.Code.Pokemon
 
         public static Personality Find(PersonalityEnum personalityEnum)
         {
+            if (!_initialized)
+            {
+                Initialize();
+            }
             if (_data.ContainsKey(personalityEnum))
             {
                 return _data[personalityEnum];
