@@ -17,7 +17,7 @@ namespace Games.CricketGame.Code.Pokemon.Asset
         {
             if(!autoCreate)
                 return;
-
+            
             var skills = new Dictionary<SkillEnum, Skill.Skill>();
 
             foreach (var inspector in skillInspectors)

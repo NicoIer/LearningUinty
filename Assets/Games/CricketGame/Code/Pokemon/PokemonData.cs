@@ -8,12 +8,15 @@ namespace Games.CricketGame.Code.Pokemon
     public class PokemonData
     {
         //基本数据(图鉴和种族值)
-        [HideInInspector] public PokemonDataMeta data;
+        private PokemonDataMeta _data;
+        //访问属性
+        public PokemonDataMeta meta => _data;
 
         //性格
         public PersonalityEnum personalityEnum;
         public string name;
         public int level;
+        public int alreadyExperience;
 
         public int healthAbility;
         public int attackAbility;
@@ -68,7 +71,7 @@ namespace Games.CricketGame.Code.Pokemon
             this.specialDefenseEffort = specialDefenseEffort;
             this.speedEffort = speedEffort;
 
-            data = PokemonDataMeta.Find(pokemonEnum);
+            _data = PokemonDataMeta.Find(pokemonEnum);
             //ToDo 计算默认能力值
             _cal_default();
         }

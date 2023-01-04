@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60371ce82bc545959a0fa8908fab9528, type: 3}
   m_Name: "\u53F2\u83B1\u59C6"
   m_EditorClassIdentifier: 
-  autoReplace: 0
+  autoCreate: 0
   skillInspectors:
   - skillEnum: 0
     propertyEnum: 0
@@ -29,12 +29,13 @@ MonoBehaviour:
   meta:
     property: 0
     pokemonEnum: 0
-    healthRace: 10
-    attackRace: 10
-    defenseRace: 10
-    specialAttackRace: 0
-    specialDefenseRace: 0
-    speedRace: 10
+    experienceEnum: 2
+    healthRace: 55
+    attackRace: 55
+    defenseRace: 55
+    specialAttackRace: 55
+    specialDefenseRace: 55
+    speedRace: 55
     desc: "\u5927\u8DEF\u4E0A\u6700\u795E\u5947\u7684\u751F\u7269"
     previousLevel: 5
     nextLevel: 01000000020000000300000004000000

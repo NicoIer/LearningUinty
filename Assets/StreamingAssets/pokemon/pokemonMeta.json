@@ -1,1 +1,87 @@
-﻿{"史莱姆":{"property":0,"pokemonEnum":0,"healthRace":10,"attackRace":10,"defenseRace":10,"specialAttackRace":0,"specialDefenseRace":0,"speedRace":10,"desc":"大路上最神奇的生物","SkillMetas":{"电光一闪":{"meta":{"name":"撞击","skillEnum":0,"priority":1,"power":30,"hitRate":1.0},"propertyEnum":0,"use_times":30,"need_level":10},"撞击":{"meta":{"name":"撞击","skillEnum":2,"priority":1,"power":30,"hitRate":1.0},"propertyEnum":0,"use_times":35,"need_level":0},"叫声":{"meta":{"name":"None","skillEnum":1,"priority":1,"power":30,"hitRate":1.0},"propertyEnum":0,"use_times":35,"need_level":0}},"previousLevel":5,"nextLevel":[1,2,3,4]}}
+﻿{
+  "史莱姆": {
+    "property": 0,
+    "pokemonEnum": 0,
+    "experienceEnum": 2,
+    "healthRace": 55,
+    "attackRace": 55,
+    "defenseRace": 55,
+    "specialAttackRace": 55,
+    "specialDefenseRace": 55,
+    "speedRace": 55,
+    "desc": "大路上最神奇的生物",
+    "SkillMetas": {
+      "电光一闪": {
+        "meta": {
+          "name": "撞击",
+          "skillEnum": 0,
+          "priority": 1,
+          "power": 30,
+          "hitRate": 1.0
+        },
+        "propertyEnum": 0,
+        "use_times": 30,
+        "need_level": 10
+      },
+      "撞击": {
+        "meta": {
+          "name": "撞击",
+          "skillEnum": 2,
+          "priority": 1,
+          "power": 30,
+          "hitRate": 1.0
+        },
+        "propertyEnum": 0,
+        "use_times": 35,
+        "need_level": 0
+      },
+      "叫声": {
+        "meta": {
+          "name": "None",
+          "skillEnum": 1,
+          "priority": 1,
+          "power": 30,
+          "hitRate": 1.0
+        },
+        "propertyEnum": 0,
+        "use_times": 35,
+        "need_level": 0
+      }
+    },
+    "previousLevel": 5,
+    "nextLevel": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "火史莱姆": {
+    "property": 0,
+    "pokemonEnum": 2,
+    "experienceEnum": 3,
+    "healthRace": 65,
+    "attackRace": 90,
+    "defenseRace": 60,
+    "specialAttackRace": 85,
+    "specialDefenseRace": 60,
+    "speedRace": 65,
+    "desc": "充满热情",
+    "SkillMetas": {
+      "火花": {
+        "meta": {
+          "name": "撞击",
+          "skillEnum": 3,
+          "priority": 1,
+          "power": 30,
+          "hitRate": 1.0
+        },
+        "propertyEnum": 2,
+        "use_times": 25,
+        "need_level": 18
+      }
+    },
+    "previousLevel": 0,
+    "nextLevel": []
+  }
+}

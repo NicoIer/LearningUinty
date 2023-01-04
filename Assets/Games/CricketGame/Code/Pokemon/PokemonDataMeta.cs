@@ -82,6 +82,7 @@ namespace Games.CricketGame.Code.Pokemon
         
         public PropertyEnum property;
         public PokemonEnum pokemonEnum;
+        public ExperienceEnum experienceEnum;
         public int healthRace;
         public int attackRace;
         public int defenseRace;
