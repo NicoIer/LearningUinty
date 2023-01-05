@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Games.CricketGame.Code.Player.Core;
 using Nico.Interface;
 using Nico.Player;
 using UnityEngine;
@@ -6,34 +8,49 @@ namespace Games.CricketGame.Code.Player
 {
     public class Player : MonoBehaviour
     {
+        #region Attribute
+
         private PlayerInputHandler _handler;
         [SerializeField] private PlayerPhysicsData physicsData;
-        #region Components
+        private ColliderHandler _colliderHandler;
+
+        #endregion
+        
+        #region Unity Components
 
         private Rigidbody2D _rigidbody;
         private Animator _animator;
+        private Collider2D _collider;
         
-        
-        
-        
-        
+        #endregion
+
+        #region Action
+
+        public Action<Collider2D> triggerEnter2D;
+        public Action<Collider2D> triggerExit2D;
+        public Action<Collision2D> collisionEnter2D;
+        public Action<Collision2D> collisionExit2D;
 
         #endregion
+        
         #region CoreComponents
         
         private readonly List<ICoreComponent> _components = new();
         
         #endregion
 
+        #region Unity LifeTime
 
-
+        
         private void Awake()
         {
-            // Application.targetFrameRate = -1;
-            
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+            _collider = GetComponent<Collider2D>();
             _handler = transform.Find("InputHandler").GetComponent<PlayerInputHandler>();
+
+            _colliderHandler = new ColliderHandler(this);
+            
             var playerController = new PlayerController(_rigidbody, _handler,physicsData);
             _components.Add(playerController);
         }
@@ -63,5 +80,36 @@ namespace Games.CricketGame.Code.Player
                 component.FixedUpdate();
             }
         }
+        #endregion
+
+        #region Trigger2D Event
+        
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            triggerEnter2D.Invoke(col);
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            
+            triggerExit2D.Invoke(other);
+        }
+
+        #endregion
+
+        #region Collider2D Event
+
+        private void OnCollisionEnter2D(Collision2D col)
+        {
+            collisionEnter2D.Invoke(col);
+        }
+
+        private void OnCollisionExit2D(Collision2D other)
+        {
+            collisionExit2D.Invoke(other);
+        }
+
+        #endregion
+        
     }
 }
