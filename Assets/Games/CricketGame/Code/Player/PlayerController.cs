@@ -2,7 +2,7 @@
 using Nico.Player;
 using UnityEngine;
 
-namespace Games.CricketGame.Code.Player
+namespace Games.CricketGame.Manager.Code.Player
 {
     public class PlayerController: ICoreComponent
     {

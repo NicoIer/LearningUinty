@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Games.CricketGame.Code.Pokemon.Enum;
+using Games.CricketGame.Manager.Code.Manager;
 using Nico.Interface;
 using UnityEngine;
 
-namespace Games.CricketGame.Code.Pokemon
+namespace Games.CricketGame.Manager.Code.Pokemon
 {
     public class Cricket : MonoBehaviour
     {
@@ -18,7 +18,7 @@ namespace Games.CricketGame.Code.Pokemon
             handler = transform.GetChild(0).GetComponent<InputHandler>();
             var controller = new Controller(this);
             // data = PokemonData.random_init(data.meta.pokemonEnum);
-            data.CalDefault();
+            data.UpdateDefault();
             _components.Add(controller);
         }
 

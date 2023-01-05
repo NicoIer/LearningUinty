@@ -1,4 +1,4 @@
-﻿namespace Games.CricketGame.Code.Pokemon.Skill.Effects
+﻿namespace Games.CricketGame.Manager.Code.Pokemon.Skill.Effects
 {
     public class 叫声: ISkillEffect
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Games.CricketGame.Code
+namespace Games.CricketGame.Manager.Code
 {
     public class GameManager : MonoBehaviour
     {

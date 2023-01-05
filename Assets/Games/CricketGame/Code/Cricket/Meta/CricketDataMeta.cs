@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Games.CricketGame.Code.Pokemon.Enum;
-using Games.CricketGame.Code.Pokemon.Skill;
+using Games.CricketGame.Manager.Code.Manager;
+using Games.CricketGame.Manager.Code.Pokemon.Skill;
 using Newtonsoft.Json;
 using Nico.Common;
 using UnityEngine;
 
-namespace Games.CricketGame.Code.Pokemon
+namespace Games.CricketGame.Manager.Code.Pokemon
 {
     [CreateAssetMenu(fileName = "CricketMetaData", menuName = "Data/CricketGame/Pokemon/CricketMetaData", order = 0)]
     [Serializable]

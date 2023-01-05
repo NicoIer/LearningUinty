@@ -1,8 +1,8 @@
 ﻿using System;
-using Games.CricketGame.Code.Pokemon.Enum;
+using Games.CricketGame.Manager.Code.Manager;
 using UnityEngine;
 
-namespace Games.CricketGame.Code.Pokemon.Skill
+namespace Games.CricketGame.Manager.Code.Pokemon.Skill
 {
     public class CreateSkillEffect : MonoBehaviour
     {

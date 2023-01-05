@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Games.CricketGame.Code.Pokemon.Enum;
+using Games.CricketGame.Manager.Code.Manager;
 using Nico.Common;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-namespace Games.CricketGame.Code.Pokemon.Skill
+namespace Games.CricketGame.Manager.Code.Pokemon.Skill
 {
     [Serializable]
     public class SkillMeta

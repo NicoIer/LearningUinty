@@ -1,10 +1,11 @@
 ﻿using System;
-using Games.CricketGame.Code.Pokemon.Enum;
+using System.Collections;
+using Games.CricketGame.Manager.Code.Manager;
 using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Games.CricketGame.Code.Pokemon
+namespace Games.CricketGame.Manager.Code.Pokemon
 {
     [Serializable]
     public class CricketData
@@ -70,11 +71,25 @@ namespace Games.CricketGame.Code.Pokemon
 
         #endregion
 
+        #region 基础信息
+
         public string name;
         public int level;
         public int alreadyExperience;
+        public bool sex = true;
+
+        #endregion
+
+        #region Action
+
+        public Action<int> damageAction;
+        public Action<int> expAction;
+
+        #endregion
 
         #region 能力值
+
+        #region 当前值
 
         public int healthAbility;
         public int attackAbility;
@@ -82,6 +97,19 @@ namespace Games.CricketGame.Code.Pokemon
         public int specialAttackAbility;
         public int specialDefenseAbility;
         public int speedAbility;
+
+        #endregion
+
+        #region 默认值
+
+        [JsonIgnore] public int defalut_health { get; private set; }
+        [JsonIgnore] public int defalut_attack { get; private set; }
+        [JsonIgnore] public int _defenseAbility { get; private set; }
+        [JsonIgnore] public int _specialAttackAbility { get; private set; }
+        [JsonIgnore] public int _specialDefenseAbility { get; private set; }
+        [JsonIgnore] public int _speedAbility { get; private set; }
+
+        #endregion
 
         #endregion
 
@@ -125,9 +153,11 @@ namespace Games.CricketGame.Code.Pokemon
             int defenseEffort,
             int specialAttackEffort,
             int specialDefenseEffort,
-            int speedEffort
+            int speedEffort,
+            bool sex = true
         )
         {
+            this.sex = sex;
             this.level = level;
             this.name = name;
             personality = Personality.Find(personalityEnum);
@@ -147,16 +177,29 @@ namespace Games.CricketGame.Code.Pokemon
             this.speedEffort = speedEffort;
             meta = CricketDataMeta.Find(cricketEnum);
 
-            CalDefault();
+            UpdateDefault();
         }
 
         #endregion
 
+        #region 随机初始化 Method
+
         public void RandomInit()
         {
             level = _random_level();
+            RandomExp();
+            RandomIndividual();
+            UpdateDefault();
         }
-        public void RandomFlashIndividual()
+
+        public void RandomExp()
+        {
+            var levelExp = ExperienceManger.LevelExp(meta.experienceEnum, level);
+            alreadyExperience =
+                levelExp + _random.Next(0, ExperienceManger.LevelUpTotalExp(meta.experienceEnum, level));
+        }
+
+        public void RandomIndividual()
         {
             healthIndividual = _random.Next(0, 32);
             attackIndividual = _random.Next(0, 32);
@@ -164,10 +207,9 @@ namespace Games.CricketGame.Code.Pokemon
             specialAttackIndividual = _random.Next(0, 32);
             specialDefenseIndividual = _random.Next(0, 32);
             speedIndividual = _random.Next(0, 32);
-            CalDefault();
         }
 
-        public void RandomFlashEffort()
+        public void RandomEffort()
         {
             throw new NotImplementedException();
         }
@@ -182,7 +224,29 @@ namespace Games.CricketGame.Code.Pokemon
             return _random.Next(0, 32);
         }
 
-        public void CalDefault()
+        #endregion
+
+        #region Attribut Method
+
+        #region Exp
+
+        public int NeededExp() =>
+            ExperienceManger.LevelUpNeededExperience(meta.experienceEnum, level, alreadyExperience);
+
+        public int LevelTotalExp() =>
+            ExperienceManger.LevelUpTotalExp(meta.experienceEnum, level);
+
+        /// <summary>
+        /// 当前等级已经获得的经验
+        /// </summary>
+        /// <returns></returns>
+        public int LevelAttainedExp() => LevelTotalExp() - NeededExp();
+
+        #endregion
+
+        #endregion
+
+        public void UpdateDefault()
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -193,8 +257,8 @@ namespace Games.CricketGame.Code.Pokemon
             {
                 level = _random_level();
             }
-            
-            alreadyExperience = ExperienceManger.NeededExperience(this);
+
+
             var levelRate = level / 100.0;
             healthAbility = (int)((meta.healthRace * 2 + healthIndividual + Math.Sqrt(healthEffort)) * levelRate + 15 +
                                   level);
@@ -235,13 +299,33 @@ namespace Games.CricketGame.Code.Pokemon
                         throw new ArgumentOutOfRangeException();
                 }
             }
+
+            //计算默认值
+            defalut_health = healthAbility;
+            defalut_attack = attackAbility;
+            _defenseAbility = defenseAbility;
+            _specialAttackAbility = specialAttackAbility;
+            _specialDefenseAbility = specialDefenseAbility;
+            _speedAbility = speedAbility;
         }
 
         public void LevelUp()
-        {//Todo 做进化
+        {
+            level += 1;
+            //Todo 做进化 还有其他设置
             // meta = PokemonDataMeta.Find(meta.nextLevel[0]);
-            CalDefault();
+            UpdateDefault();
         }
-        
+
+        public void AttainExp(int exp)
+        {
+            expAction.Invoke(exp);
+        }
+
+        public void DoDamage(int damage)
+        {
+            damageAction.Invoke(damage); //先处理事件 再扣血
+            healthAbility = Math.Clamp(healthAbility - damage, 0, healthAbility);
+        }
     }
 }

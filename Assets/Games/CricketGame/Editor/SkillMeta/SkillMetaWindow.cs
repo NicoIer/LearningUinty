@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using Games.CricketGame.Code.Pokemon.Enum;
-using Games.CricketGame.Code.Pokemon.Skill;
+using Games.CricketGame.Manager.Code.Manager;
+using Games.CricketGame.Manager.Code.Pokemon.Skill;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Games.CricketGame.Editor.SkillMeta
+namespace Games.CricketGame.Manager.Editor.SkillMeta
 {
     public class SkillMetaWindow : EditorWindow
     {

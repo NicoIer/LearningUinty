@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Games.CricketGame.Code.Pokemon.Enum;
-using Games.CricketGame.Code.Pokemon.Skill.Effects;
+using Games.CricketGame.Manager.Code.Manager;
+using Games.CricketGame.Manager.Code.Pokemon.Skill.Effects;
 using Nico.Common;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Games.CricketGame.Code.Pokemon.Skill
+namespace Games.CricketGame.Manager.Code.Pokemon.Skill
 {
     [Serializable]
     public class SkillInspector

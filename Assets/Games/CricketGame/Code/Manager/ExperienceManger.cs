@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Games.CricketGame.Manager.Code.Pokemon;
 
-namespace Games.CricketGame.Code.Pokemon.Enum
+namespace Games.CricketGame.Manager.Code.Manager
 {
     /// <summary>
     /// 用于计算宝可梦升级所需经验
@@ -10,25 +11,40 @@ namespace Games.CricketGame.Code.Pokemon.Enum
     {
         private static Dictionary<ExperienceEnum, int> _expMap;
 
-        public static int AlreadyExperience(CricketData cricket)
+        public static int LevelUpTotalExp(ExperienceEnum experienceEnum, int level)
         {
-            var level = cricket.level;
-            return (int)(Math.Pow(level, 3) + Math.Pow(level, 2) - (double)level / 4 +
-                         _base_exp(cricket.meta.experienceEnum));
-        }
-        public static int NeededExperience(CricketData cricket)
-        {
-            // 升级所需经验 = 
-            var level = cricket.level;
             if (level == 100)
-            {//满级则不需要额外经验
-                return -1;
-            }
-            level += 1;//否则计算下一级需要的经验总和 - 已经获得的经验
-            return (int)(Math.Pow(level, 3) + Math.Pow(level, 2) - (double)level / 4 +
-                         _base_exp(cricket.meta.experienceEnum)) - cricket.alreadyExperience;
+                return 0;
+            return LevelExp(experienceEnum, level + 1) - LevelExp(experienceEnum, level);
         }
 
+        /// <summary>
+        /// 升到级下一级还需要的经验
+        /// </summary>
+        /// <returns></returns>
+        public static int LevelUpNeededExperience(ExperienceEnum experienceEnum, int level, int attainedExp)
+        {
+            // 升级所需经验 = 
+            if (level == 100)
+            {
+                //满级则不需要额外经验
+                return 0;
+            }
+            //否则计算下一级需要的经验总和 - 已经获得的经验
+            return LevelExp(experienceEnum, level+1) - attainedExp;
+        }
+
+        /// <summary>
+        /// 对应等级所需经验
+        /// </summary>
+        /// <param name="experienceEnum"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public static int LevelExp(ExperienceEnum experienceEnum, int level)
+        {
+            return (int)(Math.Pow(level, 3) + Math.Pow(level, 2) - (double)level / 4 +
+                         _base_exp(experienceEnum));
+        }
 
         /// <summary>
         /// 计算精灵战斗胜利获得的经验

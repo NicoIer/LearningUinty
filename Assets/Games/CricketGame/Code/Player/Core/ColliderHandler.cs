@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Games.CricketGame.Code.Player.Core
+namespace Games.CricketGame.Manager.Code.Player.Core
 {
     public class ColliderHandler
     {

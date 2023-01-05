@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Games.CricketGame.Code.Pokemon.Enum;
+using Games.CricketGame.Manager.Code.Manager;
 using Newtonsoft.Json;
 using Nico.Common;
 using UnityEngine;
 
-namespace Games.CricketGame.Code.Pokemon.Character
+namespace Games.CricketGame.Manager.Code.Pokemon.Character
 {
     [Serializable]
     public class CharacterEffect

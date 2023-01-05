@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Games.CricketGame.Code.Player.Core;
+using Games.CricketGame.Manager.Code.Player.Core;
 using Nico.Interface;
 using Nico.Player;
 using UnityEngine;
-namespace Games.CricketGame.Code.Player
+namespace Games.CricketGame.Manager.Code.Player
 {
     public class Player : MonoBehaviour
     {
