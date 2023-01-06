@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Games.CricketGame.Manager.Code.Pokemon;
+using UnityEngine;
 
 namespace Games.CricketGame.Manager.Code.Player.Core
 {
@@ -22,7 +23,7 @@ namespace Games.CricketGame.Manager.Code.Player.Core
             if (col.collider.CompareTag("Cricket"))
             {
                 Debug.Log("遭遇野生精灵,现在要进入战斗画面");
-                Nico.Scene.CameraManager.Instance.ToAttack();
+                GameManager.instance.EnterAttackMap(_player,col.collider.GetComponent<Cricket>());
             }
         }
 

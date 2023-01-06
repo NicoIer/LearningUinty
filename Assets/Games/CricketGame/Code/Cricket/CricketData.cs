@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using Games.CricketGame.Manager.Code.Manager;
 using Newtonsoft.Json;
-using UnityEngine;
 using Random = System.Random;
 
 namespace Games.CricketGame.Manager.Code.Pokemon
@@ -325,7 +323,6 @@ namespace Games.CricketGame.Manager.Code.Pokemon
         public void DoDamage(int damage)
         {
             damageAction.Invoke(damage); //先处理事件 再扣血
-            healthAbility = Math.Clamp(healthAbility - damage, 0, healthAbility);
         }
     }
 }

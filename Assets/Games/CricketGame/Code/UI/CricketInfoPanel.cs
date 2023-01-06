@@ -16,6 +16,7 @@ namespace Games.CricketGame.Manager.Code.UI
         public Text healthText;
         private bool _is_enemy;
         public bool expOver { get; private set; }
+        public bool healthOver { get; private set; }
         public CricketData cricketData;
 
 
@@ -88,28 +89,42 @@ namespace Games.CricketGame.Manager.Code.UI
         /// <param name="damage"></param>
         /// <param name="totalTimes"></param>
         /// <returns></returns>
-        private IEnumerator _do_health_update(int tempHealth, int maxHealth, int damage, int totalTimes)
+        private IEnumerator _do_health_update(int damage, int totalTimes)
         {
-            if (tempHealth <= 0)
+            
+            if (cricketData.healthAbility <= 0)
             {
                 yield break;
             }
 
+            healthOver = false;
             var _ = new WaitForFixedUpdate();
             //将伤害分成很多次进行UI刷新
             var one_damage = (float)damage / totalTimes;
+            var maxHealth = cricketData.defalut_health; //最大值
+            var tempHealth = (float)cricketData.healthAbility; //临时值
             for (var i = 1; i != totalTimes + 1; i++)
             {
-                var cur_health = tempHealth - i * one_damage;
-                healthBar.fillAmount = cur_health / maxHealth;
-                healthText.text = $"{(int)cur_health}/{maxHealth}";
-                if (cur_health <= 0 || cur_health >= maxHealth)
+                tempHealth -= i * one_damage;
+                healthBar.fillAmount = tempHealth / maxHealth;
+                healthText.text = $"{(int)tempHealth}/{maxHealth}";
+                if (tempHealth <= 0)
                 {
+                    healthOver = true;
+                    cricketData.healthAbility -= damage;
+                    cricketData.healthAbility = 0;
                     yield break;
+                }
+                if (tempHealth >= maxHealth)
+                {
+                    cricketData.healthAbility = maxHealth;
                 }
 
                 yield return _;
             }
+
+            cricketData.healthAbility -= damage;
+            healthOver = true;
         }
 
         private void _ApplyDamage(int damage)
@@ -120,18 +135,19 @@ namespace Games.CricketGame.Manager.Code.UI
                 return;
             }
 
-            StartCoroutine(_do_health_update(cricketData.healthAbility, cricketData.defalut_health, damage, 30));
+            StartCoroutine(_do_health_update(damage, 30));
         }
 
 
         private IEnumerator _do_exp_update(int exp, int totalTimes)
         {
+            expOver = false;
             var _ = new WaitForFixedUpdate();
             var needed = cricketData.NeededExp(); //升级所需经验值
             var total = cricketData.LevelTotalExp(); //从0升到下一级需要的经验值
             float cur_exp;
             float one_exp;
-
+            
             while (exp >= needed)
             {
                 exp -= needed;
@@ -153,7 +169,8 @@ namespace Games.CricketGame.Manager.Code.UI
                 {
                     //满级了就不要再搞了
                     expBar.fillAmount = 1;
-                    break;
+                    expOver = true;
+                    yield break;
                 }
 
                 //更新下一级需要的经验
@@ -197,8 +214,6 @@ namespace Games.CricketGame.Manager.Code.UI
                 expBar.fillAmount = 1;
                 return;
             }
-
-            expOver = false;
             StartCoroutine(_do_exp_update(exp, 30));
         }
 

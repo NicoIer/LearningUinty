@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Games.CricketGame.Manager.Code.Player.Core;
+using Games.CricketGame.Manager.Code.Pokemon;
 using Nico.Interface;
 using Nico.Player;
 using UnityEngine;
@@ -8,6 +9,8 @@ namespace Games.CricketGame.Manager.Code.Player
 {
     public class Player : MonoBehaviour
     {
+        public Cricket cricket;
+        
         #region Attribute
 
         private PlayerInputHandler _handler;
