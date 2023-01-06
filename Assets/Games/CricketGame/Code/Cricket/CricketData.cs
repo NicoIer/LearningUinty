@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Games.CricketGame.Cricket_;
 using Games.CricketGame.Manager;
 using Newtonsoft.Json;
+using UnityEngine;
 using Random = System.Random;
 
 namespace Games.CricketGame.Code.Cricket_
@@ -30,9 +33,9 @@ namespace Games.CricketGame.Code.Cricket_
             var sde = _random.Next(0, 32);
             var se = _random.Next(0, 32);
 
-            var values = System.Enum.GetValues(typeof(PersonalityEnum));
+            var values = Enum.GetValues(typeof(PersonalityEnum));
             PersonalityEnum personalityEnum = (PersonalityEnum)values.GetValue(_random.Next(values.Length));
-            values = System.Enum.GetValues(typeof(CharacterEnum));
+            values = Enum.GetValues(typeof(CharacterEnum));
             CharacterEnum characterEnum = (CharacterEnum)values.GetValue(_random.Next(values.Length));
 
             return new CricketData(
@@ -69,6 +72,9 @@ namespace Games.CricketGame.Code.Cricket_
         //性格
         public Personality personality;
 
+        //异常状态 ToDo 将异常状态加入考虑
+        public StateEnum stateEnum;
+
         #endregion
 
         #region 基础信息
@@ -83,12 +89,14 @@ namespace Games.CricketGame.Code.Cricket_
         #region 技能信息
 
         public List<Skill> skills;
+
         #endregion
-        
+
         #region Action
 
-        public Action<int> damageAction;
-        public Action<int> expAction;
+        public Action<float, float> expRateChangeAction;
+        public Action<string, int> levelUpAction;
+        public Action<float, float> healthRateChangeAction;
 
         #endregion
 
@@ -107,12 +115,12 @@ namespace Games.CricketGame.Code.Cricket_
 
         #region 默认值
 
-        [JsonIgnore] public int defalut_health { get; private set; }
-        [JsonIgnore] public int defalut_attack { get; private set; }
-        [JsonIgnore] public int _defenseAbility { get; private set; }
-        [JsonIgnore] public int _specialAttackAbility { get; private set; }
-        [JsonIgnore] public int _specialDefenseAbility { get; private set; }
-        [JsonIgnore] public int _speedAbility { get; private set; }
+        [JsonIgnore] public int defaultHealth { get; private set; }
+        [JsonIgnore] public int defaultAttack { get; private set; }
+        [JsonIgnore] public int defaultDefense { get; private set; }
+        [JsonIgnore] public int defaultSpecialAttack { get; private set; }
+        [JsonIgnore] public int defaultSpecialDefense { get; private set; }
+        [JsonIgnore] public int defaultSpeed { get; private set; }
 
         #endregion
 
@@ -182,7 +190,7 @@ namespace Games.CricketGame.Code.Cricket_
             this.speedEffort = speedEffort;
             meta = CricketDataMeta.Find(cricketEnum);
 
-            UpdateDefault();
+            CalculateDefault();
         }
 
         #endregion
@@ -194,7 +202,12 @@ namespace Games.CricketGame.Code.Cricket_
             level = _random_level();
             RandomExp();
             RandomIndividual();
-            UpdateDefault();
+            CalculateDefault();
+            foreach (Skill skill in skills)
+            {
+                //ToDo 不应该由他进行初始化
+                skill.InitMeta();
+            }
         }
 
         public void RandomExp()
@@ -251,7 +264,7 @@ namespace Games.CricketGame.Code.Cricket_
 
         #endregion
 
-        public void UpdateDefault()
+        public void CalculateDefault()
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -267,15 +280,18 @@ namespace Games.CricketGame.Code.Cricket_
             var levelRate = level / 100.0;
             healthAbility = (int)((meta.healthRace * 2 + healthIndividual + Math.Sqrt(healthEffort)) * levelRate + 15 +
                                   level);
-            attackAbility = (int)((meta.healthRace * 2 + attackIndividual + Math.Sqrt(attackEffort)) * levelRate + 10);
-            defenseAbility = (int)((meta.healthRace * 2 + defenseIndividual + Math.Sqrt(speedEffort)) * levelRate + 10);
+            attackAbility = (int)((meta.attackRace * 2 + attackIndividual + Math.Sqrt(attackEffort)) * levelRate + 10);
+            defenseAbility =
+                (int)((meta.defenseRace * 2 + defenseIndividual + Math.Sqrt(defenseEffort)) * levelRate + 10);
             specialAttackAbility =
-                (int)((meta.healthRace * 2 + specialAttackIndividual + Math.Sqrt(specialAttackEffort)) * levelRate +
+                (int)((meta.specialAttackRace * 2 + specialAttackIndividual + Math.Sqrt(specialAttackEffort)) *
+                      levelRate +
                       10);
             specialDefenseAbility =
-                (int)((meta.healthRace * 2 + specialDefenseIndividual + Math.Sqrt(specialDefenseEffort)) * levelRate +
+                (int)((meta.specialDefenseRace * 2 + specialDefenseIndividual + Math.Sqrt(specialDefenseEffort)) *
+                      levelRate +
                       10);
-            speedAbility = (int)((meta.healthRace * 2 + speedIndividual + Math.Sqrt(speedEffort)) * levelRate + 10);
+            speedAbility = (int)((meta.speedRace * 2 + speedIndividual + Math.Sqrt(speedEffort)) * levelRate + 10);
 
             foreach (var effect in personality.effects)
             {
@@ -306,30 +322,96 @@ namespace Games.CricketGame.Code.Cricket_
             }
 
             //计算默认值
-            defalut_health = healthAbility;
-            defalut_attack = attackAbility;
-            _defenseAbility = defenseAbility;
-            _specialAttackAbility = specialAttackAbility;
-            _specialDefenseAbility = specialDefenseAbility;
-            _speedAbility = speedAbility;
+            defaultHealth = healthAbility;
+            defaultAttack = attackAbility;
+            defaultDefense = defenseAbility;
+            defaultSpecialAttack = specialAttackAbility;
+            defaultSpecialDefense = specialDefenseAbility;
+            defaultSpeed = speedAbility;
         }
 
-        public void LevelUp()
+        private void _levelUp()
         {
             level += 1;
             //Todo 做进化 还有其他设置
+            Debug.Log("进化了");
             // meta = PokemonDataMeta.Find(meta.nextLevel[0]);
-            UpdateDefault();
+            levelUpAction?.Invoke(name,level);
+            CalculateDefault();
         }
 
-        public void AttainExp(int exp)
+        public async void ChangeExp(int exp)
         {
-            expAction.Invoke(exp);
+            var totalTimes = 30;
+            var needed = NeededExp();
+            var total = LevelTotalExp();
+            float one_exp;
+            float cur_exp;
+            while (exp >= needed)
+            {
+                exp -= needed;
+                one_exp = (float)needed / totalTimes;
+                cur_exp = LevelAttainedExp();
+                for (var i = 1; i != totalTimes + 1; i++)
+                {
+                    cur_exp += one_exp;
+                    expRateChangeAction.Invoke(cur_exp , total);
+                    await UniTask.Delay(20);
+                }
+
+                alreadyExperience += needed;
+                _levelUp();
+                if (level == 100)
+                {
+                    expRateChangeAction.Invoke(1,1);
+                    return;
+                }
+            }
+
+            cur_exp = LevelAttainedExp();
+            one_exp = (float)exp / totalTimes;
+            for (var i = 1; i != totalTimes + 1; i++)
+            {
+                cur_exp += one_exp;
+                expRateChangeAction.Invoke(cur_exp , total);
+                await UniTask.Delay(20);
+            }
+
+            alreadyExperience += exp;
         }
 
-        public void DoDamage(int damage)
+
+        public async void ChangeHealth(int damage)
         {
-            damageAction.Invoke(damage); //先处理事件 再扣血
+            if (healthAbility <= 0)
+            {
+                return;
+            }
+            
+            int totalTimes = 30;
+            float tempHealth = defaultHealth;
+            //将伤害分成很多次进行调用,以进行事件调用
+            var one_damage = (float)damage / totalTimes;
+            for (var i = 1; i != totalTimes + 1; i++)
+            {
+                tempHealth -= i * one_damage;
+                healthRateChangeAction?.Invoke(tempHealth, defaultHealth);
+                await UniTask.WaitForFixedUpdate();
+                if (tempHealth <= 0)
+                {
+                    healthAbility = 0;
+                    return;
+                }
+            
+                if (tempHealth >= defaultHealth)
+                {
+                    healthAbility = defaultHealth;
+                    return;
+                }
+            }
+
+            healthAbility -= damage;
+            healthRateChangeAction?.Invoke(healthAbility, defaultHealth);
         }
     }
 }

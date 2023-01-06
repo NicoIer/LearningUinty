@@ -4,6 +4,6 @@ namespace Games.CricketGame.Cricket_
 {
     public interface ISkillEffect
     {
-        public void Apply(Cricket user, Cricket hitter,Skill skill);
+        public void Apply(Cricket attacker, Cricket defenser,Skill skill);
     }
 }

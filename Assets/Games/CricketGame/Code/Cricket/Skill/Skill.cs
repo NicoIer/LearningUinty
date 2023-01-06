@@ -19,10 +19,10 @@ namespace Games.CricketGame.Cricket_
 
     [Serializable]
     public class Skill
-    {
+    {//ToDo 没有考虑技能的类型 变化 啥的 暂时交给Effect处理
         #region Static
 
-        public static bool Initilized { get; private set; }
+        public static bool Initialized { get; private set; }
         private static Dictionary<SkillEnum, Type> _effectTyeMap;
         private static Dictionary<SkillEnum, ISkillEffect> _effectObjs;
         private static readonly string _effect_map_path = "skill/effect_map.json";
@@ -32,13 +32,13 @@ namespace Games.CricketGame.Cricket_
 
         #region Static Method
 
-        public static Dictionary<SkillEnum, Type> GetEffectMap(bool reload=false)
+        public static Dictionary<SkillEnum, Type> GetEffectMap(bool reload = false)
         {
             if (reload)
             {
                 InitializeStatic();
             }
-            else if (!Initilized)
+            else if (!Initialized)
             {
                 InitializeStatic();
             }
@@ -54,6 +54,7 @@ namespace Games.CricketGame.Cricket_
 
         private static void InitializeStatic()
         {
+            Debug.Log("初始化SkillMap");
             //初始化静态变量
             try
             {
@@ -80,12 +81,12 @@ namespace Games.CricketGame.Cricket_
                 _effectObjs.Add(skillEnum, effect);
             }
 
-            Initilized = true;
+            Initialized = true;
         }
 
         public static void AddEffectByString(SkillEnum skillEnum, string type, bool replace)
         {
-            if (!Initilized)
+            if (!Initialized)
             {
                 InitializeStatic();
             }
@@ -128,7 +129,7 @@ namespace Games.CricketGame.Cricket_
         public static void AddEffect<T>(SkillEnum skillEnum, bool replace) where T : ISkillEffect
         {
             Debug.Log($"为技能:{skillEnum} 添加技能效果类:{typeof(T)}");
-            if (!Initilized)
+            if (!Initialized)
             {
                 InitializeStatic();
             }
@@ -161,11 +162,15 @@ namespace Games.CricketGame.Cricket_
         public PropertyEnum propertyEnum;
         [JsonIgnore] public int cur_times { get; private set; }
         public int use_times;
-        [HideInInspector]public int need_level;
+        [HideInInspector] public int need_level;
 
+        public void InitMeta()
+        {
+            meta = SkillMeta.Find(meta.skillEnum);
+        }
         public Skill(SkillEnum skillEnum, PropertyEnum propertyEnum, int needLevel, int useTimes)
         {
-            if (!Initilized)
+            if (!Initialized)
             {
                 InitializeStatic();
             }
@@ -176,17 +181,14 @@ namespace Games.CricketGame.Cricket_
             this.use_times = useTimes;
         }
 
-        public bool Apply(Cricket user, Cricket hitter)
+        public void Apply(Cricket attacker, Cricket defenser)
         {
-            if (cur_times > 0)
+            if (!Initialized)
             {
-                _effectObjs[meta.skillEnum].Apply(user, hitter, this);
-                return true;
+                InitializeStatic();
             }
-
-            return false;
-
-
+            cur_times--;
+            _effectObjs[meta.skillEnum].Apply(attacker, defenser, this);
         }
     }
 }

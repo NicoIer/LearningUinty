@@ -10,6 +10,10 @@ namespace Games.CricketGame.UI
         public Button cricket;
         public Button bag;
         public Button run;
+        public Action cricketClicked;
+        public Action attackClicked;
+        public Action bagClicked;
+        public Action runClicked;
 
 
         private void Awake()
@@ -22,19 +26,23 @@ namespace Games.CricketGame.UI
         
         private void _cricket_clicked()
         {
+            cricketClicked?.Invoke();
             print("点击Cricket按钮");
         }
         private void _bag_clicked()
         {
+            bagClicked?.Invoke();
             print("点击bag按钮");
         }
         private void _attack_clicked()
         {
+            attackClicked?.Invoke();
             print("点击战斗按钮");
         }
 
         private void _run_clicked()
         {
+            runClicked?.Invoke();
             print("点击逃跑按钮");
 
         }

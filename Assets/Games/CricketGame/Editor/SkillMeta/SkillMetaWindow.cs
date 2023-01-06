@@ -202,7 +202,7 @@ namespace Games.CricketGame.Editor
         private static void _read()
         {
             _skillEnumList = SkillMeta.GetSkillEnumList();
-            if (!Skill.Initilized)
+            if (!Skill.Initialized)
             {
                 var map = Skill.GetEffectMap();
                 foreach (SkillEnum @enum in _skillEnumList)
