@@ -91,7 +91,6 @@ namespace Games.CricketGame.Cricket_
             }
 
             var value = Type.GetType(type);
-
             if (value == null)
             {
                 Debug.LogError($"请先定义{skillEnum}对应的effect类型");

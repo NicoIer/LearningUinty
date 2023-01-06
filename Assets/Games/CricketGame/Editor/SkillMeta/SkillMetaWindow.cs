@@ -14,7 +14,7 @@ namespace Games.CricketGame.Editor
         private static bool _readed = false;
 
         private static readonly string _template =
-            "Games.CricketGame.Code.Pokemon.Skill.Effects.{0}, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
+            "Games.CricketGame.Cricket_.{0}, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
         
         [MenuItem("Window/Create/SkillMeta")]
         public static void ShowExample()
