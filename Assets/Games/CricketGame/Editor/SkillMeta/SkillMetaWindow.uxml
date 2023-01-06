@@ -16,7 +16,6 @@
             <ui:VisualElement name="top" style="border-left-color: rgb(147, 147, 147); border-right-color: rgb(147, 147, 147); border-top-color: rgb(147, 147, 147); border-bottom-color: rgb(147, 147, 147);">
                 <ui:Foldout text="SkillMeta" name="SkillMeta" style="background-color: rgb(43, 43, 43); border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px; padding-bottom: 5px; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px;">
                     <uie:EnumField label="技能枚举" value="Center" name="skillEnum" />
-                    <ui:TextField picking-mode="Ignore" label="图鉴名称" value="电光一闪" text="电光一闪" name="skillName" />
                     <uie:FloatField label="命中率" value="1" name="hitRate" />
                     <uie:IntegerField label="威力" value="30" name="power" />
                     <uie:EnumField label="优先级枚举" value="Center" name="skillPriority" />

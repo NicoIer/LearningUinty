@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Games.CricketGame.Manager.Code.UI
+namespace Games.CricketGame.UI
 {
     public class UIManager: MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using Nico.Interface;
 
-namespace Games.CricketGame.Manager.Code.Pokemon
+namespace Games.CricketGame.Code.Cricket_
 {
     public class Controller : ICoreComponent
     {

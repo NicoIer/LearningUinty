@@ -1,7 +1,8 @@
-﻿using Games.CricketGame.Manager.Code.Pokemon;
+﻿
+using Games.CricketGame.Code.Cricket_;
 using UnityEngine;
 
-namespace Games.CricketGame.Manager.Code.UI
+namespace Games.CricketGame.UI
 {
     public class AttackPanel : MonoBehaviour
     {
@@ -10,7 +11,7 @@ namespace Games.CricketGame.Manager.Code.UI
         public CricketInfoPanel other;
         public AttackOperatorPanel attackOperatorPanel;
         private bool _initialized;
-
+        
 
         public void Initialize(CricketData p1, CricketData p2)
         {
@@ -19,7 +20,7 @@ namespace Games.CricketGame.Manager.Code.UI
             //将自身/对方的Cricket数据传递给panel
             player.Initialize(p1, false);
             other.Initialize(p2, true);
-            
+            attackOperatorPanel.Initialize(p1);
         }
     }
 }

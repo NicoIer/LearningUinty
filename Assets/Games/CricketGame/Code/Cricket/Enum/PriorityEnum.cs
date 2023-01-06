@@ -1,4 +1,4 @@
-﻿namespace Games.CricketGame.Manager.Code.Manager
+﻿namespace Games.CricketGame.Cricket_
 {
     public enum PriorityEnum
     {

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using Games.CricketGame.Manager.Code.Manager;
-using Games.CricketGame.Manager.Code.Pokemon.Skill;
+using Games.CricketGame.Code.Cricket_;
+using Games.CricketGame.Cricket_;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Games.CricketGame.Manager.Editor.SkillMeta
+namespace Games.CricketGame.Editor
 {
     public class SkillMetaWindow : EditorWindow
     {
@@ -15,7 +15,7 @@ namespace Games.CricketGame.Manager.Editor.SkillMeta
 
         private static readonly string _template =
             "Games.CricketGame.Code.Pokemon.Skill.Effects.{0}, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null";
-
+        
         [MenuItem("Window/Create/SkillMeta")]
         public static void ShowExample()
         {
@@ -33,7 +33,6 @@ namespace Games.CricketGame.Manager.Editor.SkillMeta
 
         private static EnumField _skillEnum;
         private static EnumField _priorityEnum;
-        private static TextField _skillName;
         private static FloatField _hitRate;
         private static IntegerField _power;
         private static ListView _listView;
@@ -60,8 +59,6 @@ namespace Games.CricketGame.Manager.Editor.SkillMeta
 
             _power = root.Q<IntegerField>("power");
             _hitRate = root.Q<FloatField>("hitRate");
-            _skillName = root.Q<TextField>("skillName");
-
             _skillEnum.Init(SkillEnum.None);
             _priorityEnum.Init(PriorityEnum.正常手);
             clear.clicked += _clear;
@@ -102,12 +99,11 @@ namespace Games.CricketGame.Manager.Editor.SkillMeta
                 }
 
                 var @enum = (SkillEnum)obj;
-                var meta = Code.Pokemon.Skill.SkillMeta.Find(@enum);
+                var meta = SkillMeta.Find(@enum);
                 _skillEnum.value = meta.skillEnum;
                 _priorityEnum.value = meta.priority;
                 _power.value = meta.power;
                 _hitRate.value = meta.hitRate;
-                _skillName.value = @enum.ToString();
             }
         }
 
@@ -129,13 +125,11 @@ namespace Games.CricketGame.Manager.Editor.SkillMeta
         private static SkillEnum _create_meta()
         {
             SkillEnum _enum = _skillEnum.value as SkillEnum? ?? SkillEnum.None;
-            _skillName.value = _enum.ToString();
-            string _name = _skillName.value;
             int powerValue = _power.value;
             float hitRateValue = _hitRate.value;
             PriorityEnum _priority = _priorityEnum.value as PriorityEnum? ?? PriorityEnum.后手;
-            var meta = new Code.Pokemon.Skill.SkillMeta(_name, _enum, powerValue, hitRateValue, _priority, true);
-            Code.Pokemon.Skill.SkillMeta.Add(meta);
+            var meta = new SkillMeta(_enum, powerValue, hitRateValue, _priority, true);
+            SkillMeta.Add(meta);
             return _enum;
         }
 
@@ -143,7 +137,7 @@ namespace Games.CricketGame.Manager.Editor.SkillMeta
 
         private static void _reload()
         {
-            _skillEnumList = Code.Pokemon.Skill.SkillMeta.GetSkillEnumList(true);
+            _skillEnumList = SkillMeta.GetSkillEnumList(true);
             var map = Skill.GetEffectMap(true);
             foreach (SkillEnum @enum in _skillEnumList)
             {
@@ -164,7 +158,7 @@ namespace Games.CricketGame.Manager.Editor.SkillMeta
             }
 
             Skill.Save();
-            Code.Pokemon.Skill.SkillMeta.Save();
+            SkillMeta.Save();
             _bottom.Add(new HelpBox("数据保存完成",HelpBoxMessageType.Info));
         }
 
@@ -199,7 +193,7 @@ namespace Games.CricketGame.Manager.Editor.SkillMeta
                 return;
             }
 
-            Code.Pokemon.Skill.SkillMeta.Clear();
+            SkillMeta.Clear();
             Skill.ClearEffect();
             _bottom.Add(new HelpBox("清空完成现在点击保存按钮则之前的数据都会消失,请谨慎保存!!",HelpBoxMessageType.Warning));
             _read();
@@ -207,7 +201,7 @@ namespace Games.CricketGame.Manager.Editor.SkillMeta
 
         private static void _read()
         {
-            _skillEnumList = Code.Pokemon.Skill.SkillMeta.GetSkillEnumList();
+            _skillEnumList = SkillMeta.GetSkillEnumList();
             if (!Skill.Initilized)
             {
                 var map = Skill.GetEffectMap();

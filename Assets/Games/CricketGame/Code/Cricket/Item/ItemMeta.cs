@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Games.CricketGame.Manager.Code.Pokemon.Item
+namespace Games.CricketGame.Cricket_
 {
     public class ItemMeta
     {//ToDO 暂时不做 道具

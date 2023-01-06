@@ -1,4 +1,6 @@
-﻿namespace Games.CricketGame.Manager.Code.Pokemon.Skill.Effects
+﻿using Games.CricketGame.Code.Cricket_;
+
+namespace Games.CricketGame.Cricket_
 {
     public class None: ISkillEffect
     {

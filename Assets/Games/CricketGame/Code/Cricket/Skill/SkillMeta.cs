@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Games.CricketGame.Manager.Code.Manager;
+using Games.CricketGame.Cricket_;
 using Nico.Common;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
-namespace Games.CricketGame.Manager.Code.Pokemon.Skill
+namespace Games.CricketGame.Code.Cricket_
 {
     [Serializable]
     public class SkillMeta
@@ -17,10 +15,9 @@ namespace Games.CricketGame.Manager.Code.Pokemon.Skill
         private static bool _initialized = false;
         private static readonly string _meta_map_path = "skill/meta_map.json";
         private static Dictionary<SkillEnum, SkillMeta> _metaMap;
-        
+
         private static void InitializeStatic()
         {
-            
             try
             {
                 _metaMap = JsonResourcesManager.LoadStreamingAssets<Dictionary<SkillEnum, SkillMeta>>(_meta_map_path);
@@ -36,9 +33,10 @@ namespace Games.CricketGame.Manager.Code.Pokemon.Skill
 
             _initialized = true;
         }
+
         public static void Save()
         {
-            JsonResourcesManager.SaveStreamingAssets(_metaMap, _meta_map_path,true);
+            JsonResourcesManager.SaveStreamingAssets(_metaMap, _meta_map_path, true);
         }
 
         public static List<SkillEnum> GetSkillEnumList(bool reload = false)
@@ -51,8 +49,8 @@ namespace Games.CricketGame.Manager.Code.Pokemon.Skill
             {
                 InitializeStatic();
             }
-            return new List<SkillEnum>(_metaMap.Keys);
 
+            return new List<SkillEnum>(_metaMap.Keys);
         }
 
         public static void Add(SkillMeta meta, bool replace = true)
@@ -61,12 +59,12 @@ namespace Games.CricketGame.Manager.Code.Pokemon.Skill
             {
                 InitializeStatic();
             }
-            
+
             if (!_metaMap.ContainsKey(meta.skillEnum))
             {
                 _metaMap.Add(meta.skillEnum, meta);
             }
-            else if(replace)
+            else if (replace)
             {
                 //Debug.LogWarning("正在覆盖之前的skillMeta数据");
                 _metaMap[meta.skillEnum] = meta;
@@ -98,26 +96,25 @@ namespace Games.CricketGame.Manager.Code.Pokemon.Skill
             {
                 return new SkillMeta();
             }
-
         }
-
 
         #endregion
 
-        
-        public string name;
+
+        public string name=>skillEnum.ToString();
         public SkillEnum skillEnum;
-        public PriorityEnum priority;
-        public int power;
-        public float hitRate;
+        [HideInInspector] public PriorityEnum priority;
+        [HideInInspector] public int power;
+        [HideInInspector] public float hitRate;
 
         public SkillMeta()
         {
             this.skillEnum = SkillEnum.None;
         }
-        public SkillMeta(string name, SkillEnum skillEnum, int power, float hitRate,PriorityEnum? priority,bool autoAdd)
+
+        public SkillMeta(SkillEnum skillEnum, int power, float hitRate, PriorityEnum? priority,
+            bool autoAdd)
         {
-            this.name = name;
             this.skillEnum = skillEnum;
             this.power = power;
             this.hitRate = hitRate;
@@ -134,7 +131,6 @@ namespace Games.CricketGame.Manager.Code.Pokemon.Skill
             {
                 Add(this);
             }
-
         }
     }
 }

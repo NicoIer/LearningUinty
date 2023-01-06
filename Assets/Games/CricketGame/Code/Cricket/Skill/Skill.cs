@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Games.CricketGame.Manager.Code.Manager;
-using Games.CricketGame.Manager.Code.Pokemon.Skill.Effects;
+using Games.CricketGame.Code.Cricket_;
+using Newtonsoft.Json;
 using Nico.Common;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Games.CricketGame.Manager.Code.Pokemon.Skill
+namespace Games.CricketGame.Cricket_
 {
     [Serializable]
     public class SkillInspector
@@ -18,6 +17,7 @@ namespace Games.CricketGame.Manager.Code.Pokemon.Skill
         public int needLevel;
     }
 
+    [Serializable]
     public class Skill
     {
         #region Static
@@ -160,8 +160,9 @@ namespace Games.CricketGame.Manager.Code.Pokemon.Skill
 
         public SkillMeta meta;
         public PropertyEnum propertyEnum;
+        [JsonIgnore] public int cur_times { get; private set; }
         public int use_times;
-        public int need_level;
+        [HideInInspector]public int need_level;
 
         public Skill(SkillEnum skillEnum, PropertyEnum propertyEnum, int needLevel, int useTimes)
         {
@@ -176,9 +177,17 @@ namespace Games.CricketGame.Manager.Code.Pokemon.Skill
             this.use_times = useTimes;
         }
 
-        public void Apply(Cricket user, Cricket hitter)
+        public bool Apply(Cricket user, Cricket hitter)
         {
-            _effectObjs[meta.skillEnum].Apply(user, hitter, this);
+            if (cur_times > 0)
+            {
+                _effectObjs[meta.skillEnum].Apply(user, hitter, this);
+                return true;
+            }
+
+            return false;
+
+
         }
     }
 }

@@ -1,11 +1,10 @@
-﻿using System;
-using Cinemachine;
-using Games.CricketGame.Manager.Code.Pokemon;
-using Games.CricketGame.Manager.Code.UI;
+﻿using Cinemachine;
+using Games.CricketGame.Code.Cricket_;
+using Games.CricketGame.Player_;
 using Script.Tools.DesignPattern;
 using UnityEngine;
 
-namespace Games.CricketGame.Manager.Code
+namespace Games.CricketGame.Manager
 {
     public class GameManager : Singleton<GameManager>
     {
@@ -30,7 +29,7 @@ namespace Games.CricketGame.Manager.Code
         /// </summary>
         /// <param name="player"></param>
         /// <param name="cricket"></param>
-        public void EnterAttackMap(Player.Player player, Cricket cricket)
+        public void EnterAttackMap(Player player, Cricket cricket)
         {
             _attcking = true;
             ToAttack();

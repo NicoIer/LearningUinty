@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Games.CricketGame.Manager.Code.Manager;
-using Games.CricketGame.Manager.Code.Pokemon.Skill;
+using Games.CricketGame.Code.Cricket_;
 using Newtonsoft.Json;
 using Nico.Common;
 using UnityEngine;
 
-namespace Games.CricketGame.Manager.Code.Pokemon
+namespace Games.CricketGame.Cricket_
 {
     [CreateAssetMenu(fileName = "CricketMetaData", menuName = "Data/CricketGame/Pokemon/CricketMetaData", order = 0)]
     [Serializable]
@@ -106,7 +105,7 @@ namespace Games.CricketGame.Manager.Code.Pokemon
         public int specialDefenseRace;
         public int speedRace;
         public string desc; //图鉴描述
-        public Dictionary<SkillEnum, Skill.Skill> skillMetas;
+        public Dictionary<SkillEnum, Skill> skillMetas;
         public CricketEnum previousLevel;
         public List<CricketEnum> nextLevel = new();
 
@@ -121,7 +120,7 @@ namespace Games.CricketGame.Manager.Code.Pokemon
                 return;
 
 
-            skillMetas = new Dictionary<SkillEnum, Skill.Skill>();
+            skillMetas = new Dictionary<SkillEnum, Skill>();
             foreach (var inspector in skillInspectors)
             {
                 var skillMeta = SkillMeta.Find(inspector.skillEnum); //通过枚举查找技能meta信息
@@ -130,7 +129,7 @@ namespace Games.CricketGame.Manager.Code.Pokemon
                     Debug.LogWarning("对应SkillMeta没有创建.....请先创建");
                 }
 
-                var skill = new Skill.Skill(skillMeta.skillEnum, inspector.propertyEnum, inspector.needLevel,
+                var skill = new Skill(skillMeta.skillEnum, inspector.propertyEnum, inspector.needLevel,
                     inspector.useTimes); //通过枚举和指定信息创建skill
                 if (!skillMetas.ContainsKey(skillMeta.skillEnum))
                 {

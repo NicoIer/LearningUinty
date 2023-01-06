@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
-using Games.CricketGame.Manager.Code.Manager;
-using Games.CricketGame.Manager.Code.Pokemon;
+﻿using System.Collections;
+using Games.CricketGame.Code.Cricket_;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Games.CricketGame.Manager.Code.UI
+namespace Games.CricketGame.UI
 {
     public class CricketInfoPanel : MonoBehaviour
     {

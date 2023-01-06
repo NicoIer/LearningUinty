@@ -1,7 +1,9 @@
-﻿using Games.CricketGame.Manager.Code.Pokemon;
+﻿
+using Games.CricketGame.Code.Cricket_;
+using Games.CricketGame.Manager;
 using UnityEngine;
 
-namespace Games.CricketGame.Manager.Code.Player.Core
+namespace Games.CricketGame.Player_
 {
     public class ColliderHandler
     {

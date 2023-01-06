@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using Games.CricketGame.Manager.Code.Manager;
 using Newtonsoft.Json;
 using Nico.Common;
 using UnityEngine;
 
-namespace Games.CricketGame.Manager.Code.Pokemon
+namespace Games.CricketGame.Cricket_
 {
     [Serializable]
     public class PersonalityEffectMeta

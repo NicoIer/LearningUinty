@@ -1,9 +1,11 @@
 ﻿using System;
-using Games.CricketGame.Manager.Code.Manager;
+using System.Collections.Generic;
+using Games.CricketGame.Cricket_;
+using Games.CricketGame.Manager;
 using Newtonsoft.Json;
 using Random = System.Random;
 
-namespace Games.CricketGame.Manager.Code.Pokemon
+namespace Games.CricketGame.Code.Cricket_
 {
     [Serializable]
     public class CricketData
@@ -62,7 +64,7 @@ namespace Games.CricketGame.Manager.Code.Pokemon
         public CricketDataMeta meta;
 
         //特性
-        public Character.Character character;
+        public Character character;
 
         //性格
         public Personality personality;
@@ -74,10 +76,15 @@ namespace Games.CricketGame.Manager.Code.Pokemon
         public string name;
         public int level;
         public int alreadyExperience;
-        public bool sex = true;
+        public bool sex;
 
         #endregion
 
+        #region 技能信息
+
+        public List<Skill> skills;
+        #endregion
+        
         #region Action
 
         public Action<int> damageAction;
@@ -159,7 +166,7 @@ namespace Games.CricketGame.Manager.Code.Pokemon
             this.level = level;
             this.name = name;
             personality = Personality.Find(personalityEnum);
-            character = Character.Character.Find(characterEnum);
+            character = Character.Find(characterEnum);
             this.healthIndividual = healthIndividual;
             this.attackIndividual = attackIndividual;
             this.defenseIndividual = defenseIndividual;

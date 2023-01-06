@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Games.CricketGame.Manager.Code.Player.Core;
-using Games.CricketGame.Manager.Code.Pokemon;
+using Games.CricketGame.Code.Cricket_;
 using Nico.Interface;
 using Nico.Player;
 using UnityEngine;
-namespace Games.CricketGame.Manager.Code.Player
+namespace Games.CricketGame.Player_
 {
     public class Player : MonoBehaviour
     {
-        public Cricket cricket;
+        public 
+            Cricket cricket;
         
         #region Attribute
 

@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Games.CricketGame.Manager.Code.Manager;
 using Nico.Interface;
 using UnityEngine;
 
-namespace Games.CricketGame.Manager.Code.Pokemon
+namespace Games.CricketGame.Code.Cricket_
 {
     public class Cricket : MonoBehaviour
     {

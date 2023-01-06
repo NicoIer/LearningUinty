@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Games.CricketGame.Manager.Code.UI
+namespace Games.CricketGame.UI
 {
     public class ImageBar : MonoBehaviour
     {

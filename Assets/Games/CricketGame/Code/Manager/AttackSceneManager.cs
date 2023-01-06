@@ -1,9 +1,10 @@
 ﻿using System;
 using Cinemachine;
-using Games.CricketGame.Manager.Code.Pokemon;
+using Games.CricketGame.Code.Cricket_;
+using Games.CricketGame.UI;
 using UnityEngine;
 
-namespace Games.CricketGame.Manager.Code.UI
+namespace Games.CricketGame.Manager
 {
     /// <summary>
     /// 战斗管理 

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Games.CricketGame.Manager.Code.Pokemon;
+using Games.CricketGame.Code.Cricket_;
+using Games.CricketGame.Cricket_;
 
-namespace Games.CricketGame.Manager.Code.Manager
+namespace Games.CricketGame.Manager
 {
     /// <summary>
     /// 用于计算宝可梦升级所需经验
