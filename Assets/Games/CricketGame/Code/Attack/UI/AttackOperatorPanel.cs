@@ -15,7 +15,7 @@ namespace Games.CricketGame.UI
             selectPanel.gameObject.SetActive(true);
             //ToDo 其他按钮点击事件也要进行绑定
             selectPanel.attackClicked += _enter_skill_panel;
-            
+
             skillPanel.gameObject.SetActive(false);
         }
 
@@ -25,14 +25,15 @@ namespace Games.CricketGame.UI
             _connected = true;
             skillPanel.gameObject.SetActive(true);
             skillPanel.Connect(data);
-
         }
 
         public void DisConnect()
         {
+            print("AttackPanel断开");
             skillPanel.DisConnect();
             _connected = false;
         }
+
         public void RoundStart()
         {
             if (!_connected)
@@ -43,13 +44,18 @@ namespace Games.CricketGame.UI
             selectPanel.gameObject.SetActive(true);
             skillPanel.gameObject.SetActive(false);
         }
-        
 
 
         private void _enter_skill_panel()
         {
             selectPanel.gameObject.SetActive(false);
             skillPanel.gameObject.SetActive(true);
+        }
+
+        private void _back_select_panel()
+        {
+            selectPanel.gameObject.SetActive(true);
+            skillPanel.gameObject.SetActive(false);
         }
     }
 }

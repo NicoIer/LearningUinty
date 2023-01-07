@@ -10,12 +10,9 @@ namespace Games.CricketGame.Player_
     public class Player : MonoBehaviour
     {
         //玩家携带cricket
-        public List<Cricket> crickets;
+        public List<CricketData> crickets;
         //玩家拥有的Cricket
-        public bool have_next()
-        {
-            return false;
-        }
+
 
         #region Attribute
 
@@ -48,13 +45,29 @@ namespace Games.CricketGame.Player_
 
         #endregion
 
+        /// <summary>
+        /// 玩家是否还有可以战斗的cricket
+        /// </summary>
+        /// <returns></returns>
+        public bool HavaAvalizableCricket()
+        {
+            foreach (var cricketData in crickets)
+            {
+                if (cricketData.healthAbility >= 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
         #region Unity LifeTime
 
         private void Awake()
         {
             //ToDo 删掉这里
-            crickets[0].data.RandomInit(40);
-            crickets[0].data.name = "玩家";
+            crickets[0].RandomInit(40);
+            crickets[0].name = "玩家";
             
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();

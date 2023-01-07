@@ -9,18 +9,32 @@ namespace Games.CricketGame.Npc_
 {
     public class Npc : MonoBehaviour
     {
-        public List<Cricket> crickets;
+        public List<CricketData> crickets;
 
         private void Awake()
         {
-            crickets[0].data.RandomInit(60);
-            crickets[0].data.name = "敌人";
+            crickets[0].RandomInit(60);
+            crickets[0].name = "敌人";
         }
 
         public Skill random_skill()
-        {//ToDo 修复这里
+        {
             var idx = RandomManager.Next(0, 4);
-            return crickets[0].data.skills[idx];
+            return crickets[0].skills[idx];
         }
+
+        public bool HaveAvaliableCricket()
+        {
+            foreach (var cricketData in crickets)
+            {
+                if (cricketData.healthAbility > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        
     }
 }

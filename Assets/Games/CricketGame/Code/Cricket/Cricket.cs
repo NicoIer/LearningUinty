@@ -19,8 +19,6 @@ namespace Games.CricketGame.Code.Cricket_
         {
             handler = transform.GetChild(0).GetComponent<InputHandler>();
             var controller = new Controller(this);
-            // data = PokemonData.random_init(data.meta.pokemonEnum);
-            data.CalculateDefault();
             _components.Add(controller);
         }
 
@@ -50,15 +48,27 @@ namespace Games.CricketGame.Code.Cricket_
 
         #endregion
 
+        public void ReSetData(CricketData data)
+        {
+            this.data = data;
+            print($"{name}的数据更新为:{data}");
+        }
+
         public Skill random_skill()
-        {//ToDo 实现一种聪明的ai
+        {
+            //ToDo 实现一种聪明的ai
             var idx = RandomManager.Next(0, 4);
             return data.skills[idx];
         }
 
+        #region Event
+
         public void Dead()
         {
-            print($"啊!!!{data.name}陷入危险境地了");
+            print($"啊!!!{data.name}陷入危险境地了,播放战败动画,并且.....");
+            
         }
+
+        #endregion
     }
 }

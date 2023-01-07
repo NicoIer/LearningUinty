@@ -39,6 +39,7 @@ namespace Games.CricketGame.UI
 
         public void DisConnect()
         {
+            print("SkillPanel断开");
             _connected = false;
             for (int i = 0; i < _skillButtons.Count; i++)
             {

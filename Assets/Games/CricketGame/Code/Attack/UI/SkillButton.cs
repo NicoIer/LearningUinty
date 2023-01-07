@@ -14,7 +14,7 @@ namespace Games.CricketGame.UI
         public Text effectText;
         public Image propertyImage;
         public Text ppText;
-        private bool _initialized;
+        private bool _connected;
         private Skill _skill;
 
         private void Awake()
@@ -28,28 +28,30 @@ namespace Games.CricketGame.UI
             {
                 button = GetComponent<Button>();
             }
+
             button.onClick.AddListener(_clicked);
         }
 
         public void Connect(Skill skill)
         {
-            _initialized = true;
+            _connected = true;
             _skill = skill;
             _skill.ppChangeAction += _pp_change;
             _skill.nameChangeAction += _name_change;
             _skill.properyuChange += _property_change;
             //ToDo 完成图标和效果的更新
             _name_change(_skill.meta.name);
-            _pp_change(_skill.cur_times,_skill.use_times);
+            _pp_change(_skill.cur_times, _skill.use_times);
             // propertyImage.sprite = sprite;
             // effectText.text = effect;
         }
 
         public void DisConnect()
         {
-            _initialized = false;
+            print("skillButton断开");
+            _connected = false;
             _skill.ppChangeAction -= _pp_change;
-            _skill.nameChangeAction-= _name_change;
+            _skill.nameChangeAction -= _name_change;
             _skill.properyuChange -= _property_change;
             _skill = null;
         }
@@ -58,6 +60,7 @@ namespace Games.CricketGame.UI
         {
             nameText.text = now;
         }
+
         private void _pp_change(int cur, int max)
         {
             ppText.text = $"{_skill.cur_times}/{_skill.use_times}";
@@ -65,22 +68,21 @@ namespace Games.CricketGame.UI
 
         private void _property_change(PropertyEnum now)
         {
-            
         }
 
         private void _effect_change()
         {
-            
         }
+
         private void _clicked()
         {
-            if (!_initialized)
+            if (!_connected)
             {
                 Debug.LogError("点击未初始化的技能按钮");
             }
+
             print($"选择使用{_skill.meta.name}");
             AttackInputHandler.player_input = _skill;
         }
-        
     }
 }

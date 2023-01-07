@@ -39,6 +39,7 @@ namespace Games.CricketGame.UI
 
         public void DisConnect()
         {
+            print("InfoPanel断开");
             _bandedData.healthRateChangeAction -= _update_health;
             _bandedData.expRateChangeAction -= _update_exp;
             _bandedData.levelUpAction -= _update_info;

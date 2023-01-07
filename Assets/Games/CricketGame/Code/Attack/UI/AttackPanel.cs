@@ -13,6 +13,11 @@ namespace Games.CricketGame.UI
 
         public void Connect(CricketData p1, CricketData p2)
         {
+            if (_connected)
+            {
+                DisConnect();
+            }
+
             _connected = true;
             //将自身/对方的Cricket数据传递给panel
             player.gameObject.SetActive(true);
@@ -26,6 +31,7 @@ namespace Games.CricketGame.UI
 
         public void DisConnect()
         {
+            print("AttackPanel断开");
             _connected = false;
             player.DisConnect();
             other.DisConnect();

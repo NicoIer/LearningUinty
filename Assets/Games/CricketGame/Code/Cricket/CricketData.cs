@@ -409,7 +409,6 @@ namespace Games.CricketGame.Code.Cricket_
             for (var i = 1; i != totalTimes + 1; i++)
             {
                 tempHealth = healthAbility - i * one_damage;
-                Debug.Log($"cricket:{name} 血量更新{tempHealth}/{defaultHealth}");
                 if (tempHealth <= 0)
                 {
                     healthAbility = 0;
