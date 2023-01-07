@@ -17,7 +17,10 @@ namespace Games.CricketGame.Code.Cricket_
 
         private void Awake()
         {
-            handler = transform.GetChild(0).GetComponent<InputHandler>();
+            if (handler == null)
+            {
+                handler = transform.GetChild(0).GetComponent<InputHandler>(); 
+            }
             var controller = new Controller(this);
             _components.Add(controller);
         }
@@ -53,13 +56,7 @@ namespace Games.CricketGame.Code.Cricket_
             this.data = data;
             print($"{name}的数据更新为:{data}");
         }
-
-        public Skill random_skill()
-        {
-            //ToDo 实现一种聪明的ai
-            var idx = RandomManager.Next(0, 4);
-            return data.skills[idx];
-        }
+        
 
         #region Event
 

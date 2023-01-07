@@ -9,14 +9,25 @@ namespace Games.CricketGame.UI
         public SelectPanel selectPanel;
         public SkillPanel skillPanel;
         private bool _connected;
+        private GameObject curPanel;
 
         private void Awake()
         {
-            selectPanel.gameObject.SetActive(true);
+            curPanel = selectPanel.gameObject;
+            curPanel.SetActive(true); //默认激活选择Panel
             //ToDo 其他按钮点击事件也要进行绑定
             selectPanel.attackClicked += _enter_skill_panel;
 
-            skillPanel.gameObject.SetActive(false);
+            skillPanel.gameObject.SetActive(false); //默认关闭技能Panel
+        }
+
+
+        private void Update()
+        {
+            if (UIManager.instance.escDown)
+            {
+                _back_select_panel();
+            }
         }
 
         public void Connect(CricketData data)
@@ -49,13 +60,19 @@ namespace Games.CricketGame.UI
         private void _enter_skill_panel()
         {
             selectPanel.gameObject.SetActive(false);
-            skillPanel.gameObject.SetActive(true);
+            curPanel = skillPanel.gameObject;
+            curPanel.SetActive(true);
         }
 
         private void _back_select_panel()
         {
-            selectPanel.gameObject.SetActive(true);
-            skillPanel.gameObject.SetActive(false);
+            print("按下Esc");
+            if (curPanel != selectPanel.gameObject)
+            {
+                curPanel.SetActive(false);
+                curPanel = selectPanel.gameObject;
+                curPanel.SetActive(true);
+            }
         }
     }
 }

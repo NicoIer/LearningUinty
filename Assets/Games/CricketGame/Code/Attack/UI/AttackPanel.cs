@@ -1,4 +1,5 @@
-﻿using Games.CricketGame.Code.Cricket_;
+﻿using System;
+using Games.CricketGame.Code.Cricket_;
 using UnityEngine;
 
 namespace Games.CricketGame.UI
@@ -9,7 +10,7 @@ namespace Games.CricketGame.UI
         public CricketInfoPanel other;
         public AttackOperatorPanel attackOperatorPanel;
         private bool _connected;
-
+        
 
         public void Connect(CricketData p1, CricketData p2)
         {

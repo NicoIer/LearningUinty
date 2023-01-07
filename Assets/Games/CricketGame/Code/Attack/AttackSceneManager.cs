@@ -243,7 +243,7 @@ namespace Games.CricketGame.Manager
                     AttackInputHandler.player_next = null;
                     return temp;
                 }
-
+                print("等待玩家切换精灵");
                 await UniTask.WaitForFixedUpdate();
             }
         }

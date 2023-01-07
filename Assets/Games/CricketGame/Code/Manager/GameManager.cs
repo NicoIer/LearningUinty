@@ -1,16 +1,19 @@
-﻿using Cinemachine;
-using Games.CricketGame.Code.Cricket_;
+﻿using Cysharp.Threading.Tasks;
 using Games.CricketGame.Npc_;
 using Games.CricketGame.Player_;
 using Script.Tools.DesignPattern;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Games.CricketGame.Manager
 {
+
+
     public class GameManager : Singleton<GameManager>
     {
         public AttackSceneManager attackSceneManager;
         public Transform gameMap;
+        [field: SerializeField]public GameInputHandler handler { get; private set; }
 
         #region 游戏状态
 
@@ -19,22 +22,22 @@ namespace Games.CricketGame.Manager
 
         #endregion
 
+        protected override void Awake()
+        {
+            base.Awake();
+            handler = transform.GetChild(0).GetComponent<GameInputHandler>();
+        }
 
-        [field: SerializeField] public Camera mainCamera;
-        [field: SerializeField] public CinemachineVirtualCamera playerCamera;
-        [field: SerializeField] public CinemachineVirtualCamera attackCamera;
-        private Player _player;
         private Npc npc;
+
         public void EnterAttackMap(Player player, Npc npc)
         {
-            this._player = player;
             this.npc = npc;
             npc.gameObject.SetActive(false);
             _mapping = false;
             _attcking = true;
             ToAttack();
-            attackSceneManager.EnterAttack(player, npc,attackCamera);
-            
+            attackSceneManager.EnterAttack(player, npc, CameraManager.instance.attackCamera);
         }
 
         public void ExitAttackMap()
@@ -47,26 +50,18 @@ namespace Games.CricketGame.Manager
             ToPlayer();
         }
 
-        public void ToPlayer()
+        private void ToPlayer()
         {
             attackSceneManager.gameObject.SetActive(false);
             gameMap.gameObject.SetActive(true);
-            attackCamera.enabled = false;
-            attackCamera.gameObject.SetActive(false);
-            playerCamera.enabled = true;
-            playerCamera.gameObject.SetActive(true);
-            mainCamera.orthographic = true;
+            CameraManager.instance.SwitchToPlayerCamera(false);
         }
 
-        public void ToAttack()
+        private void ToAttack()
         {
             attackSceneManager.gameObject.SetActive(true);
             gameMap.gameObject.SetActive(false);
-            playerCamera.enabled = false;
-            playerCamera.gameObject.SetActive(false);
-            attackCamera.enabled = true;
-            attackCamera.gameObject.SetActive(true);
-            mainCamera.orthographic = false;
+            CameraManager.instance.SwitchToAttackCamera(false);
         }
     }
 }

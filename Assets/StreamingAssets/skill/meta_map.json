@@ -1,1 +1,44 @@
-﻿{"None":{"skillEnum":5,"priority":1,"power":30,"hitRate":1.0,"name":"None"},"叫声":{"skillEnum":1,"priority":1,"power":30,"hitRate":1.0,"name":"叫声"},"撞击":{"skillEnum":2,"priority":1,"power":30,"hitRate":1.0,"name":"撞击"},"火花":{"skillEnum":3,"priority":1,"power":30,"hitRate":1.0,"name":"火花"},"抓":{"skillEnum":4,"priority":1,"power":30,"hitRate":1.0,"name":"抓"},"电光一闪":{"skillEnum":0,"priority":1,"power":30,"hitRate":1.0,"name":"电光一闪"}}
+﻿{
+  "None": {
+    "skillEnum": 5,
+    "priority": 1,
+    "power": 30,
+    "hitRate": 1.0,
+    "name": "None"
+  },
+  "叫声": {
+    "skillEnum": 1,
+    "priority": 1,
+    "power": 30,
+    "hitRate": 1.0,
+    "name": "叫声"
+  },
+  "撞击": {
+    "skillEnum": 2,
+    "priority": 1,
+    "power": 30,
+    "hitRate": 1.0,
+    "name": "撞击"
+  },
+  "火花": {
+    "skillEnum": 3,
+    "priority": 1,
+    "power": 30,
+    "hitRate": 1.0,
+    "name": "火花"
+  },
+  "抓": {
+    "skillEnum": 4,
+    "priority": 1,
+    "power": 30,
+    "hitRate": 1.0,
+    "name": "抓"
+  },
+  "电光一闪": {
+    "skillEnum": 0,
+    "priority": 1,
+    "power": 90,
+    "hitRate": 1.0,
+    "name": "电光一闪"
+  }
+}

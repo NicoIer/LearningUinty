@@ -8,8 +8,9 @@ namespace Games.CricketGame.UI
 {
     public class SkillPanel : MonoBehaviour
     {
-        private List<SkillButton> _skillButtons = new ();
+        private List<SkillButton> _skillButtons = new();
         private bool _connected;
+
         private void Awake()
         {
             for (int i = 0; i < transform.childCount; i++)
@@ -18,19 +19,17 @@ namespace Games.CricketGame.UI
                 _skillButtons.Add(skillButton);
             }
         }
-
-
+        
         public void Connect(CricketData data)
         {
-
             if (_connected)
             {
-                Debug.LogWarning($"已经连接了{data}到{name}!");
-                return;
+                Debug.LogWarning($"已经连接了{data}到{name}!正在断开");
+                DisConnect();
             }
+
             print($"{data.name}连接到{name}");
             _connected = true;
-            print(_skillButtons.Count);
             for (int i = 0; i < _skillButtons.Count; i++)
             {
                 _skillButtons[i].Connect(data.skills[i]);
