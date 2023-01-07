@@ -61,7 +61,6 @@ namespace Games.CricketGame.UI
 
         private void _update_health(float now, float max)
         {
-            print($"更新血条:{now}/{max}");
             healthText.text = $"{(int)now}/{(int)max}";
             healthBar.fillAmount = now / max;
         }

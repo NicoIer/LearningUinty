@@ -29,7 +29,7 @@ namespace Games.CricketGame.UI
             selectPanel.gameObject.SetActive(true);
             skillPanel.gameObject.SetActive(false);
         }
-
+        
 
 
         private void _enter_skill_panel()

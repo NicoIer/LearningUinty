@@ -210,6 +210,19 @@ namespace Games.CricketGame.Code.Cricket_
             }
         }
 
+        public void RandomInit(int level)
+        {
+            this.level = level;
+            RandomExp();
+            RandomIndividual();
+            CalculateDefault();
+            foreach (Skill skill in skills)
+            {
+                //ToDo 不应该由他进行初始化
+                skill.InitMeta();
+            }
+        }
+
         public void RandomExp()
         {
             var levelExp = ExperienceManger.LevelExp(meta.experienceEnum, level);
@@ -381,7 +394,7 @@ namespace Games.CricketGame.Code.Cricket_
         }
 
 
-        public async void ChangeHealth(int damage)
+        public async UniTask ChangeHealth(int damage)
         {
             if (healthAbility <= 0)
             {

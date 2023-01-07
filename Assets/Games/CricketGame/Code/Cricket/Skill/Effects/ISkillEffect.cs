@@ -1,9 +1,10 @@
-﻿using Games.CricketGame.Code.Cricket_;
+﻿using Cysharp.Threading.Tasks;
+using Games.CricketGame.Code.Cricket_;
 
 namespace Games.CricketGame.Cricket_
 {
     public interface ISkillEffect
     {
-        public void Apply(Cricket attacker, Cricket defenser,Skill skill);
+        public UniTask Apply(Cricket attacker, Cricket defenser,Skill skill);
     }
 }

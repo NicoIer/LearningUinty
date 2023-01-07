@@ -25,16 +25,29 @@ namespace Games.CricketGame.UI
 
         public void RoundStart()
         {
+            if (!_check())
+                return;
+            gameObject.SetActive(true);
+            attackOperatorPanel.RoundStart();
+        }
+
+        public void RoundPlaying()
+        {
+            if(!_check())
+                return;
+            gameObject.SetActive(false);
+            
+        }
+
+        private bool _check()
+        {
             if (!_initialized)
             {
                 Debug.LogError("AttackPanel未初始化");
-                return;
+                return false;
             }
-            gameObject.SetActive(true);
-            attackOperatorPanel.RoundStart();
 
+            return true;
         }
-
-
     }
 }

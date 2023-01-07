@@ -28,7 +28,7 @@ namespace Games.CricketGame.Cricket_
         {
             if (!attackMap.ContainsKey(attack))
             {
-                Debug.LogWarning($"属性{attack}未存在克制表中");
+                // Debug.LogWarning($"属性{attack}未存在克制表中");
                 return 1;
             }
             return attackMap[attack][defense];

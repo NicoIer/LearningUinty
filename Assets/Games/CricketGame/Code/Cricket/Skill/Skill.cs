@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Cysharp.Threading.Tasks;
 using Games.CricketGame.Code.Cricket_;
 using Newtonsoft.Json;
 using Nico.Common;
@@ -19,7 +20,9 @@ namespace Games.CricketGame.Cricket_
 
     [Serializable]
     public class Skill
-    {//ToDo 没有考虑技能的类型 变化 啥的 暂时交给Effect处理
+    {
+        //ToDo 没有考虑技能的类型 变化 啥的 暂时交给Effect处理
+
         #region Static
 
         public static bool Initialized { get; private set; }
@@ -168,6 +171,7 @@ namespace Games.CricketGame.Cricket_
         {
             meta = SkillMeta.Find(meta.skillEnum);
         }
+
         public Skill(SkillEnum skillEnum, PropertyEnum propertyEnum, int needLevel, int useTimes)
         {
             if (!Initialized)
@@ -181,14 +185,15 @@ namespace Games.CricketGame.Cricket_
             this.use_times = useTimes;
         }
 
-        public void Apply(Cricket attacker, Cricket defenser)
+        public async UniTask Apply(Cricket attacker, Cricket defenser)
         {
             if (!Initialized)
             {
                 InitializeStatic();
             }
+
             cur_times--;
-            _effectObjs[meta.skillEnum].Apply(attacker, defenser, this);
+           await _effectObjs[meta.skillEnum].Apply(attacker, defenser, this);
         }
     }
 }

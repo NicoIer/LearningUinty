@@ -1,11 +1,12 @@
-﻿using Games.CricketGame.Code.Cricket_;
+﻿using Cysharp.Threading.Tasks;
+using Games.CricketGame.Code.Cricket_;
 
 namespace Games.CricketGame.Cricket_
 {
     public class 叫声: ISkillEffect
     {
 
-        public void Apply(Cricket user, Cricket hitter, Skill skill)
+        public UniTask Apply(Cricket user, Cricket hitter, Skill skill)
         {
             throw new System.NotImplementedException();
         }
