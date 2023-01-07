@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using Games.CricketGame.Code.Cricket_;
+using Games.CricketGame.Npc_;
 using Games.CricketGame.Player_;
 using Script.Tools.DesignPattern;
 using UnityEngine;
@@ -10,35 +11,42 @@ namespace Games.CricketGame.Manager
     {
         public AttackSceneManager attackSceneManager;
         public Transform gameMap;
-        public bool _attcking { get; private set; }
+
+        #region 游戏状态
+
+        [field: SerializeField] public bool _attcking { get; private set; }
+        [field: SerializeField] public bool _mapping { get; private set; }
+
+        #endregion
+
+
         [field: SerializeField] public Camera mainCamera;
         [field: SerializeField] public CinemachineVirtualCamera playerCamera;
         [field: SerializeField] public CinemachineVirtualCamera attackCamera;
-
-        private void Start()
+        private Player _player;
+        private Npc npc;
+        public void EnterAttackMap(Player player, Npc npc)
         {
-            DebugAttack();
-        }
-
-        private void DebugAttack()
-        {
-        }
-
-        /// <summary>
-        /// 玩家和野生精灵遭遇 进入战斗
-        /// </summary>
-        /// <param name="player"></param>
-        /// <param name="cricket"></param>
-        public void EnterAttackMap(Player player, Cricket cricket)
-        {
+            this._player = player;
+            this.npc = npc;
+            npc.gameObject.SetActive(false);
+            _mapping = false;
             _attcking = true;
             ToAttack();
+            attackSceneManager.EnterAttack(player, npc,attackCamera);
+            
         }
 
         public void ExitAttackMap()
         {
+            Destroy(npc);
+            npc = null;
+            print("退出战斗,回到大地图");
+            _mapping = true;
             _attcking = false;
+            ToPlayer();
         }
+
         public void ToPlayer()
         {
             attackSceneManager.gameObject.SetActive(false);

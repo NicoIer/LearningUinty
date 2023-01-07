@@ -55,5 +55,10 @@ namespace Games.CricketGame.Code.Cricket_
             var idx = RandomManager.Next(0, 4);
             return data.skills[idx];
         }
+
+        public void Dead()
+        {
+            print($"啊!!!{data.name}陷入危险境地了");
+        }
     }
 }

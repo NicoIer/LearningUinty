@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Games.CricketGame.Code.Cricket_;
 using Games.CricketGame.Code.UI.Attack;
 using Games.CricketGame.Cricket_;
+using Games.CricketGame.Npc_;
+using Games.CricketGame.Player_;
 using Games.CricketGame.UI;
-using Unity.VisualScripting;
+using Nico.Common;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Games.CricketGame.Manager
 {
@@ -34,18 +35,16 @@ namespace Games.CricketGame.Manager
     /// </summary>
     public class AttackSceneManager : MonoBehaviour
     {
-        public static AttackSceneManager instance;
-
         //ToDo 还有战斗场景地图啥的 没有设计 
-        public int state;
-        public bool round_start = false;
-
-        #region 精灵生成位置
-
+        private bool _round_start; //回合是否开始
+        private bool _attack_over; //战斗是否结束
+        public Player player; //玩家是需要持有的
+        public Npc npc;
+        private CinemachineVirtualCamera virtualCamera;
+        public AttackPanel ui;
         public Transform p1;
         public Transform p2;
 
-        #endregion
 
         #region 在场上的精灵
 
@@ -54,118 +53,132 @@ namespace Games.CricketGame.Manager
 
         #endregion
 
-        #region ui
-
-        public AttackPanel ui;
-
-        #endregion
-
-        #region 摄像机
-
-        private CinemachineVirtualCamera _camera;
-
-        #endregion
-
-        #region debug
-
-        [field: SerializeField] public CinemachineVirtualCamera attackCamera;
-        public Cricket c1;
-        public Cricket c2;
-
-        #endregion
-
-
-        #region Unity LifeTime
-
-        private void Awake()
-        {
-            if (instance != null)
-            {
-                Debug.LogWarning("战斗场景管理器只能有一个!!!");
-            }
-
-            instance = this;
-
-            if (p1 == null)
-            {
-                p1 = transform.Find("p1");
-            }
-
-            if (p2 == null)
-            {
-                p2 = transform.Find("p2");
-            }
-        }
-
-        private void Start()
-        {
-            //ToDO 暂时这样用于调试 后续修改
-            c1.data.RandomInit(40);
-            c1.data.name = "玩家";
-            c2.data.RandomInit(40);
-            c2.data.name = "敌人";
-            _self = c1;
-            _other = c2;
-            _camera = attackCamera;
-            var rotation = _camera.transform.rotation;
-            _self.transform.localRotation = rotation;
-            _other.transform.localRotation = rotation;
-            ui.Initialize(_self.data, _other.data);
-        }
-
         private void Update()
         {
             _update_rotation(); //更新场景内的2D物体,使面朝相机
-            if (!round_start)
+            if (!_attack_over)
             {
-                print("开启UniTask执行回合逻辑");
-                //如果回合没有开始 则开始回合
-                MainLogic().Forget();
-                round_start = true;
+                if (!_round_start)
+                {
+                    print("开启UniTask执行回合逻辑");
+                    //如果回合没有开始 则开始回合
+                    MainLogic().Forget();
+                    _round_start = true;
+                }
             }
         }
 
-        #endregion
+
+        #region 战斗逻辑
 
         private async UniTask MainLogic()
         {
-            
+            print("回合开始");
             ui.RoundStart(); //显示ui
             var s1 = await PlayerSelect(); //等待玩家输入
             var s2 = NpcSelect(); //Npc立即选择一个输入
+            print("回合结算");
             ui.RoundPlaying();
-            bool player_first = false;
-            if (PriorityCompare.Compare(s1.meta.priority, s2.meta.priority))
-            {
-                //技能优先级高?
-                player_first = true;
-            }
-            else if (c1.data.speedAbility > c2.data.speedAbility)
-            {
-                //速度快?
-                player_first = true;
-            }
+            bool player_first = PlayerFirst(_self.data, _other.data, s1, s2);
 
             if (player_first)
             {
                 await s1.Apply(_self, _other);
+                if (_other.data.healthAbility <= 0)
+                {
+                    _other.Dead();
+                    //判断npc是否还可以战斗
+                    NpcLose();
+                    _attack_over = true; //战斗结束
+                    _round_start = false; //
+                }
+
                 print("玩家攻击完毕");
-                await UniTask.Delay(3000);
                 await s2.Apply(_other, _self);
+                if (_self.data.healthAbility <= 0)
+                {
+                    _self.Dead();
+                    if (!player.have_next())
+                    {
+                        print("玩家没有可用的Cricket了!!!");
+                        PlayerLose();
+                        _attack_over = true; //战斗结束
+                        _round_start = false; //
+                    }
+                }
+
                 print("敌人攻击完毕");
             }
             else
             {
                 await s2.Apply(_other, _self);
                 print("敌人攻击完毕");
-                await UniTask.Delay(3000);
+                if (_self.data.healthAbility <= 0)
+                {
+                    _self.Dead();
+                    if (!player.have_next())
+                    {
+                        print("玩家没有可用的Cricket了!!!");
+                        PlayerLose();
+                        _attack_over = true; //战斗结束
+                        _round_start = false; //
+                    }
+                }
+
                 await s1.Apply(_self, _other);
+                if (_other.data.healthAbility <= 0)
+                {
+                    _other.Dead();
+                    //判断npc是否还可以战斗
+                    NpcLose();
+                    _attack_over = true; //战斗结束
+                    _round_start = false; //
+                }
+
                 print("玩家攻击完毕");
             }
 
-            round_start = false;
+            //回合逻辑结束
+            print("回合结束");
+            _round_start = false;
         }
-        
+
+        private void PlayerLose()
+        {
+            print("玩家输了,现在要返回大地图(基地)");
+            _attack_over = true;
+            ExitAttack();
+        }
+
+        private void NpcLose()
+        {
+            print("npc输了,现在为玩家结算奖励");
+            _attack_over = true;
+            GameManager.instance.ExitAttackMap();
+        }
+
+        private bool PlayerFirst(CricketData self, CricketData other, Skill s1, Skill s2)
+        {
+            if (PriorityCompare.Compare(s1.meta.priority, s2.meta.priority))
+            {
+                //技能优先级高?
+                return true;
+            }
+
+            if (self.speedAbility > other.speedAbility)
+            {
+                //速度快?
+                return true;
+            }
+
+            if (self.speedAbility == other.speedAbility)
+            {
+                return RandomManager.Probability(0, 1) > 0.5;
+            }
+
+            return false;
+        }
+
         private async UniTask<Skill> PlayerSelect()
         {
             while (true)
@@ -185,32 +198,51 @@ namespace Games.CricketGame.Manager
 
         private Skill NpcSelect()
         {
-            return c2.random_skill();
+            return npc.random_skill();
         }
 
-        public void EnterAttack(Cricket cricket1, Cricket cricket2, CinemachineVirtualCamera virtualCamera)
+        #endregion
+
+        public void ExitAttack()
         {
+            print("战斗结束");
+            player = null;
+            npc = null;
+            ui.DisConnect();
+            ui.gameObject.SetActive(false);
+            // gameObject.SetActive(false);
+            GameManager.instance.ExitAttackMap();
+        }
+
+        public void EnterAttack(Player player, Npc npc, CinemachineVirtualCamera virtualCamera)
+        {
+            ui.gameObject.SetActive(true);
             //获取战斗相机的位置
-            _camera = virtualCamera;
-            //将数据传递给UI 
-            ui.Initialize(cricket1.data, cricket2.data);
-            //在对应位置生成精灵
-            //ToDO 调试时 暂时不要这个
-            _self = Instantiate(cricket1, p1);
-            _other = Instantiate(cricket2, p2);
+            this.virtualCamera = virtualCamera;
+            this.npc = npc;
+            this.player = player;
+            //获取玩家的和Npc的首发精灵
+            _self = Instantiate(player.crickets[0], p1);
+            // _self = player.crickets[0];
+            _other = Instantiate(npc.crickets[0], p2);
+            // _other = npc.crickets[0];
+            //激活他们
             _self.gameObject.SetActive(true);
             _other.gameObject.SetActive(true);
-
-            //将精灵看向相机
-            _self.transform.localRotation = _camera.transform.rotation;
-            _other.transform.localRotation = _camera.transform.rotation;
+            //将数据连接到ui
+            ui.Connect(_self.data, _other.data);
+            _attack_over = false;
         }
+
+        #region 场景相关
 
         private void _update_rotation()
         {
-            var rotation = _camera.transform.rotation;
+            var rotation = virtualCamera.transform.rotation;
             _self.transform.localRotation = rotation;
             _other.transform.localRotation = rotation;
         }
+
+        #endregion
     }
 }

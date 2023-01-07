@@ -349,7 +349,7 @@ namespace Games.CricketGame.Code.Cricket_
             //Todo 做进化 还有其他设置
             Debug.Log("进化了");
             // meta = PokemonDataMeta.Find(meta.nextLevel[0]);
-            levelUpAction?.Invoke(name,level);
+            levelUpAction?.Invoke(name, level);
             CalculateDefault();
         }
 
@@ -368,7 +368,7 @@ namespace Games.CricketGame.Code.Cricket_
                 for (var i = 1; i != totalTimes + 1; i++)
                 {
                     cur_exp += one_exp;
-                    expRateChangeAction.Invoke(cur_exp , total);
+                    expRateChangeAction.Invoke(cur_exp, total);
                     await UniTask.Delay(20);
                 }
 
@@ -376,7 +376,7 @@ namespace Games.CricketGame.Code.Cricket_
                 _levelUp();
                 if (level == 100)
                 {
-                    expRateChangeAction.Invoke(1,1);
+                    expRateChangeAction.Invoke(1, 1);
                     return;
                 }
             }
@@ -386,7 +386,7 @@ namespace Games.CricketGame.Code.Cricket_
             for (var i = 1; i != totalTimes + 1; i++)
             {
                 cur_exp += one_exp;
-                expRateChangeAction.Invoke(cur_exp , total);
+                expRateChangeAction.Invoke(cur_exp, total);
                 await UniTask.Delay(20);
             }
 
@@ -396,34 +396,48 @@ namespace Games.CricketGame.Code.Cricket_
 
         public async UniTask ChangeHealth(int damage)
         {
+            //ToDo 这里很丑陋 后面来改一下结构
             if (healthAbility <= 0)
             {
                 return;
             }
-            
+
             int totalTimes = 30;
             float tempHealth = defaultHealth;
-            //将伤害分成很多次进行调用,以进行事件调用
-            var one_damage = (float)damage / totalTimes;
+            //将伤害分成很多次进行事件调用,以慢慢的更新UI
+            float one_damage = (float)damage / totalTimes;
             for (var i = 1; i != totalTimes + 1; i++)
             {
-                tempHealth -= i * one_damage;
-                healthRateChangeAction?.Invoke(tempHealth, defaultHealth);
-                await UniTask.WaitForFixedUpdate();
+                tempHealth = healthAbility - i * one_damage;
+                Debug.Log($"cricket:{name} 血量更新{tempHealth}/{defaultHealth}");
                 if (tempHealth <= 0)
                 {
                     healthAbility = 0;
+                    healthRateChangeAction?.Invoke(healthAbility, defaultHealth);
                     return;
                 }
-            
+
                 if (tempHealth >= defaultHealth)
                 {
                     healthAbility = defaultHealth;
+                    healthRateChangeAction?.Invoke(healthAbility, defaultHealth);
                     return;
                 }
+
+                healthRateChangeAction?.Invoke(tempHealth, defaultHealth);
+                await UniTask.WaitForFixedUpdate();
             }
 
             healthAbility -= damage;
+            if (healthAbility <= 0)
+            {
+                healthAbility = 0;
+            }
+            else if (healthAbility >= defaultHealth)
+            {
+                healthAbility = defaultHealth;
+            }
+
             healthRateChangeAction?.Invoke(healthAbility, defaultHealth);
         }
     }

@@ -163,9 +163,28 @@ namespace Games.CricketGame.Cricket_
 
         public SkillMeta meta;
         public PropertyEnum propertyEnum;
-        [JsonIgnore] public int cur_times { get; private set; }
+        private int _cur_times;
         public int use_times;
+        #region Action
+
+        public Action<PropertyEnum> properyuChange;
+        public Action<SkillMeta> metaChange;
+        public Action<int, int> ppChangeAction;
+        public Action<string> nameChangeAction;
         [HideInInspector] public int need_level;
+        #endregion
+
+        public int cur_times
+        {
+            get => _cur_times;
+            set
+            {
+                _cur_times = value;
+                ppChangeAction?.Invoke(_cur_times, use_times);
+            }
+        }
+
+
 
         public void InitMeta()
         {
@@ -193,7 +212,7 @@ namespace Games.CricketGame.Cricket_
             }
 
             cur_times--;
-           await _effectObjs[meta.skillEnum].Apply(attacker, defenser, this);
+            await _effectObjs[meta.skillEnum].Apply(attacker, defenser, this);
         }
     }
 }

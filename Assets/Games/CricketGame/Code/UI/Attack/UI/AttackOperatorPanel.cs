@@ -1,4 +1,5 @@
-﻿using Games.CricketGame.Code.Cricket_;
+﻿using System;
+using Games.CricketGame.Code.Cricket_;
 using UnityEngine;
 
 namespace Games.CricketGame.UI
@@ -7,21 +8,34 @@ namespace Games.CricketGame.UI
     {
         public SelectPanel selectPanel;
         public SkillPanel skillPanel;
-        private bool _initialized;
-        private CricketData _data;
+        private bool _connected;
 
-        public void Initialize(CricketData data)
+        private void Awake()
         {
-            _initialized = true;
-            _data = data;
             selectPanel.gameObject.SetActive(true);
+            //ToDo 其他按钮点击事件也要进行绑定
             selectPanel.attackClicked += _enter_skill_panel;
+            
             skillPanel.gameObject.SetActive(false);
         }
 
+        public void Connect(CricketData data)
+        {
+            print($"{data.name}连接到{name}");
+            _connected = true;
+            skillPanel.gameObject.SetActive(true);
+            skillPanel.Connect(data);
+
+        }
+
+        public void DisConnect()
+        {
+            skillPanel.DisConnect();
+            _connected = false;
+        }
         public void RoundStart()
         {
-            if (!_initialized)
+            if (!_connected)
             {
                 return;
             }
@@ -36,8 +50,6 @@ namespace Games.CricketGame.UI
         {
             selectPanel.gameObject.SetActive(false);
             skillPanel.gameObject.SetActive(true);
-            print("进入技能选择面板");
-            skillPanel.Initialize(_data);
         }
     }
 }

@@ -4,13 +4,19 @@ using Games.CricketGame.Code.Cricket_;
 using Nico.Interface;
 using Nico.Player;
 using UnityEngine;
+
 namespace Games.CricketGame.Player_
 {
     public class Player : MonoBehaviour
     {
-        public 
-            Cricket cricket;
-        
+        //玩家携带cricket
+        public List<Cricket> crickets;
+        //玩家拥有的Cricket
+        public bool have_next()
+        {
+            return false;
+        }
+
         #region Attribute
 
         private PlayerInputHandler _handler;
@@ -18,13 +24,13 @@ namespace Games.CricketGame.Player_
         private ColliderHandler _colliderHandler;
 
         #endregion
-        
+
         #region Unity Components
 
         private Rigidbody2D _rigidbody;
         private Animator _animator;
         private Collider2D _collider;
-        
+
         #endregion
 
         #region Action
@@ -35,26 +41,29 @@ namespace Games.CricketGame.Player_
         public Action<Collision2D> collisionExit2D;
 
         #endregion
-        
+
         #region CoreComponents
-        
+
         private readonly List<ICoreComponent> _components = new();
-        
+
         #endregion
 
         #region Unity LifeTime
 
-        
         private void Awake()
         {
+            //ToDo 删掉这里
+            crickets[0].data.RandomInit(40);
+            crickets[0].data.name = "玩家";
+            
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
             _collider = GetComponent<Collider2D>();
             _handler = transform.Find("InputHandler").GetComponent<PlayerInputHandler>();
 
             _colliderHandler = new ColliderHandler(this);
-            
-            var playerController = new PlayerController(_rigidbody, _handler,physicsData);
+
+            var playerController = new PlayerController(_rigidbody, _handler, physicsData);
             _components.Add(playerController);
         }
 
@@ -83,10 +92,11 @@ namespace Games.CricketGame.Player_
                 component.FixedUpdate();
             }
         }
+
         #endregion
 
         #region Trigger2D Event
-        
+
         private void OnTriggerEnter2D(Collider2D col)
         {
             triggerEnter2D.Invoke(col);
@@ -94,7 +104,6 @@ namespace Games.CricketGame.Player_
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            
             triggerExit2D.Invoke(other);
         }
 
@@ -113,6 +122,5 @@ namespace Games.CricketGame.Player_
         }
 
         #endregion
-        
     }
 }

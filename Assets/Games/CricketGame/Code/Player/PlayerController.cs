@@ -13,9 +13,9 @@ namespace Games.CricketGame.Player_
         
         public PlayerController(Rigidbody2D rigidbody,PlayerInputHandler handler,PlayerPhysicsData physicsData)
         {
-            this._rigidbody = rigidbody;
-            this._handler = handler;
-            this._physicsData = physicsData;
+            _rigidbody = rigidbody;
+            _handler = handler;
+            _physicsData = physicsData;
         }
 
         public void Start()

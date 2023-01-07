@@ -21,17 +21,20 @@ namespace Games.CricketGame.UI
         private CricketData _bandedData;
 
 
-        public void Connect(CricketData cricket_data, bool isEnemy)
+        public void Connect(CricketData data, bool isEnemy)
         {
+            print($"{data.name}连接到{name}");
             expBar.gameObject.SetActive(!isEnemy);
             healthText.gameObject.SetActive(!isEnemy);
 
-            _bandedData = cricket_data;
+            _bandedData = data;
             _bandedData.healthRateChangeAction += _update_health;
             _bandedData.expRateChangeAction += _update_exp;
             _bandedData.levelUpAction += _update_info;
             //刷新对应UI数值
             _update_info(_bandedData.name, _bandedData.level);
+            _update_exp(_bandedData.LevelAttainedExp(), _bandedData.LevelTotalExp());
+            _update_health(_bandedData.healthAbility, _bandedData.defaultHealth);
         }
 
         public void DisConnect()
@@ -41,7 +44,7 @@ namespace Games.CricketGame.UI
             _bandedData.levelUpAction -= _update_info;
             _bandedData = null;
         }
-        
+
         #region Update UI Method
 
         private void _update_info(string cricketName, int level)
@@ -54,9 +57,6 @@ namespace Games.CricketGame.UI
         {
             expBar.fillAmount = attained / total;
         }
-
-
-
 
 
         private void _update_health(float now, float max)

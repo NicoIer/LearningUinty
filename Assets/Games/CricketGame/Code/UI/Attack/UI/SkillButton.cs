@@ -31,23 +31,46 @@ namespace Games.CricketGame.UI
             button.onClick.AddListener(_clicked);
         }
 
-        public void Initialize(Skill skill)
+        public void Connect(Skill skill)
         {
-            print($"SkillButton初始化{skill.meta.name}");
             _initialized = true;
             _skill = skill;
-            //ToDo 这里只做测试
-            nameText.text = skill.meta.name;
-            ppText.text = $"{skill.cur_times}/{skill.use_times}";
+            _skill.ppChangeAction += _pp_change;
+            _skill.nameChangeAction += _name_change;
+            _skill.properyuChange += _property_change;
+            //ToDo 完成图标和效果的更新
+            _name_change(_skill.meta.name);
+            _pp_change(_skill.cur_times,_skill.use_times);
             // propertyImage.sprite = sprite;
             // effectText.text = effect;
         }
 
-        public void Flash()
+        public void DisConnect()
         {
-            if(!_initialized)
-                return;
+            _initialized = false;
+            _skill.ppChangeAction -= _pp_change;
+            _skill.nameChangeAction-= _name_change;
+            _skill.properyuChange -= _property_change;
+            _skill = null;
+        }
+
+        private void _name_change(string now)
+        {
+            nameText.text = now;
+        }
+        private void _pp_change(int cur, int max)
+        {
             ppText.text = $"{_skill.cur_times}/{_skill.use_times}";
+        }
+
+        private void _property_change(PropertyEnum now)
+        {
+            
+        }
+
+        private void _effect_change()
+        {
+            
         }
         private void _clicked()
         {

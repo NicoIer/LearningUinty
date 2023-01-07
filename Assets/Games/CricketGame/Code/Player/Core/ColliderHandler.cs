@@ -1,6 +1,7 @@
 ﻿
 using Games.CricketGame.Code.Cricket_;
 using Games.CricketGame.Manager;
+using Games.CricketGame.Npc_;
 using UnityEngine;
 
 namespace Games.CricketGame.Player_
@@ -25,7 +26,7 @@ namespace Games.CricketGame.Player_
             if (col.collider.CompareTag("Cricket"))
             {
                 Debug.Log("遭遇野生精灵,现在要进入战斗画面");
-                GameManager.instance.EnterAttackMap(_player,col.collider.GetComponent<Cricket>());
+                GameManager.instance.EnterAttackMap(_player,col.collider.GetComponent<Npc>());
             }
         }
 
