@@ -83,7 +83,7 @@ namespace Games.CricketGame.Code.Cricket_
         public int level;
         public int alreadyExperience;
         public bool sex;
-
+        public ItemEnum itemEnum;
         #endregion
 
         #region 技能信息
@@ -95,8 +95,10 @@ namespace Games.CricketGame.Code.Cricket_
         #region Action
 
         public Action<float, float> expRateChangeAction;
-        public Action<string, int> levelUpAction;
-        public Action<float, float> healthRateChangeAction;
+        public Action<int,int> levelUpAction;
+        public Action<CricketData> metaChangeAction;
+        public Action<string,string> nameChangeAction;
+        public Action<float, float> healthChangeAction;
 
         #endregion
 
@@ -264,14 +266,14 @@ namespace Games.CricketGame.Code.Cricket_
         public int NeededExp() =>
             ExperienceManger.LevelUpNeededExperience(meta.experienceEnum, level, alreadyExperience);
 
-        public int LevelTotalExp() =>
+        public int LevelUpTotalExp() =>
             ExperienceManger.LevelUpTotalExp(meta.experienceEnum, level);
 
         /// <summary>
         /// 当前等级已经获得的经验
         /// </summary>
         /// <returns></returns>
-        public int LevelAttainedExp() => LevelTotalExp() - NeededExp();
+        public int LevelAttainedExp() => LevelUpTotalExp() - NeededExp();
 
         #endregion
 
@@ -345,19 +347,19 @@ namespace Games.CricketGame.Code.Cricket_
 
         private void _levelUp()
         {
-            level += 1;
             //Todo 做进化 还有其他设置
             Debug.Log("进化了");
             // meta = PokemonDataMeta.Find(meta.nextLevel[0]);
-            levelUpAction?.Invoke(name, level);
+            level += 1;
+            levelUpAction?.Invoke(level-1, level);
             CalculateDefault();
         }
 
-        public async void ChangeExp(int exp)
+        public async UniTask ChangeExp(int exp)
         {
             var totalTimes = 30;
             var needed = NeededExp();
-            var total = LevelTotalExp();
+            var total = LevelUpTotalExp();
             float one_exp;
             float cur_exp;
             while (exp >= needed)
@@ -392,11 +394,9 @@ namespace Games.CricketGame.Code.Cricket_
 
             alreadyExperience += exp;
         }
-
-
+        
         public async UniTask ChangeHealth(int damage)
         {
-            //ToDo 这里很丑陋 后面来改一下结构
             if (healthAbility <= 0)
             {
                 return;
@@ -412,18 +412,18 @@ namespace Games.CricketGame.Code.Cricket_
                 if (tempHealth <= 0)
                 {
                     healthAbility = 0;
-                    healthRateChangeAction?.Invoke(healthAbility, defaultHealth);
+                    healthChangeAction?.Invoke(healthAbility, defaultHealth);
                     return;
                 }
 
                 if (tempHealth >= defaultHealth)
                 {
                     healthAbility = defaultHealth;
-                    healthRateChangeAction?.Invoke(healthAbility, defaultHealth);
+                    healthChangeAction?.Invoke(healthAbility, defaultHealth);
                     return;
                 }
 
-                healthRateChangeAction?.Invoke(tempHealth, defaultHealth);
+                healthChangeAction?.Invoke(tempHealth, defaultHealth);
                 await UniTask.WaitForFixedUpdate();
             }
 
@@ -437,7 +437,7 @@ namespace Games.CricketGame.Code.Cricket_
                 healthAbility = defaultHealth;
             }
 
-            healthRateChangeAction?.Invoke(healthAbility, defaultHealth);
+            healthChangeAction?.Invoke(healthAbility, defaultHealth);
         }
     }
 }

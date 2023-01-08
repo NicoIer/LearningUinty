@@ -1,13 +1,14 @@
 ﻿using System;
 using Games.CricketGame.Code.Cricket_;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Games.CricketGame.UI
 {
     public class AttackOperatorPanel : MonoBehaviour
     {
         public SelectPanel selectPanel;
-        public SkillPanel skillPanel;
+        [FormerlySerializedAs("skillPanel")] public AttackSkillPanel attackSkillPanel;
         private bool _connected;
         private GameObject curPanel;
 
@@ -18,7 +19,7 @@ namespace Games.CricketGame.UI
             //ToDo 其他按钮点击事件也要进行绑定
             selectPanel.attackClicked += _enter_skill_panel;
 
-            skillPanel.gameObject.SetActive(false); //默认关闭技能Panel
+            attackSkillPanel.gameObject.SetActive(false); //默认关闭技能Panel
         }
 
 
@@ -34,14 +35,14 @@ namespace Games.CricketGame.UI
         {
             print($"{data.name}连接到{name}");
             _connected = true;
-            skillPanel.gameObject.SetActive(true);
-            skillPanel.Connect(data);
+            attackSkillPanel.gameObject.SetActive(true);
+            attackSkillPanel.Connect(data);
         }
 
         public void DisConnect()
         {
             print("AttackPanel断开");
-            skillPanel.DisConnect();
+            attackSkillPanel.DisConnect();
             _connected = false;
         }
 
@@ -53,14 +54,14 @@ namespace Games.CricketGame.UI
             }
 
             selectPanel.gameObject.SetActive(true);
-            skillPanel.gameObject.SetActive(false);
+            attackSkillPanel.gameObject.SetActive(false);
         }
 
 
         private void _enter_skill_panel()
         {
             selectPanel.gameObject.SetActive(false);
-            curPanel = skillPanel.gameObject;
+            curPanel = attackSkillPanel.gameObject;
             curPanel.SetActive(true);
         }
 

@@ -29,10 +29,6 @@ namespace Games.CricketGame.Cricket_
         private static Dictionary<SkillEnum, Type> _effectTyeMap;
         private static Dictionary<SkillEnum, ISkillEffect> _effectObjs;
         private static readonly string _effect_map_path = "skill/effect_map.json";
-
-        #endregion
-
-
         #region Static Method
 
         public static Dictionary<SkillEnum, Type> GetEffectMap(bool reload = false)
@@ -160,18 +156,26 @@ namespace Games.CricketGame.Cricket_
         }
 
         #endregion
+        
+        #endregion
+
+
+
 
         public SkillMeta meta;
         public PropertyEnum propertyEnum;
+        public EffectEnum effectEnum;
         private int _cur_times;
         public int use_times;
+        [HideInInspector] public int need_level;
         #region Action
-
-        public Action<PropertyEnum> properyuChange;
-        public Action<SkillMeta> metaChange;
+        
+        public Action<PropertyEnum> properyuChangeAction;
+        public Action<Skill> metaChangeAction;
+        public Action<EffectEnum> effectChangeAction;
         public Action<int, int> ppChangeAction;
         public Action<string> nameChangeAction;
-        [HideInInspector] public int need_level;
+        
         #endregion
 
         public int cur_times
