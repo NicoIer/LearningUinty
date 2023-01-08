@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Games.CricketGame.UI
 {
-    public class CricketInfoPanel : MonoBehaviour
+    public class CricketInfoAttackPanel : MonoBehaviour
     {
         #region UI Elemet
 

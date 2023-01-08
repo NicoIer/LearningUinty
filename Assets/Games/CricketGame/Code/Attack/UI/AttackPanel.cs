@@ -6,8 +6,8 @@ namespace Games.CricketGame.UI
 {
     public class AttackPanel : MonoBehaviour
     {
-        public CricketInfoPanel player;
-        public CricketInfoPanel other;
+        public CricketInfoAttackPanel player;
+        public CricketInfoAttackPanel other;
         public AttackOperatorPanel attackOperatorPanel;
         private bool _connected;
         
