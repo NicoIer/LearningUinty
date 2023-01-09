@@ -4,17 +4,17 @@ using UnityEngine.InputSystem;
 
 namespace Games.CricketGame.Manager
 {
-    public class GameInputHandler: MonoBehaviour
+    public class GameInputHandler : MonoBehaviour
     {
-        public bool escDown;
-        public Vector2 move;
-        public short x;
-        public short y;
-        public bool jump;
+        [field: SerializeField] public bool escDown { get; private set; }
+        [field: SerializeField] public bool enterDown { get; private set; }
+        [field: SerializeField] public Vector2 move { get; private set; }
+        [field: SerializeField] public short x { get; private set; }
+        [field: SerializeField] public short y { get; private set; }
+        [field: SerializeField] public bool jump { get; private set; }
 
         public void OnEscDown(InputAction.CallbackContext obj)
         {
-            print("escdown");
             if (obj.performed)
             {
                 escDown = true;
@@ -25,6 +25,17 @@ namespace Games.CricketGame.Manager
             }
         }
 
+        public void onEnterDown(InputAction.CallbackContext obj)
+        {
+            if (obj.performed)
+            {
+                enterDown = true;
+            }
+            else if (obj.canceled)
+            {
+                enterDown = false;
+            }
+        }
 
         public void OnMove(InputAction.CallbackContext ctx)
         {

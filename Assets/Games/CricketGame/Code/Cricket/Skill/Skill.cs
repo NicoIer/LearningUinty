@@ -209,7 +209,7 @@ namespace Games.CricketGame.Cricket_
         }
 
         public async UniTask Apply(Cricket attacker, Cricket defenser)
-        {
+        {//ToDo 考虑防御者已经GG的情况
             if (!Initialized)
             {
                 InitializeStatic();

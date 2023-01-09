@@ -1,4 +1,5 @@
 ﻿using Games.CricketGame.Manager;
+using Games.CricketGame.UI.Attack;
 using Games.CricketGame.UI.Package;
 using UnityEngine;
 
@@ -22,6 +23,6 @@ namespace Games.CricketGame.UI
             }
         }
 
-        public bool escDown => GameManager.instance.handler.escDown;
+        public bool escDown => GameManager.instance.input.escDown;
     }
 }

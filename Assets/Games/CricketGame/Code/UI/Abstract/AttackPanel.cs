@@ -1,15 +1,24 @@
-﻿using Games.CricketGame.Cricket_;
+﻿using Cysharp.Threading.Tasks;
+using Games.CricketGame.Cricket_;
 using UnityEngine;
 
-namespace Games.CricketGame.UI
+namespace Games.CricketGame.UI.Attack
 {
     public class AttackPanel : MonoBehaviour
     {
         public CricketAttackInfoCell player;
         public CricketAttackInfoCell other;
+        [SerializeField] private ConsolePanel consolePanel;
         public AttackOperatorPanel attackOperatorPanel;
         private bool _connected;
         private bool _opened;
+
+        public async UniTask UpdateConsoleText(string text,int times)
+        {
+            consolePanel.gameObject.SetActive(true);
+            await consolePanel.UpdateText(text, times);
+            consolePanel.gameObject.SetActive(false);
+        }
         public void Open()
         {
             if(_opened)

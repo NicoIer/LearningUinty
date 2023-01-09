@@ -249,7 +249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackSceneManager: {fileID: 1737110951}
   gameMap: {fileID: 918938445}
-  <handler>k__BackingField: {fileID: 1488797059}
+  <input>k__BackingField: {fileID: 1488797059}
   <_attcking>k__BackingField: 0
   <_mapping>k__BackingField: 0
 --- !u!1 &60761835
@@ -618,7 +618,7 @@ GameObject:
   - component: {fileID: 149518651}
   - component: {fileID: 149518654}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -803,6 +803,7 @@ GameObject:
   - component: {fileID: 250297530}
   - component: {fileID: 250297532}
   - component: {fileID: 250297531}
+  - component: {fileID: 250297533}
   m_Layer: 5
   m_Name: consolePanel
   m_TagString: Untagged
@@ -869,6 +870,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 250297529}
   m_CullTransparentMesh: 1
+--- !u!114 &250297533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250297529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01224ab169e941ba89093cd202afd8c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &270030063
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8591,6 +8604,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3d4f7691-761d-415d-ad7c-08c1f329ae9f
     m_ActionName: Player/Back[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1488797059}
+        m_TargetAssemblyTypeName: Games.CricketGame.Manager.GameInputHandler, Assembly-CSharp
+        m_MethodName: onEnterDown
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3155a5da-1621-468e-8189-3fd57bffb30e
+    m_ActionName: Player/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -8608,11 +8637,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 672373bb2fc64e2186acfdcb10279802, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  escDown: 0
-  move: {x: 0, y: 0}
-  x: 0
-  y: 0
-  jump: 0
+  <escDown>k__BackingField: 0
+  <enterDown>k__BackingField: 0
+  <move>k__BackingField: {x: 0, y: 0}
+  <x>k__BackingField: 0
+  <y>k__BackingField: 0
+  <jump>k__BackingField: 0
 --- !u!1 &1511233013
 GameObject:
   m_ObjectHideFlags: 0
@@ -10400,7 +10430,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 70faeffa7353f9f4c85f5e5f8bd7f90a, type: 3}
+    m_Font: {fileID: 12800000, guid: 81c66a396dda276479b71628ee9037f3, type: 3}
     m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
@@ -10471,9 +10501,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03128c0878364f6797c0ded5d57225b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  consoleDelayTimes: 66
   environment: {fileID: 345367202}
-  p1: {fileID: 1630761408}
-  p2: {fileID: 60761839}
+  <pPlayer>k__BackingField: {fileID: 1630761408}
+  <pNpc>k__BackingField: {fileID: 60761839}
 --- !u!1001 &1740569420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11458,6 +11489,7 @@ GameObject:
   - component: {fileID: 1984836830}
   - component: {fileID: 1984836832}
   - component: {fileID: 1984836833}
+  - component: {fileID: 1984836834}
   m_Layer: 5
   m_Name: AttackPanel
   m_TagString: Untagged
@@ -11511,7 +11543,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1941504206}
   other: {fileID: 1799362762}
+  consolePanel: {fileID: 250297533}
   attackOperatorPanel: {fileID: 1847820064}
+--- !u!114 &1984836834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984836829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.103773594, g: 0.06706124, b: 0.06706124, a: 0.31764707}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1989386898
 GameObject:
   m_ObjectHideFlags: 0

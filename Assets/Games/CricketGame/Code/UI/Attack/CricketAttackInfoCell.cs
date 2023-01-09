@@ -5,7 +5,7 @@ using Games.CricketGame.Cricket_;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Games.CricketGame.UI
+namespace Games.CricketGame.UI.Attack
 {
     public class CricketAttackInfoCell : AbsCricketUI
     {

@@ -12,7 +12,7 @@ namespace Games.CricketGame.Manager
         public AttackSceneManager attackSceneManager;
         public Transform gameMap;
         // public Player player;
-        [field: SerializeField]public GameInputHandler handler { get; private set; }
+        [field: SerializeField]public GameInputHandler input { get; private set; }
 
         #region 游戏状态
 
@@ -24,7 +24,7 @@ namespace Games.CricketGame.Manager
         protected override void Awake()
         {
             base.Awake();
-            handler = transform.GetChild(0).GetComponent<GameInputHandler>();
+            input = transform.GetChild(0).GetComponent<GameInputHandler>();
         }
         
 

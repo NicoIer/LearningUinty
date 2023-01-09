@@ -5,9 +5,9 @@ namespace Nico.Player
 {
     public class PlayerInputHandler : MonoBehaviour
     {
-        public Vector2 move => GameManager.instance.handler.move;
-        public short x => GameManager.instance.handler.x;
-        public short y => GameManager.instance.handler.x;
-        public bool jump => GameManager.instance.handler.jump;
+        public Vector2 move => GameManager.instance.input.move;
+        public short x => GameManager.instance.input.x;
+        public short y => GameManager.instance.input.x;
+        public bool jump => GameManager.instance.input.jump;
     }
 }
