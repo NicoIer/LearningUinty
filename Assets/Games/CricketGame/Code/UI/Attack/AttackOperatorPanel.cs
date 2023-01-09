@@ -55,8 +55,7 @@ namespace Games.CricketGame.UI
             selectPanel.gameObject.SetActive(true);
             attackSkillPanel.gameObject.SetActive(false);
         }
-
-
+        
         private void _enter_skill_panel()
         {
             selectPanel.gameObject.SetActive(false);

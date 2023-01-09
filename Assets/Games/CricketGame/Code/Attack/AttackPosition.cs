@@ -3,11 +3,12 @@ using Games.CricketGame.Code.Cricket_;
 using Games.CricketGame.Cricket_;
 using UnityEngine;
 
-namespace Games.CricketGame.Code.Attack
+namespace Games.CricketGame.Attack
 {
     public class AttackPosition : MonoBehaviour
     {
         [field: SerializeField] public Cricket cricket { get; private set; }
+        public CricketData data => cricket.data;
 
         private void Awake()
         {

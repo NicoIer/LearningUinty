@@ -1,4 +1,7 @@
 ﻿using System;
+using Games.CricketGame.Attack;
+using Games.CricketGame.Code.Attack;
+using Games.CricketGame.Cricket_;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -43,8 +46,7 @@ namespace Games.CricketGame.UI
         private void _run_clicked()
         {
             runClicked?.Invoke();
-            print("点击逃跑按钮");
-
+            InputStorage.player_input = new AttackInputStruct(SelectTypeEnum.逃跑);
         }
     }
 }

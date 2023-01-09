@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Games.CricketGame.Attack;
 using Games.CricketGame.Code.Package;
+using Games.CricketGame.Cricket_;
 using Games.CricketGame.Player_;
 using UnityEngine;
 using UnityEngine.UI;
@@ -98,7 +99,8 @@ namespace Games.CricketGame.UI.Package
             if (player_next.healthAbility > 0)
             {
                 print($"{cricketBagCells[idx].name}被点击,可以战斗");
-                AttackInputHandler.player_next = player_next;
+                var inputStruct = new AttackInputStruct(SelectTypeEnum.切换精灵,player_next.GetType(),player_next);
+                InputStorage.player_input = inputStruct;
             }
             else
             {

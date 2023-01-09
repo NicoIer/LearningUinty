@@ -30,7 +30,7 @@ namespace Games.CricketGame.UI
             }
 
             print($"选择使用{_skill.meta.name}");
-            AttackInputHandler.player_input = _skill;
+            InputStorage.player_input = new AttackInputStruct(SelectTypeEnum.使用技能,_skill.GetType(),_skill);
         }
 
         public override void Connect(Skill skill)

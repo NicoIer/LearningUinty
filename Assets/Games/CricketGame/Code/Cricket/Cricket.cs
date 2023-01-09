@@ -53,7 +53,6 @@ namespace Games.CricketGame.Code.Cricket_
 
         public void ReSetData(CricketData data)
         {
-            print($"{this.data.name}的数据更新为:{data}");
             this.data = data;
         }
         
@@ -63,7 +62,8 @@ namespace Games.CricketGame.Code.Cricket_
         public void Dead()
         {
             print($"啊!!!{data.name}陷入危险境地了,播放战败动画,并且.....");
-            
+            data.stateEnum = StateEnum.陷入困境;
+
         }
 
         #endregion

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using Games.CricketGame.Code.Cricket_;
 using Games.CricketGame.Cricket_;
+using Games.CricketGame.Npc_;
+using Games.CricketGame.Player_;
 using Nico.Common;
 
 namespace Games.CricketGame.Manager
@@ -19,7 +20,14 @@ namespace Games.CricketGame.Manager
         {
             return _speedMap[p1] > _speedMap[p2];
         }
-
+        /// <summary>
+        /// 比较技能出手先后
+        /// </summary>
+        /// <param name="c1"></param>
+        /// <param name="c2"></param>
+        /// <param name="s1"></param>
+        /// <param name="s2"></param>
+        /// <returns></returns>
         public static bool CompareSkillSpeed(CricketData c1,CricketData c2,Skill s1,Skill s2)
         {
             if (ComparePriority(s1.meta.priority, s2.meta.priority))
@@ -40,6 +48,16 @@ namespace Games.CricketGame.Manager
             }
 
             return false;
+        }
+
+        public static bool ComparePlayerRun(Npc npc,CricketData c1,CricketData c2)
+        {//ToDo fix it
+            return true;
+        }
+
+        public static bool CompareNpcRun(CricketData c1, CricketData c2)
+        {
+            return true;
         }
     }
 }

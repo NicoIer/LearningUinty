@@ -27,6 +27,12 @@ namespace Games.CricketGame.Manager
         public AttackEnvironment environment;
         public AttackPosition p1;
         public AttackPosition p2;
+        private AttackInputHandler _inputHandler;
+
+        private void Awake()
+        {
+            _inputHandler = new();
+        }
 
         private void Update()
         {
@@ -46,10 +52,10 @@ namespace Games.CricketGame.Manager
 
         #region 战斗逻辑
 
-        private async UniTask<(Skill, Skill)> _get_skill_input()
+        private async UniTask<(AttackInputStruct, AttackInputStruct)> _get_attack_input()
         {
-            var s1 = await PlayerSelect();
-            var s2 = _npc.random_skill(p2.cricket.data);
+            var s1 = await _inputHandler.GetPlayerInput();
+            var s2 = new AttackInputStruct(SelectTypeEnum.使用技能, typeof(Skill), _npc.random_skill(p2.cricket.data));
             return (s1, s2);
         }
 
@@ -57,152 +63,162 @@ namespace Games.CricketGame.Manager
         {
             //ToDo 这里有很多种不同的输入可能 后面来考虑
             //等待输入
-            var (player_skill, npc_skill) = await _get_skill_input();
+            var (playerInput, npcInput) = await _get_attack_input();
+            print("输入完毕");
             attackPanel.RoundPlaying();
-            bool player_first = CompareManager.CompareSkillSpeed(p1.cricket.data, p2.cricket.data, player_skill, npc_skill);
+            if (playerInput.typeEnum == SelectTypeEnum.使用技能)
+            {
+                switch (npcInput.typeEnum)
+                {
+                    //双方都决定使用技能进行攻击
+                    case SelectTypeEnum.使用技能:
+                    {
+                        Skill playerSkill = AttackInputStruct.CastToType<Skill>(playerInput);
+                        Skill npcSkill = AttackInputStruct.CastToType<Skill>(npcInput);
+                        await _attack_together(playerSkill, npcSkill);
+                        break;
+                    }
+                    case SelectTypeEnum.使用道具:
+                        break;
+                    case SelectTypeEnum.切换精灵:
+                        break;
+                    case SelectTypeEnum.逃跑:
+                        if (CompareManager.CompareNpcRun(p1.data, p2.data))
+                        {
+                            PlayerWin();
+                            return;
+                        }
+                        break;
+                }
+            }
+            else if (playerInput.typeEnum == SelectTypeEnum.使用道具)
+            {
+                if (npcInput.typeEnum == SelectTypeEnum.使用技能)
+                {
+                }
+                else if (npcInput.typeEnum == SelectTypeEnum.使用道具)
+                {
+                }
+                else if (npcInput.typeEnum == SelectTypeEnum.切换精灵)
+                {
+                }
+                else if (npcInput.typeEnum == SelectTypeEnum.逃跑)
+                {
+                }
+            }
+            else if (playerInput.typeEnum == SelectTypeEnum.切换精灵)
+            {
+                if (npcInput.typeEnum == SelectTypeEnum.使用技能)
+                {
+                }
+                else if (npcInput.typeEnum == SelectTypeEnum.使用道具)
+                {
+                }
+                else if (npcInput.typeEnum == SelectTypeEnum.切换精灵)
+                {
+                }
+                else if (npcInput.typeEnum == SelectTypeEnum.逃跑)
+                {
+                }
+            }
+            else if (playerInput.typeEnum == SelectTypeEnum.逃跑)
+            {
+                if (CompareManager.ComparePlayerRun(_npc, p1.data, p2.data))
+                {
+                    //判断玩家是否能够逃跑 ToDo 当面对特定NPC时不可以逃跑
+                    PlayerLose();
+                    return;
+                }
+
+                //没有 跑掉
+                switch (npcInput.typeEnum)
+                {
+                    case SelectTypeEnum.使用技能:
+                        var skill = AttackInputStruct.CastToType<Skill>(npcInput);
+                        await _npc_attack(p2.cricket, p1.cricket, skill);
+                        break;
+                    case SelectTypeEnum.使用道具:
+                        break;
+                    case SelectTypeEnum.切换精灵:
+                        break;
+                    case SelectTypeEnum.逃跑:
+                        break;
+                }
+            }
+
+            _round_start = false;
+        }
+
+        private async UniTask _npc_attack(Cricket attacker, Cricket defenser, Skill skill)
+        {
+            //Npc释放技能攻击
+            bool attacker_dead;
+            bool defender_dead;
+            (attacker_dead, defender_dead) = await _apply(skill, attacker, defenser); //玩家攻击
+            if ((attacker_dead && !CanNpcContinue()) || (defender_dead && !CanPlayerContinue()))
+            {
+                //有一方不能够再战斗
+                return;
+            }
+        }
+
+        private async UniTask _attack_together(Skill playerSkill, Skill npcSkill)
+        {
+            bool player_first =
+                CompareManager.CompareSkillSpeed(p1.data, p2.data, playerSkill, npcSkill);
             bool attacked_dead;
-            bool defender;
+            bool defender_dead;
 
             if (player_first)
             {
-                #region 玩家先手
-
-                #region 玩家攻击
-
-                (attacked_dead, defender) = await _apply(player_skill, p1.cricket, p2.cricket); //玩家攻击
-                if (attacked_dead)
+                (attacked_dead, defender_dead) = await _apply(playerSkill, p1.cricket, p2.cricket); //玩家攻击
+                if (attacked_dead && !CanPlayerContinue())
                 {
-                    //玩家当前精灵GG
-                    if (!CanPlayerContinue())
-                    {
-                        //玩家不能再战斗
-                        return;
-                    }
-
-                    _attack_over = false;
-                    _round_start = false;
                     return;
                 }
 
-                if (defender)
+                if (defender_dead && !CanNpcContinue())
                 {
-                    //NPC当前精灵GG 回合结束
-                    if (!CanNpcContinue())
-                    {
-                        //Npc不能再战斗
-                        return;
-                    }
-
-                    _attack_over = false;
-                    _round_start = false;
                     return;
                 }
-
-                #endregion
-
-                #region npc攻击
 
                 //npc当前精灵没有GG
-                (attacked_dead, defender) = await _apply(npc_skill, p2.cricket, p1.cricket);
-                if (attacked_dead)
+                (attacked_dead, defender_dead) = await _apply(npcSkill, p2.cricket, p1.cricket);
+                if (attacked_dead && !CanNpcContinue())
                 {
-                    //npc 精灵GG 
-                    if (!CanNpcContinue())
-                    {
-                        return;
-                    }
-
-                    //还有可用的精灵
-                    _attack_over = false;
-                    _round_start = false;
                     return;
                 }
 
-                if (defender)
+                if (defender_dead && !CanPlayerContinue())
                 {
-                    if (!CanPlayerContinue())
-                    {
-                        return;
-                    }
-
-                    _attack_over = false;
-                    _round_start = false;
                     return;
                 }
-
-                #endregion
-
-                #endregion
             }
-
             else
             {
-                #region 玩家后手
-
-                #region 敌方攻击
-
-                (attacked_dead, defender) = await _apply(npc_skill, p2.cricket, p1.cricket);
-                if (attacked_dead)
+                (attacked_dead, defender_dead) = await _apply(npcSkill, p2.cricket, p1.cricket);
+                if (attacked_dead && !CanNpcContinue())
                 {
-                    if (!CanNpcContinue())
-                    {
-                        return;
-                    }
-
-                    _attack_over = false;
-                    _round_start = false;
                     return;
                 }
 
-                if (defender)
+                if (defender_dead && !CanPlayerContinue())
                 {
-                    if (!CanPlayerContinue())
-                    {
-                        return;
-                    }
-
-                    _attack_over = false;
-                    _round_start = false;
                     return;
                 }
 
-                #endregion
 
-
-                #region 玩家攻击
-
-                (attacked_dead, defender) = await _apply(player_skill, p1.cricket, p2.cricket);
-                if (attacked_dead)
+                (attacked_dead, defender_dead) = await _apply(playerSkill, p1.cricket, p2.cricket);
+                if (attacked_dead && !CanPlayerContinue())
                 {
-                    if (!CanPlayerContinue())
-                    {
-                        return;
-                    }
-
-                    _attack_over = false;
-                    _round_start = false;
                     return;
                 }
 
-                if (defender)
+                if (defender_dead && !CanNpcContinue())
                 {
-                    if (!CanNpcContinue())
-                    {
-                        return;
-                    }
-
-                    _attack_over = false;
-                    _round_start = false;
                     return;
                 }
-
-                #endregion
-
-                #endregion
             }
-
-
-            _round_start = false;
         }
 
         /// <summary>
@@ -233,13 +249,18 @@ namespace Games.CricketGame.Manager
 
         private async UniTask MainLogic()
         {
-            //进入回合逻辑 说明我方和敌方都有能够战斗的精灵
-            //新的回合开始 先判断玩家的当前精灵是否gg            
+            await _change_cricket_if_needed(); //回合开始时,如果当前精灵在上一回合被击败 则需要进行替换
+            attackPanel.RoundStart(); //显示ui
+            await RoundPlaying(); //进行回合
+        }
+
+        private async UniTask _change_cricket_if_needed()
+        {
             if (p1.cricket.data.healthAbility <= 0)
             {
                 //玩家当前的精灵已经GG
                 //等待玩家选择新的精灵
-                var next_cricket = await _player_change_cricket();
+                var next_cricket = await _inputHandler.GetPlayerNextCricket();
                 print($"我方派{next_cricket.name}上场了");
                 p1.ResetData(next_cricket);
                 attackPanel.DisConnect();
@@ -248,44 +269,17 @@ namespace Games.CricketGame.Manager
             else if (p2.cricket.data.healthAbility <= 0)
             {
                 //npc精灵GG
-                var next_cricket = await _npc_change_cricket();
+                var next_cricket = await _inputHandler.GetNpcNextCricket(_npc);
                 print($"敌方派上:{next_cricket.name}");
                 p2.ResetData(next_cricket);
                 attackPanel.DisConnect();
                 attackPanel.Connect(p1.cricket.data, p2.cricket.data);
             }
-
-            attackPanel.RoundStart(); //显示ui
-            await RoundPlaying(); //进行回合
-        }
-        
-        private async UniTask<CricketData> _npc_change_cricket()
-        {
-            await UniTask.WaitForFixedUpdate();
-            return _npc.FirstAvailableCricket();
-        }
-
-        private async UniTask<CricketData> _player_change_cricket()
-        {
-            UIManager.instance.cricketPanel.OpenSelectPanel();
-            while (true)
-            {
-                if (AttackInputHandler.player_next != null)
-                {
-                    var temp = AttackInputHandler.player_next;
-                    AttackInputHandler.player_next = null;
-                    UIManager.instance.cricketPanel.CloseSelectPanel();
-                    return temp;
-                }
-
-                print("等待玩家切换精灵");
-                await UniTask.WaitForFixedUpdate();
-            }
         }
 
         #region 胜利/失败逻辑
 
-        #region 场上精灵战败
+        #region 判断是否还能继续战斗
 
         /// <summary>
         /// 判断玩家(判断是否还有血量>0的cricket)是否还能继续战斗 
@@ -307,6 +301,7 @@ namespace Games.CricketGame.Manager
 
         private bool CanNpcContinue()
         {
+            //ToDo 这个函数的命名不好
             print($"Npc场上精灵{p2.cricket.name}战败了");
             if (_npc.HaveAvailableCricket())
             {
@@ -342,24 +337,6 @@ namespace Games.CricketGame.Manager
         #endregion
 
         #endregion
-
-        
-        private async UniTask<Skill> PlayerSelect()
-        {
-            while (true)
-            {
-                if (AttackInputHandler.player_input != null)
-                {
-                    var temp = AttackInputHandler.player_input;
-                    AttackInputHandler.player_input = null;
-                    print($"玩家选择了技能:{temp.meta.name}");
-                    return temp;
-                }
-
-                print("等待玩家输入");
-                await UniTask.WaitForFixedUpdate();
-            }
-        }
 
         #endregion
 
