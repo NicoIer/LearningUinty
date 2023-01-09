@@ -1,9 +1,7 @@
-﻿using Cysharp.Threading.Tasks;
-using Games.CricketGame.Npc_;
+﻿using Games.CricketGame.Npc_;
 using Games.CricketGame.Player_;
 using Script.Tools.DesignPattern;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Games.CricketGame.Manager
 {
@@ -27,13 +25,10 @@ namespace Games.CricketGame.Manager
             base.Awake();
             handler = transform.GetChild(0).GetComponent<GameInputHandler>();
         }
-
-        private Npc npc;
+        
 
         public void EnterAttackMap(Player player, Npc npc)
         {
-            this.npc = npc;
-            npc.gameObject.SetActive(false);
             _mapping = false;
             _attcking = true;
             ToAttack();
@@ -42,8 +37,6 @@ namespace Games.CricketGame.Manager
 
         public void ExitAttackMap()
         {
-            Destroy(npc);
-            npc = null;
             print("退出战斗,回到大地图");
             _mapping = true;
             _attcking = false;

@@ -37,6 +37,7 @@ namespace Games.CricketGame.UI
             _data.nameChangeAction -= _name_change;
             _data.healthChangeAction -= _health_change;
             _data = null;
+            _connected = false;
         }
 
         protected abstract void _exp_change(float attained, float total);

@@ -10,8 +10,20 @@ namespace Games.CricketGame.UI
         public CricketAttackInfoCell other;
         public AttackOperatorPanel attackOperatorPanel;
         private bool _connected;
-        
+        private bool _opened;
+        public void Open()
+        {
+            if(_opened)
+                return;
+            gameObject.SetActive(true);
+        }
 
+        public void Close()
+        {
+            if(!_opened)
+                return;
+            gameObject.SetActive(false);
+        }
         public void Connect(CricketData p1, CricketData p2)
         {
             if (_connected)

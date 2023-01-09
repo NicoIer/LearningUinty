@@ -45,6 +45,7 @@ namespace Games.CricketGame.UI
 
         protected override void _name_change(string pre, string now)
         {
+            print($"name:{now}");
             nameText.text = now;
         }
 

@@ -6,8 +6,8 @@ namespace Games.CricketGame.Code.Attack
 {
     public class AttackPosition : MonoBehaviour
     {
-        public Cricket cricket;
-        
+        [field: SerializeField] public Cricket cricket { get; private set; }
+
         private void Awake()
         {
             cricket = transform.GetChild(0).GetComponent<Cricket>();

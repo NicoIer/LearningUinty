@@ -11,8 +11,11 @@ namespace Games.CricketGame.Player_
     {
         //玩家携带cricket
         public List<CricketData> crickets;
-        //玩家拥有的Cricket
 
+        //玩家拥有的Cricket
+        // public List<CricketData> 
+        //玩家的首发cricket
+        public CricketData first_cricket { get; private set; }
 
         #region Attribute
 
@@ -45,15 +48,28 @@ namespace Games.CricketGame.Player_
 
         #endregion
 
+        public CricketData FirstAvailableCricket()
+        {
+            foreach (var cricketData in crickets)
+            {
+                if (cricketData.healthAbility > 0)
+                {
+                    return cricketData;
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// 玩家是否还有可以战斗的cricket
         /// </summary>
         /// <returns></returns>
-        public bool HavaAvalizableCricket()
+        public bool HavaAvailableCricket()
         {
             foreach (var cricketData in crickets)
             {
-                if (cricketData.healthAbility >= 0)
+                if (cricketData.healthAbility > 0)
                 {
                     return true;
                 }
@@ -61,14 +77,20 @@ namespace Games.CricketGame.Player_
 
             return false;
         }
+
         #region Unity LifeTime
 
         private void Awake()
         {
             //ToDo 删掉这里
-            crickets[0].RandomInit(40);
-            crickets[0].name = "玩家";
-            
+            int i = 0;
+            foreach (var cricket in crickets)
+            {
+                cricket.RandomInit(40);
+                cricket.name = $"测试cricket{i}";
+                i++;
+            }
+
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
             _collider = GetComponent<Collider2D>();

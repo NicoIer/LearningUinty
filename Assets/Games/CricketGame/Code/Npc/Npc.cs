@@ -13,17 +13,33 @@ namespace Games.CricketGame.Npc_
 
         private void Awake()
         {
-            crickets[0].RandomInit(60);
-            crickets[0].name = "敌人";
+            var i =0;
+            foreach (var cricket in crickets)
+            {
+                cricket.RandomInit(30);
+                cricket.name = $"敌人{i}";
+            }
         }
 
-        public Skill random_skill()
+        public Skill random_skill(CricketData data)
         {
-            var idx = RandomManager.Next(0, 4);
-            return crickets[0].skills[idx];
+            var idx = RandomManager.Next(0, data.skills.Count);
+            return data.skills[idx];
         }
 
-        public bool HaveAvaliableCricket()
+        public CricketData FirstAvailableCricket()
+        {
+            foreach (var cricket in crickets)
+            {
+                if (cricket.healthAbility > 0)
+                {
+                    return cricket;
+                }
+            }
+            Debug.LogWarning("Npc没有可用的cricket啦!!!");
+            return null;
+        }
+        public bool HaveAvailableCricket()
         {
             foreach (var cricketData in crickets)
             {

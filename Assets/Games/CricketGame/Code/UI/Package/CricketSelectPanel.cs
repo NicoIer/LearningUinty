@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Games.CricketGame.Code.Package;
+using Games.CricketGame.Code.UI.Attack;
 using Games.CricketGame.Player_;
 using UnityEngine;
 using UnityEngine.UI;
@@ -97,7 +98,20 @@ namespace Games.CricketGame.UI.Package
 
         private void OnCricketCellClicked(int idx)
         {
-            print($"{cricketBagCells[idx]}被点击,idx:{idx}");
+            
+            if(idx>=player.crickets.Count)
+                return;
+            var player_next = player.crickets[idx];
+            if (player_next.healthAbility > 0)
+            {
+                print($"{cricketBagCells[idx].name}被点击,可以战斗");
+                AttackInputHandler.player_next = player_next;
+            }
+            else
+            {
+                print($"{cricketBagCells[idx].name}被点击,不可以战斗");
+            }
+
         }
     }
 }
