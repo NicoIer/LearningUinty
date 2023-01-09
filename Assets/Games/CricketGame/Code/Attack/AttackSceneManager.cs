@@ -19,8 +19,8 @@ namespace Games.CricketGame.Manager
     public class AttackSceneManager : MonoBehaviour
     {
         //ToDo 还有战斗场景地图啥的 没有设计 
-        private bool _round_start; //回合是否开始
-        private bool _attack_over; //战斗是否结束
+        private bool _round_start = false; //回合是否开始
+        private bool _attack_over = true; //战斗是否结束
         private Player _player; //玩家是需要持有的
         private Npc _npc;
         private CinemachineVirtualCamera _virtualCamera;
@@ -30,10 +30,10 @@ namespace Games.CricketGame.Manager
 
         private void Update()
         {
-            _update_rotation(); //更新场景内的2D物体,使面朝相机
             if (!_attack_over)
             {
                 //战斗没有结束
+                _update_rotation(); //更新场景内的2D物体,使面朝相机
                 if (!_round_start)
                 {
                     //如果回合没有开始 则开始回合
@@ -385,8 +385,9 @@ namespace Games.CricketGame.Manager
 
         private void ExitAttack()
         {
+            UIManager.instance.cricketPanel.DisConnect();
             _attack_over = true;
-            Destroy(_npc);//销毁npc游戏物体
+            Destroy(_npc); //销毁npc游戏物体
             _player = null;
             _npc = null;
             attackPanel.DisConnect();
@@ -404,29 +405,22 @@ namespace Games.CricketGame.Manager
             }
 
             _attack_over = false;
+            //ToDo 暂时这样写 后面修改
+            UIManager.instance.cricketPanel.Connect(player);
+
             attackPanel.Open();
             //获取战斗相机的位置
             _virtualCamera = virtualCamera;
             _player = player;
             _npc = npc;
-            _npc.gameObject.SetActive(false);//隐藏npc游戏物体
-            _active_scene(); //激活场景
-            attackPanel.Connect(p1.cricket.data, p2.cricket.data);//将数据连接到ui
-        }
-
-        private void _active_scene()
-        {
-            if (!_attack_over)
-            {
-                throw new ArgumentException();
-            }
-
+            _npc.gameObject.SetActive(false); //隐藏npc游戏物体
             //激活他们
             p1.gameObject.SetActive(true);
             p2.gameObject.SetActive(true);
             //
             p1.ResetData(_player.FirstAvailableCricket());
             p2.ResetData(_npc.FirstAvailableCricket());
+            attackPanel.Connect(p1.cricket.data, p2.cricket.data); //将数据连接到ui
         }
 
         #region 场景相关

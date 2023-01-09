@@ -11,6 +11,7 @@ namespace Games.CricketGame.Manager
     {
         public AttackSceneManager attackSceneManager;
         public Transform gameMap;
+        // public Player player;
         [field: SerializeField]public GameInputHandler handler { get; private set; }
 
         #region 游戏状态

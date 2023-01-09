@@ -53,8 +53,8 @@ namespace Games.CricketGame.Code.Cricket_
 
         public void ReSetData(CricketData data)
         {
+            print($"{this.data.name}的数据更新为:{data.name}");
             this.data = data;
-            print($"{name}的数据更新为:{data}");
         }
         
 

@@ -16,6 +16,7 @@ namespace Games.CricketGame.UI
             if(_opened)
                 return;
             gameObject.SetActive(true);
+            attackOperatorPanel.gameObject.SetActive(true);
         }
 
         public void Close()

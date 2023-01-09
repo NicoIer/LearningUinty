@@ -18,8 +18,8 @@ namespace Games.CricketGame.UI.Package
         public Text topText;
         public PropertyIcon icon1;
         public PropertyIcon icon2;
-        private bool _banded = false;
-        public Player player;
+        private bool _connected = false;
+        private Player _player;
 
         private void Awake()
         {
@@ -40,20 +40,14 @@ namespace Games.CricketGame.UI.Package
             }
         }
 
-        private void Start()
-        {
-            Connect(player);
-        }
-
-
         public void Connect(Player player)
         {
-            if (_banded)
+            if (_connected)
             {
                 DisConnect();
             }
 
-            this.player = player;
+            _player = player;
             //默认选中第一个宝可梦
 
             for (int i = 0; i != 6; i++)
@@ -83,25 +77,25 @@ namespace Games.CricketGame.UI.Package
                     skillBagCells[i].Clear();
                 }
             }
+
             characterInfoPanel._update(cur_cricket.character);
         }
 
         public void DisConnect()
         {
-            if (!_banded)
+            if (!_connected)
             {
                 return;
             }
 
-            _banded = false;
+            _connected = false;
         }
 
         private void OnCricketCellClicked(int idx)
         {
-            
-            if(idx>=player.crickets.Count)
+            if (idx >= _player.crickets.Count)
                 return;
-            var player_next = player.crickets[idx];
+            var player_next = _player.crickets[idx];
             if (player_next.healthAbility > 0)
             {
                 print($"{cricketBagCells[idx].name}被点击,可以战斗");
@@ -111,7 +105,6 @@ namespace Games.CricketGame.UI.Package
             {
                 print($"{cricketBagCells[idx].name}被点击,不可以战斗");
             }
-
         }
     }
 }
