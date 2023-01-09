@@ -25,6 +25,7 @@ namespace Games.CricketGame.Manager
         private Npc _npc;
         private CinemachineVirtualCamera _virtualCamera;
         private AttackPanel attackPanel => UIManager.instance.attackPanel;
+        public AttackEnvironment environment;
         public AttackPosition p1;
         public AttackPosition p2;
 
@@ -46,7 +47,7 @@ namespace Games.CricketGame.Manager
 
         #region 战斗逻辑
 
-        private async UniTask<(Skill, Skill)> _get_input()
+        private async UniTask<(Skill, Skill)> _get_skill_input()
         {
             var s1 = await PlayerSelect();
             var s2 = _npc.random_skill(p2.cricket.data);
@@ -55,8 +56,9 @@ namespace Games.CricketGame.Manager
 
         private async UniTask RoundPlaying()
         {
+            //ToDo 这里有很多种不同的输入可能 后面来考虑
             //等待输入
-            var (player_skill, npc_skill) = await _get_input();
+            var (player_skill, npc_skill) = await _get_skill_input();
             attackPanel.RoundPlaying();
             bool player_first = PlayerFirst(p1.cricket.data, p2.cricket.data, player_skill, npc_skill);
             bool attacked_dead;
@@ -425,11 +427,16 @@ namespace Games.CricketGame.Manager
 
         #region 场景相关
 
+        private Quaternion previous_rotaion;
+
         private void _update_rotation()
         {
             var rotation = _virtualCamera.transform.rotation;
+            if (rotation == previous_rotaion) return;
             p1.transform.localRotation = rotation;
             p2.transform.localRotation = rotation;
+            environment.UpdateRotation(rotation);
+            previous_rotaion = rotation;
         }
 
         #endregion
