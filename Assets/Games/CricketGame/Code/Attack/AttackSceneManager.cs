@@ -1,14 +1,13 @@
 ﻿using System;
 using Cinemachine;
 using Cysharp.Threading.Tasks;
+using Games.CricketGame.Attack;
 using Games.CricketGame.Code.Attack;
 using Games.CricketGame.Code.Cricket_;
-using Games.CricketGame.Code.UI.Attack;
 using Games.CricketGame.Cricket_;
 using Games.CricketGame.Npc_;
 using Games.CricketGame.Player_;
 using Games.CricketGame.UI;
-using Nico.Common;
 using UnityEngine;
 
 namespace Games.CricketGame.Manager
@@ -19,7 +18,7 @@ namespace Games.CricketGame.Manager
     public class AttackSceneManager : MonoBehaviour
     {
         //ToDo 还有战斗场景地图啥的 没有设计 
-        private bool _round_start = false; //回合是否开始
+        private bool _round_start; //回合是否开始
         private bool _attack_over = true; //战斗是否结束
         private Player _player; //玩家是需要持有的
         private Npc _npc;
@@ -60,7 +59,7 @@ namespace Games.CricketGame.Manager
             //等待输入
             var (player_skill, npc_skill) = await _get_skill_input();
             attackPanel.RoundPlaying();
-            bool player_first = PlayerFirst(p1.cricket.data, p2.cricket.data, player_skill, npc_skill);
+            bool player_first = CompareManager.CompareSkillSpeed(p1.cricket.data, p2.cricket.data, player_skill, npc_skill);
             bool attacked_dead;
             bool defender;
 
@@ -259,7 +258,7 @@ namespace Games.CricketGame.Manager
             attackPanel.RoundStart(); //显示ui
             await RoundPlaying(); //进行回合
         }
-
+        
         private async UniTask<CricketData> _npc_change_cricket()
         {
             await UniTask.WaitForFixedUpdate();
@@ -344,28 +343,7 @@ namespace Games.CricketGame.Manager
 
         #endregion
 
-        private bool PlayerFirst(CricketData self, CricketData other, Skill s1, Skill s2)
-        {
-            if (CompareManager.ComparePriority(s1.meta.priority, s2.meta.priority))
-            {
-                //技能优先级高?
-                return true;
-            }
-
-            if (self.speedAbility > other.speedAbility)
-            {
-                //速度快?
-                return true;
-            }
-
-            if (self.speedAbility == other.speedAbility)
-            {
-                return RandomManager.Probability(0, 1) > 0.5;
-            }
-
-            return false;
-        }
-
+        
         private async UniTask<Skill> PlayerSelect()
         {
             while (true)

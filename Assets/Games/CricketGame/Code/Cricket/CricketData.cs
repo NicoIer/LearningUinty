@@ -2,13 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Games.CricketGame.Cricket_;
 using Games.CricketGame.Manager;
 using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Games.CricketGame.Code.Cricket_
+namespace Games.CricketGame.Cricket_
 {
     [Serializable]
     public class CricketData

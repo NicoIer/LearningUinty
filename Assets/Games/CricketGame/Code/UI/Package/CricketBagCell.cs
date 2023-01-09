@@ -1,6 +1,5 @@
 ﻿using System;
-using Games.CricketGame.Code.Cricket_;
-using UnityEngine;
+using Games.CricketGame.Cricket_;
 using UnityEngine.UI;
 
 namespace Games.CricketGame.UI

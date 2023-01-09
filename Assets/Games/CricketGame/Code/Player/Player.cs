@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Games.CricketGame.Code.Cricket_;
+using Games.CricketGame.Cricket_;
 using Nico.Interface;
 using Nico.Player;
 using UnityEngine;

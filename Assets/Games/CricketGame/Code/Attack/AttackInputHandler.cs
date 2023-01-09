@@ -1,7 +1,6 @@
-﻿using Games.CricketGame.Code.Cricket_;
-using Games.CricketGame.Cricket_;
+﻿using Games.CricketGame.Cricket_;
 
-namespace Games.CricketGame.Code.UI.Attack
+namespace Games.CricketGame.Attack
 {
     public static class AttackInputHandler
     {

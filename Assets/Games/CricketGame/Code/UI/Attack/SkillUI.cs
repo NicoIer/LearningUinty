@@ -1,7 +1,5 @@
-﻿using System;
-using Games.CricketGame.Code.UI.Attack;
+﻿using Games.CricketGame.Attack;
 using Games.CricketGame.Cricket_;
-using Games.CricketGame.Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
